@@ -7,12 +7,12 @@ Server folder contains:
 * finally, server.js combines these files together to run the server on port 5050.
 
 Client folder contains:
-*app.tsx - we include mantine css module and run navbar and outlet (which is further defined in main.tsx)
-**components -
-*Navbar.tsx - our navbar using react-router-dom instead of mantine for consistency with react.
-*Recipe.tsx - handles the form to create new recipe posts as well as updating a post.
-*RecipeList.tsx - handles displaying the recipes in a list on the homepage. Also handles the delete button and links to the edit button.
-*main.tsx - Where ReactDOM root is created and rendered and a createBrowserRouter is made with routes defining the routes our websites goes (currently "/", "/edit/:id", and "/create"
+* app.tsx - we include mantine css module and run navbar and outlet (which is further defined in main.tsx)
+** components -
+* Navbar.tsx - our navbar using react-router-dom instead of mantine for consistency with react.
+* Recipe.tsx - handles the form to create new recipe posts as well as updating a post.
+* RecipeList.tsx - handles displaying the recipes in a list on the homepage. Also handles the delete button and links to the edit button.
+* main.tsx - Where ReactDOM root is created and rendered and a createBrowserRouter is made with routes defining the routes our websites goes (currently "/", "/edit/:id", and "/create"
 
 Other files are configuration that I am not too familiar with, mostly setup stuff.
 
