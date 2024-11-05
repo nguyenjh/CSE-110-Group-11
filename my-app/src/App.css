@@ -1,0 +1,48 @@
+#navbar {
+  position: sticky;
+  overflow: hidden;
+  display: flex;
+  padding: 10px;
+  background-color: rgb(212, 155, 164);
+}
+
+#navbar ul {
+  display: flex;
+  margin: 15px;
+  padding: 0;
+  list-style-type: none;
+  margin-left: auto;
+}
+
+#navbar li {
+  display: block;
+  margin: 20px;
+  font-weight: bold;
+  font-size: larger;
+  cursor: pointer;
+}
+
+li:hover {
+  color:rgb(230, 209, 214)
+}
+
+.off-screen-menu {
+  background-color: aquamarine;
+  position: fixed;
+  transition: .3s ease;
+  display: flex;
+
+}
+
+.hamburger-menu {
+  height: 50px;
+  width: 50px;
+  margin-right: auto;
+  position: relative;
+}
+
+.hamburger-menu span {
+  height: 5px;
+  width: 100%;
+  background-color: black;
+}
