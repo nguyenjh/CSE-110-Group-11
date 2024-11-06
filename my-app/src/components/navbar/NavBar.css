@@ -55,9 +55,9 @@ a{
   background-color:  lightpink;
   position: fixed;
   height: 100%;
-  width: 20%;
+  width: 15%;
   left: -50%; 
-  display: flex; /* Use CSS grid for the layout */
+  display: flex; 
   flex-direction: column;
   text-align: center;
   transition: .3s ease;

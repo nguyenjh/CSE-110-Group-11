@@ -33,7 +33,7 @@ function NavBar() {
             </li>
 
             <li className="sidebar-item dropdown">
-              <a className="btn btn-secondary dropdown-toggle" id="costDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a className="btn btn-secondary dropdown-toggle" id="costDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                 Cost
               </a>
               <ul className="dropdown-menu" aria-labelledby="costDropdown">
@@ -45,18 +45,18 @@ function NavBar() {
             </li>
 
             <li className="sidebar-item dropdown">
-              <a className="btn btn-secondary dropdown-toggle" id="caloDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a className="btn btn-secondary dropdown-toggle" id="caloDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                 Calories
               </a>
               <ul className="dropdown-menu" aria-labelledby="caloDropdown">
-                <li><a className="dropdown-item" href="#">Under 50Calo</a></li>
+                <li><a className="dropdown-item" href="#">Under 50 Calo</a></li>
                 <li><a className="dropdown-item" href="#">50-150 Calo</a></li>
                 <li><a className="dropdown-item" href="#">Over 150 Calo</a></li>
               </ul>
             </li>
 
             <li className="sidebar-item dropdown">
-              <a className="btn btn-secondary dropdown-toggle" id="timeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a className="btn btn-secondary dropdown-toggle" id="timeDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                 Time
               </a>
               <ul className="dropdown-menu" aria-labelledby="timeDropdown">
@@ -67,7 +67,7 @@ function NavBar() {
             </li>
 
             <li className="sidebar-item dropdown">
-              <a className="btn btn-secondary dropdown-toggle" id="sortDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a className="btn btn-secondary dropdown-toggle" id="sortDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                 Sort By
               </a>
               <ul className="dropdown-menu" aria-labelledby="sidebarDropdown">
