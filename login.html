@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="log.css">
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+
+        <!-- Email Input -->
+        <input type="email" id="email" placeholder="Email">
+        <span class="error" id="email-error"></span>
+
+        <!-- Password Input -->
+        <input type="password" id="password" placeholder="Password">
+        <span class="error" id="password-error"></span>
+
+        <!-- Checkbox Input -->
+        <div class="checkbox-container">
+            <input type="checkbox" id="not-robot">
+            <label for="not-robot">I’m not a robot</label>
+        </div>
+        <!-- Error message below the checkbox -->
+        <div class="error" id="robot-error"></div>
+
+        <button type="button" onclick="validateLoginForm()">Login</button>
+
+        <p>Not registered? <a href="signup.html">Create an account</a></p>
+
+        <span class="error" id="form-error"></span>
+    </div>
+
+    <script src="log.js"></script>
+</body>
+</html>
