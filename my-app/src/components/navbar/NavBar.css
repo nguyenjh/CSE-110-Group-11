@@ -19,6 +19,10 @@ a{
   margin-left: auto; 
 }
 
+.topbar-item ul li:hover {
+  background-color: aliceblue;
+}
+
 .topbar-item ul {
   display: flex; 
   gap: 20px; 
