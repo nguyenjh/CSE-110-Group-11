@@ -1,0 +1,15 @@
+.viewNavBar{
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+    background-color: lightpink;
+    border-bottom: 3px solid black;
+    z-index: 10;
+    
+}
+
+.posts{
+    margin-left: 20%;
+    margin-right: 20%;
+    
+}
