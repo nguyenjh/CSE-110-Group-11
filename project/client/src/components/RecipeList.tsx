@@ -1,5 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// RecipeList.tsx
+// Code is modified from MongoDB MERN tutorial
+//
+// Component to create a recipe list from recipes in the database. This component defines the delete function 
+// and button as the edit button.
+//
+// Assembled by Alex Paz.
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 
 interface recipe_content {
   name: string;
@@ -13,6 +24,7 @@ interface recipe_props {
   deleteRecipe: (id: string) => void;
 }
 
+// Recipe component called to create the recipeList using the recipes in the database.
 const Recipe: React.FC<recipe_props> = ({recipe, deleteRecipe}) => (
   <tr >
     <td >
@@ -25,7 +37,7 @@ const Recipe: React.FC<recipe_props> = ({recipe, deleteRecipe}) => (
       {recipe.instructions}
     </td>
     <td >
-      <div >
+      <div>
         <Link to={`/edit/${recipe._id}`}
         >
           Edit
@@ -44,18 +56,23 @@ const Recipe: React.FC<recipe_props> = ({recipe, deleteRecipe}) => (
   </tr>
 );
 
+
 export default function RecipeList() {
   const [recipes, setRecipes] = useState<recipe_content[]>([]);
 
-  // This method fetches the recipes from the database.
+  // This method fetches the recipes from the database once on initialization and anytime the recipe length changes.
   useEffect(() => {
     async function getRecipes() {
       const response = await fetch(`http://localhost:5050/recipe/`);
+
+      // Error checking
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
         console.error(message);
         return;
       }
+
+      // response is typed check with our recipe_content interface and then parsed.
       const foundRecipes = await response.json() as recipe_content[];
       setRecipes(foundRecipes);
     }
@@ -68,6 +85,7 @@ export default function RecipeList() {
     await fetch(`http://localhost:5050/recipe/${id}`, {
       method: "DELETE",
     });
+
     const newRecipes = recipes.filter((el) => el._id !== id);
     setRecipes(newRecipes);
   }

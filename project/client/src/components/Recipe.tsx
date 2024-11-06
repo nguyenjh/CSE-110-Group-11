@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Recipe.tsx
+// Code is modified from MongoDB MERN tutorial
+//
+// Here we store code that builds recipes using a form useState to either create or edit recipes. 
+//
+// Assembled by Alex Paz.
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -15,23 +24,30 @@ export default function Recipe() {
     summary: "",
     instructions: "",
   });
-  const [isNew, setIsNew] = useState<boolean>(true);
+
+  const [isNew, setIsNew] = useState<boolean>(true); //Define if recipe/form is new or not.
   const params = useParams<params_type>();
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
       const id = params.id?.toString() || undefined;
+
+      // If there is no id, then we know this is a new form with no preexisting 
+      // recipe or id. So there is no need to fetch any data from the database.
       if(!id) return;
-      setIsNew(false);
+
+      setIsNew(false); //Must be new if last if-statement did not execute.
       const response = await fetch(
         `http://localhost:5050/recipe/${params.id?.toString()}`
       );
+
       if (!response.ok) {
         const message = `An error has occurred: ${response.statusText}`;
         console.error(message);
         return;
       }
+
       const recipe = await response.json();
       if (!recipe) {
         console.warn(`Recipe with id ${id} not found`);
