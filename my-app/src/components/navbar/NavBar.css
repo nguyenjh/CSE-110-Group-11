@@ -52,16 +52,17 @@ a{
   top: 90%
 }
 .sidebar{
-  background-color:  lightpink;
+  background-color:  rgb(165, 215, 243);
   position: fixed;
-  height: 100%;
-  width: 15%;
+  height: 60%;
+  width: 10%;
   left: -50%; 
   display: flex; 
   flex-direction: column;
   text-align: center;
   transition: .3s ease;
   gap: 15px;
+  border-radius: 5%;
 }
 
 .sidebar-header{
