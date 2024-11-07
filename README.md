@@ -26,7 +26,8 @@ NOTE: Other files are configuration that I am not too familiar with, mostly setu
 ## How To Run
 
 ### Pre-setup
-MongoDB Atlas requires you to connect your IP address and possibly account to the database used.
+* MongoDB Atlas requires you to connect your IP address and possibly account to the database used.
+* You will also have to run npm install in a terminal when you first run the node.js instance.
 
 ### Instructions
 
