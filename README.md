@@ -12,7 +12,7 @@
 
 
 ### Client folder contains:
-* app.tsx - we include mantine css module and run navbar and outlet (which is further defined in main.tsx
+* App.tsx - we include mantine css module and run navbar and outlet (which is further defined in main.tsx
 * */components*  -
   * Navbar.tsx - our navbar using react-router-dom instead of mantine for consistency with react.
   * Recipe.tsx - handles the form to create new recipe posts as well as updating a post.
@@ -27,7 +27,13 @@ NOTE: Other files are configuration that I am not too familiar with, mostly setu
 
 ### Pre-setup
 * MongoDB Atlas requires you to connect your IP address and possibly account to the database used.
-* You will also have to run npm install in a terminal when you first run the node.js instance.
+* You will also have to run
+ > npm install
+ >  
+   in a terminal when you first run the node.js instance.
+* If there is an error with bootstrap, install it again using: 
+ > npm i bootstrap@5.3.3
+ >
 
 ### Instructions
 
@@ -38,4 +44,8 @@ NOTE: Other files are configuration that I am not too familiar with, mostly setu
 3. Open a seperate terminal and cs to project/client.
 4. Plug this into the terminal to start the client:
    > npm run dev
-   This will start a node.js runtime environment of the client.
+   - This will start a node.js runtime environment of the client.
+
+---
+
+## Known Bugs
