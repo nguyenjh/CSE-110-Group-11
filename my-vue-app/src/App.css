@@ -1,0 +1,121 @@
+.app {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  max-width: 100%;
+  margin: auto;
+}
+
+.recipe h1 {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+}
+
+.titleAndDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.titleAndImg {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.rating {
+  color: lightgray;
+}
+
+.details {
+  background-color: #6F4E37;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 14px;
+  max-width: 500px;
+  border:3px solid rgb(255, 255, 255);
+}
+
+.tag {
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+  color: white;
+}
+
+.tag.fast {
+  background-color: green;
+}
+
+.tag.cheap {
+  background-color: lightgreen;
+}
+
+.tag.italian {
+  background-color: blue;
+}
+
+.ingredients {
+  max-width: 500px;
+}
+
+.directions {
+  max-width: 500px;
+}
+
+.pasta_img {
+  width: 400px;
+  border-radius: 20px;
+  border:3px solid rgb(255, 255, 255);
+}
+
+h3 {
+  font-size: 18px;
+  text-decoration: underline;
+}
+
+ol {
+  padding-left: 20px;
+}
+
+.actions {
+  display: flex;
+  gap: 25px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.actions button {
+  background-color: #6F4E37;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.comments {
+  margin-top: 20px;
+}
+
+.commentInputAndBtn {
+  display: flex;
+}
+
+.comment-section .comment {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+.comment-section .comment p {
+  margin: 0;
+}
+
+input[type="text"] {
+  width: calc(100% - 60px);
+  padding: 5px;
+  margin-right: 5px;
+}
+
+button {
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: #6F4E37;
+}
