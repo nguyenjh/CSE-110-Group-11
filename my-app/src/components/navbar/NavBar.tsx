@@ -12,7 +12,7 @@ function NavBar() {
       setIsOpen(!isOpen);
     };  
 
-    const toggleClick = (clickedTag: string) => { {/* handle the tag filter, basically everything in labs*/}
+    const toggleClick = (clickedTag: string) => { {/* handle the tag filter when they are clicked, basically everything in labs*/}
 
       if(isClicked.includes(clickedTag)){
         setIsClicked((prevClicked)=> (prevClicked.filter((f)=>f!==clickedTag)))
@@ -75,7 +75,7 @@ function NavBar() {
               </ul>
             </li>
 
-            <li className ="filter-item">  {/* code for the tags*/}
+            <li className ="filter-item">  {/* code for the tags when they are clicked */}
               {suggestTag.map(item => (
                 <button 
                 key={item} 
@@ -88,8 +88,8 @@ function NavBar() {
             </li>
           </ul>
         </aside>
-        
-        <nav className="navbar navbar-expand border-bottom" id="topbar">  {/* create another 'hidden' navbar so that the + button always at the bottom right of the screen*/}
+        {/* handle the hidden menu, appear/disappear when the button is clicked */}
+        <nav className="navbar navbar-expand border-bottom" id="topbar">  
             <div className={`hamburger-menu ${isOpen ? 'active' : ''}`} 
                               onClick={() => handleOpen()}>
                 <span></span>
@@ -108,6 +108,7 @@ function NavBar() {
 
         </nav>
 
+        {/* put the + button into a nav bar so it always at the bottom right of the screen*/}
         <aside className="newPostButton">
           <NewPostButton />
         </aside>

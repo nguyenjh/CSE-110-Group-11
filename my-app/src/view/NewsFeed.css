@@ -1,5 +1,5 @@
 
-{/* CSS file for the MyNewsFeed.tsx, z-index makes sure the nav-bar is over the recipes grid*/}
+/* CSS file for the MyNewsFeed.tsx, z-index makes sure the nav-bar is over the recipes grid*/
 .viewNavBar{
     position: sticky;
     top: 0;
@@ -10,7 +10,7 @@
     
 }
 
-{/*CSS for the recipes grid*/}
+/*CSS for the recipes grid*/
 .posts{
     margin-left: 20%;
     margin-right: 20%;
