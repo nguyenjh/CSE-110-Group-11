@@ -33,8 +33,7 @@ MongoDB Atlas requires you to connect your IP address and possibly account to th
 1. Open a new terminal and cd to project/server.
 2. Plug this into the terminal to start the server:
    > node --env-file=config.env server
-   
-  If this does not output "Connected to MongoDB" and "Server on ${PORT}", then you may not have properly updated config.env.
+  - If this does not output "Connected to MongoDB" and "Server on ${PORT}", then you may not have properly updated config.env.
 3. Open a seperate terminal and cs to project/client.
 4. Plug this into the terminal to start the client:
    > npm run dev
