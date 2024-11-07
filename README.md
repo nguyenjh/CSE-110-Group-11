@@ -1,4 +1,4 @@
-# Homepage Demo V.1 - Working Database, No CSS
+# Homepage Demo V.2 - Working Database, Including CSS
 
 ---
 
