@@ -9,7 +9,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import {suggestTag} from "../constants/constants";
+import "./css/Post.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 interface recipe_content {
@@ -21,39 +23,19 @@ interface recipe_content {
 
 interface recipe_props {
   recipe: recipe_content;
-  deleteRecipe: (id: string) => void;
 }
 
 // Recipe component called to create the recipeList using the recipes in the database.
-const Recipe: React.FC<recipe_props> = ({recipe, deleteRecipe}) => (
-  <tr >
-    <td >
-      {recipe.name}
-    </td>
-    <td >
-      {recipe.summary}
-    </td>
-    <td >
-      {recipe.instructions}
-    </td>
-    <td >
-      <div>
-        <Link to={`/edit/${recipe._id}`}
-        >
-          Edit
-        </Link>
-        <button
-          color="red"
-          type="button"
-          onClick={() => {
-            deleteRecipe(recipe._id);
-          }}
-        >
-          Delete
-        </button>
+const Recipe: React.FC<recipe_props> = ({recipe}) => (
+  <li className = "list-group-item d-flex flex-column justify-content-between mb-5 p-5 align-items-left border rounded">
+      <div className="mb-2" style = {{fontSize: "20px", fontWeight:"bold"}}>{recipe.name}</div>
+      <div className="mb-2">4.2R - 12 likes - Sept 12</div>
+      <div className="tags-container p-2 mt-2" >
+          {suggestTag.map((tag) => (
+              <span key={tag} className="badge me-2" style = {{ backgroundColor: "lightblue", color: "black", fontSize: "15px"}}>{tag}</span>
+          ))}
       </div>
-    </td>
-  </tr>
+  </li>
 );
 
 
@@ -80,58 +62,17 @@ export default function RecipeList() {
     return;
   }, [recipes.length]);
 
-  // This method will delete a recipe
-  async function deleteRecipe(id: string) {
-    await fetch(`http://localhost:5050/recipe/${id}`, {
-      method: "DELETE",
-    });
-
-    const newRecipes = recipes.filter((el) => el._id !== id);
-    setRecipes(newRecipes);
-  }
-
-  // This method will map out the recipe on the table
-  function recipeList() {
-    return recipes.map((recipe) => {
-      return (
-        <Recipe
-          recipe={recipe}
-          deleteRecipe={deleteRecipe}
-          key={recipe._id}
-        />
-      );
-    });
-  }
-
   // This following section will display the table with the recipes of individuals.
   return (
-    <>
-      <h3>User Recipes</h3>
-      <div>
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>
-                  Name
-                </th>
-                <th>
-                  Summary
-                </th>
-                <th>
-                  Instructions
-                </th>
-                <th>
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {recipeList()}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </>
+    <div className="row mt-3" style={{ display: "flex", flexWrap: "wrap" }}>
+      {recipes.map((recipe) => (
+          <div className="col-sm-4" key={recipe._id}> {/* 3 columns for each post using booststrap*/}
+              <Recipe
+                  recipe={recipe}
+                  key={recipe._id}
+              />
+          </div>
+      ))}
+    </div>
   );
 }
