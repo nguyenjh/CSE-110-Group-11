@@ -4,7 +4,7 @@ export const suggestTag = [
 "Vegan", "Italian", "Diet", "Opt"
 ];
 
-export const recipesList = [
+export const recipesList = [  /*dummy recipes to display */
     {
         id: 1,
         name: "My Spaghetti Recipe 1",

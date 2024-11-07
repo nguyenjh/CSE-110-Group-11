@@ -1,5 +1,7 @@
 import { Recipe } from "../../types/types"
 
+
+//use Booststrap to form a recipe to display 
 const PostItem = (currentPost: Recipe) => {
     return (
         <li className = "list-group-item d-flex flex-column justify-content-between mb-5 p-5 align-items-left border rounded">

@@ -5,14 +5,14 @@ import NewPostButton from '../post/NewPostButton';
 
 function NavBar() {
 
-    const [isOpen, setIsOpen] = useState(false);
-    const [isClicked, setIsClicked] = useState<string[]>([]);
+    const [isOpen, setIsOpen] = useState(false); //handle the hidden menu
+    const [isClicked, setIsClicked] = useState<string[]>([]);  
 
     const handleOpen = () => {
       setIsOpen(!isOpen);
     };  
 
-    const toggleClick = (clickedTag: string) => {
+    const toggleClick = (clickedTag: string) => { {/* handle the tag filter, basically everything in labs*/}
 
       if(isClicked.includes(clickedTag)){
         setIsClicked((prevClicked)=> (prevClicked.filter((f)=>f!==clickedTag)))
@@ -25,15 +25,15 @@ function NavBar() {
     
     
     return (
-      <div className="d-flex" id="wholebar">
+      <div className="d-flex" id="wholebar">  {/* code for side bar, top bar and right bar*/}
         <aside className={`sidebar p-0 ${isOpen ? 'active' : ''}`}> 
           <ul className="sidebar-nav p-0">
             <li className="sidebar-header">
                 Filter Search Results
             </li>
 
-            <li className="sidebar-item dropdown">
-              <a className="btn btn-secondary dropdown-toggle" id="costDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+            <li className="sidebar-item dropdown"> {/* code for the hidden bar*/} {/* data-bs-display="static" this part force the dropdown to always droppdown, */}
+              <a className="btn btn-secondary dropdown-toggle" id="costDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" >
                 Cost
               </a>
               <ul className="dropdown-menu" aria-labelledby="costDropdown">
@@ -44,8 +44,8 @@ function NavBar() {
               </ul>
             </li>
 
-            <li className="sidebar-item dropdown">
-              <a className="btn btn-secondary dropdown-toggle" id="caloDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+            <li className="sidebar-item dropdown"> {/*role="button": act as button, data-bs-toggle="dropdown" is dropdown type */}
+              <a className="btn btn-secondary dropdown-toggle" id="caloDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" >
                 Calories
               </a>
               <ul className="dropdown-menu" aria-labelledby="caloDropdown">
@@ -56,7 +56,7 @@ function NavBar() {
             </li>
 
             <li className="sidebar-item dropdown">
-              <a className="btn btn-secondary dropdown-toggle" id="timeDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+              <a className="btn btn-secondary dropdown-toggle" id="timeDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static">
                 Time
               </a>
               <ul className="dropdown-menu" aria-labelledby="timeDropdown">
@@ -67,7 +67,7 @@ function NavBar() {
             </li>
 
             <li className="sidebar-item dropdown">
-              <a className="btn btn-secondary dropdown-toggle" id="sortDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+              <a className="btn btn-secondary dropdown-toggle" id="sortDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static">
                 Sort By
               </a>
               <ul className="dropdown-menu" aria-labelledby="sidebarDropdown">
@@ -75,7 +75,7 @@ function NavBar() {
               </ul>
             </li>
 
-            <li className ="filter-item">
+            <li className ="filter-item">  {/* code for the tags*/}
               {suggestTag.map(item => (
                 <button 
                 key={item} 
@@ -89,15 +89,15 @@ function NavBar() {
           </ul>
         </aside>
         
-        <nav className="navbar navbar-expand border-bottom" id="topbar">
+        <nav className="navbar navbar-expand border-bottom" id="topbar">  {/* create another 'hidden' navbar so that the + button always at the bottom right of the screen*/}
             <div className={`hamburger-menu ${isOpen ? 'active' : ''}`} 
                               onClick={() => handleOpen()}>
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
-
-            <div className='topbar-item'>
+              {/*code for the top nav bar*/} 
+            <div className='topbar-item'>  
               <ul>
                 <li><a className='Account' href="#">Account</a></li>
                 <li><a className='Favorite' href="#">Favorite</a></li>

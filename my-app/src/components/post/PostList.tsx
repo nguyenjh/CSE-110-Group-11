@@ -4,14 +4,14 @@ import PostItem from "../post/PostItem";
 import { AppContext } from "../../context/AppContext";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
+//put the recipes into the 'grid', each row has 3 recipes
 const PostList = () => {
     const { recipes } = useContext(AppContext);
 
     return (
         <div className="row mt-3" style={{ display: "flex", flexWrap: "wrap" }}>
             {recipes.map((recipe: Recipe) => (
-                <div className="col-sm-4" key={recipe.id}> {/* 4 columns for each post (3 posts per row) */}
+                <div className="col-sm-4" key={recipe.id}> {/* 3 columns for each post using booststrap*/}
                     <PostItem
                         id={recipe.id}
                         name={recipe.name}

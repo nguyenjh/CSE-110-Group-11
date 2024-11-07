@@ -1,3 +1,4 @@
+/*CSS for the '+' button at the bottom right of the page*/
 .add {
     border-radius: 80%;
     background-color: rgb(236, 151, 165);
@@ -26,11 +27,12 @@
     transition: all 0.3s ease; 
 }
 
+/*the spans look like this: = , so i rotate 1 span to points up to make a + sign*/
 .add span:nth-child(2) {
     transform: translate(-50%, -50%) rotate(-90deg);
 }
 
-
+/*when hover, the + button turns red and increases the size, this is just for fun*/
 button:hover span {
     height: 10px; 
     width: 75%;  

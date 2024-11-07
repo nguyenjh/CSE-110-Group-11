@@ -3,9 +3,10 @@ import { createContext, useState } from "react";
 import { recipesList } from "../constants/constants";
 
 interface AppContextType {
-    recipes: Recipe[];
+    recipes: Recipe[]; //initialize an empty array of recipes
     setRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>;
 }
+
 
 const initialState: AppContextType = {
     recipes: recipesList,
