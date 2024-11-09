@@ -1,4 +1,4 @@
-# Homepage Demo V.1 - Working Database, No CSS
+# Homepage Demo V.2 - Working Database, Including CSS
 
 ---
 
@@ -12,7 +12,7 @@
 
 
 ### Client folder contains:
-* app.tsx - we include mantine css module and run navbar and outlet (which is further defined in main.tsx
+* App.tsx - we include mantine css module and run navbar and outlet (which is further defined in main.tsx
 * */components*  -
   * Navbar.tsx - our navbar using react-router-dom instead of mantine for consistency with react.
   * Recipe.tsx - handles the form to create new recipe posts as well as updating a post.
@@ -27,15 +27,28 @@ NOTE: Other files are configuration that I am not too familiar with, mostly setu
 
 ### Pre-setup
 * MongoDB Atlas requires you to connect your IP address and possibly account to the database used.
-* You will also have to run npm install in a terminal when you first run the node.js instance.
+* You will also have to run
+ > npm install
+ >  
+   in a terminal in /project folder when you first run the node.js instance.
+* If there is an error with bootstrap, install it again using: 
+ > npm i bootstrap@5.3.3
+ >
+  in the terminal in /project folder.
 
 ### Instructions
 
 1. Open a new terminal and cd to project/server.
 2. Plug this into the terminal to start the server:
    > node --env-file=config.env server
-  - If this does not output "Connected to MongoDB" and "Server on ${PORT}", then you may not have properly updated config.env.
+   > 
+   If this does not output "Connected to MongoDB" and "Server on ${PORT}", then you may not have properly updated config.env.
 3. Open a seperate terminal and cs to project/client.
 4. Plug this into the terminal to start the client:
    > npm run dev
+   >
    This will start a node.js runtime environment of the client.
+
+---
+
+## Known Bugs
