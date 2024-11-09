@@ -10,7 +10,7 @@
 
 import React, { useEffect, useState } from "react";
 import {suggestTag} from "../constants/constants";
-import "./css/Post.css";
+import "../css/Post.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 

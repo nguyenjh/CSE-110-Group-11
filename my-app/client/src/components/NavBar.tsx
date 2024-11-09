@@ -1,7 +1,8 @@
 import {useState} from 'react';
-import './css/NavBar.css';
+import '../css/NavBar.css';
 import { suggestTag } from '../constants/constants';
 import NewPostButton from "./NewPostButton";
+import {NavLink} from "react-router-dom";
 
 export default function NavBar() {
 
@@ -99,6 +100,7 @@ export default function NavBar() {
               {/*code for the top nav bar*/} 
             <div className='topbar-item'>  
               <ul>
+                <li><NavLink to="/create">Create</NavLink></li>
                 <li><a className='Account' href="#">Account</a></li>
                 <li><a className='Favorite' href="#">Favorite</a></li>
                 <li><a className='Setting' href="#">Setting</a></li>
@@ -107,9 +109,11 @@ export default function NavBar() {
             </div>
         </nav>
 
-        <aside className="newPostButton">
-          <NewPostButton />
-        </aside>
+        <nav>
+          <aside className="newPostButton">
+            <NewPostButton />
+          </aside>
+        </nav>
       </div>
     
     );

@@ -18,8 +18,10 @@ import {
   RouteObject,
 } from "react-router-dom";
 import App from "./App";
-import Recipe from "./components/Recipe";
 import RecipeList from "./components/RecipeList";
+import PostCreation from "./views/PostCreation";
+import { RecipeContextProvider } from "./context/RecipeContext";
+
 import "./index.css";
 
 const routes: RouteObject[] = [
@@ -34,22 +36,14 @@ const routes: RouteObject[] = [
     ],
   },
   {
-    path: "/edit/:id",
-    element: <App />,
-    children: [
-      {
-        path: "/edit/:id",
-        element: <Recipe />,
-      },
-    ],
-  },
-  {
     path: "/create",
     element: <App />,
     children: [
       {
         path: "/create",
-        element: <Recipe />,
+        element:  <RecipeContextProvider>
+                    <PostCreation />
+                  </RecipeContextProvider>,
       },
     ],
   },

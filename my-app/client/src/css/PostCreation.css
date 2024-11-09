@@ -1,0 +1,210 @@
+body {
+  text-align: center;
+}
+
+/* Page main content formatting */
+#create-recipe {
+  padding: 20px 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: minmax(200px, auto);
+  grid-row-gap: 25px;
+  max-width: 70%;
+  margin: 0 auto;
+}
+
+#create-recipe h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+}
+
+#create-recipe > div {
+  border-radius: 1rem;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Class/different feature type stylings */
+.recipe-button {
+  height: 50px;
+}
+
+#create-recipe input {
+  width: 80%; /* Ensure the input field stretches inside its parent */
+  border-radius: .2rem;
+  border: none;
+}
+
+.large-input-field {
+  align-self: center; /* align the text field vertically within div */
+}
+
+#create-recipe ul, ol {
+  width: 100%;
+  justify-self: center;
+  text-align: left;
+}
+
+#create-recipe input[type="text"] {
+  font-size: 1.2rem;
+  margin: 5px;
+  padding: 5px;
+}
+
+/* Recipe banner image component */
+#create-recipe #recipe-banner {
+  background-image: url("img/stock-food-banner.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Recipe summary fields component */
+#recipe-summary {
+  /* min 200 pix height, max auto */
+  border-radius: 1rem;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  overflow: hidden;
+}
+
+#recipe-summary > div {
+  border-radius: 1rem;
+  padding: 15px;
+  width: 80%; /* Ensure input fields fill the available space */
+  align-self: center;
+}
+
+#recipe-summary #recipe-title-input input {
+  padding: 10px;
+  font-size: 1.8rem;
+}
+
+#recipe-summary label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 5px;
+}
+
+
+select[multiple] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  color: #333;
+  max-height: 100px; /* Limit the height to avoid overflow */
+  overflow-y: auto; /* Adds scroll if there are many options */
+  outline: none; /* Remove outline on focus */
+}
+select[multiple] option:hover {
+  background-color: #eaeaea;
+}
+
+/* Ingredients component */
+#create-recipe #ingredients, #create-recipe #directions{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 50px;
+  row-gap: 10px;
+  background: none;
+  box-shadow: none;
+}
+
+#ingredients > div {
+  padding: 15px;
+}
+
+#ingredients input {
+  padding: 5px;
+  margin: 5px;
+}
+
+#ingredients > * {
+  border-radius: 1rem;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Addition photo upload component */
+#photo-upload {
+  display: grid;
+}
+
+#photo-upload input{
+  width: 70%;
+  height: 200px;
+  border: 2px dashed black;
+  display: flex;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 25px;
+}
+
+/* Directions component */
+
+#directions > div { /* override default coloring to distinguish button and box */
+  padding: 15px;
+  background: none;
+}
+
+#directions > div, #directions > button{
+  border-radius: 1rem;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+
+/* Placement of recipe descriptors within the recipe-summary grid */
+#recipe-summary #recipe-title {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+#recipe-summary #recipe-title-input {
+  grid-column: 2/4;
+  grid-row: 1 / 2;
+}
+
+#recipe-summary #recipe-tags {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+
+#recipe-summary #tag-selection {
+  grid-column: 2 / 4;
+  grid-row: 2 / 3;
+}
+
+#recipe-summary #calories {
+  grid-column: 4/5;
+  grid-row: 1/2;
+}
+
+#recipe-summary #servings {
+  grid-column: 5/6;
+  grid-row: 1/2;
+}
+
+#recipe-summary #prep-time {
+  grid-column: 4/5;
+  grid-row: 2/3;
+}
+
+#recipe-summary #total-time {
+  grid-column: 5/6;
+  grid-row: 2/3;
+}
+
+/* For testing/development visualization purposes */
+#create-recipe div {
+  background: lightgray;
+}
+/* #create-recipe div:nth-child(even) {
+  background: burlywood;
+} */
+/* ---------------------------------------------- */
