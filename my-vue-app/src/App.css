@@ -5,12 +5,21 @@
   margin: auto;
 }
 
+/* Main Recipe Container */
+.recipe {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Recipe Title Styling */
 .recipe h1 {
   display: flex;
   align-items: center;
   font-size: 24px;
 }
 
+/* Recipe Details Layout */
 .titleAndDetails {
   display: flex;
   flex-direction: column;
@@ -18,23 +27,26 @@
 
 .titleAndImg {
   display: flex;
-  justify-content: space-between;
   gap: 50px;
 }
 
+/* Rating Text Style */
 .rating {
-  color: lightgray;
+  color: rgb(134, 129, 129);
 }
 
+/* Details Section Styling */
 .details {
   background-color: #6F4E37;
   padding: 10px;
   margin: 10px 0;
   font-size: 14px;
   max-width: 500px;
-  border:3px solid rgb(255, 255, 255);
+  border:3px solid rgb(0, 0, 0);
+  color: white;
 }
 
+/* Tag Styling */
 .tag {
   padding: 3px 8px;
   border-radius: 5px;
@@ -42,6 +54,7 @@
   color: white;
 }
 
+/* Specific Tag Background Colors */
 .tag.fast {
   background-color: green;
 }
@@ -54,29 +67,31 @@
   background-color: blue;
 }
 
-.ingredients {
-  max-width: 500px;
-}
-
+/* Ingredients and Directions Section */
+.ingredients, 
 .directions {
   max-width: 500px;
 }
 
+/* Image Styling */
 .pasta_img {
   width: 400px;
   border-radius: 20px;
-  border:3px solid rgb(255, 255, 255);
+  border:3px solid rgb(0, 0, 0);
 }
 
+/* Header (h3) Styling */
 h3 {
   font-size: 18px;
   text-decoration: underline;
 }
 
+/* Ordered List Styling */
 ol {
   padding-left: 20px;
 }
 
+/* Action Buttons Layout */
 .actions {
   display: flex;
   gap: 25px;
@@ -84,38 +99,47 @@ ol {
   align-items: center;
 }
 
+/* Button Styling in Actions Section */
 .actions button {
   background-color: #6F4E37;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
+  border:3px solid rgb(0, 0, 0);
 }
 
+/* Comments Section */
 .comments {
   margin-top: 20px;
 }
 
+/* Comment Input Field and Post Button Layout */
 .commentInputAndBtn {
   display: flex;
 }
 
+/* Individual Comment Styling */
 .comment-section .comment {
   border-bottom: 1px solid #ddd;
   padding: 10px 0;
 }
 
+/* Remove Default Margin for Paragraphs in Comments */
 .comment-section .comment p {
   margin: 0;
 }
 
+/* Input Field Styling for New Comment */
 input[type="text"] {
   width: calc(100% - 60px);
   padding: 5px;
   margin-right: 5px;
 }
 
+/* Global Button Styling */
 button {
   padding: 5px 10px;
   cursor: pointer;
   background-color: #6F4E37;
+  border:3px solid rgb(0, 0, 0);
 }
