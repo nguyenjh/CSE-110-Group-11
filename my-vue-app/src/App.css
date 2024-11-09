@@ -106,6 +106,8 @@ ol {
   padding: 5px 10px;
   cursor: pointer;
   border:3px solid rgb(0, 0, 0);
+  border-radius: 8px;
+  color: white;
 }
 
 /* Comments Section */
@@ -142,4 +144,5 @@ button {
   cursor: pointer;
   background-color: #6F4E37;
   border:3px solid rgb(0, 0, 0);
+  color: white;
 }
