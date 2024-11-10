@@ -30,20 +30,20 @@ NOTE: Other files are configuration that I am not too familiar with, mostly setu
 * You will also have to run
  > npm install
  >  
-   in a terminal in /project folder when you first run the node.js instance.
+   in a terminal in /my-app folder when you first run the node.js instance.
 * If there is an error with bootstrap, install it again using: 
  > npm i bootstrap@5.3.3
  >
-  in the terminal in /project folder.
+  in the terminal in /my-app folder.
 
 ### Instructions
 
-1. Open a new terminal and cd to project/server.
+1. Open a new terminal and cd to my-app/server.
 2. Plug this into the terminal to start the server:
    > node --env-file=config.env server
    > 
    If this does not output "Connected to MongoDB" and "Server on ${PORT}", then you may not have properly updated config.env.
-3. Open a seperate terminal and cs to project/client.
+3. Open a seperate terminal and cs to my-app/client.
 4. Plug this into the terminal to start the client:
    > npm run dev
    >
