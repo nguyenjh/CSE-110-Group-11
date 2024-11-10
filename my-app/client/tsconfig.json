@@ -5,6 +5,8 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
+    "types": ["vitest/globals"],
+    "incremental": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "jsx": "react-jsx",
