@@ -12,6 +12,8 @@ jobs: # the things being executed
    steps:
      - uses: actions/checkout@v4 # using version 4 of Actions
      - name: Install Dependencies
+       working-directory: ./my-app/client
        run: npm install
      - name: Unit Test
+       working-directory: ./my-app/client
        run: npm test # the actual testing line
