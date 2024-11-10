@@ -1,0 +1,18 @@
+
+/* CSS file for the MyNewsFeed.tsx, z-index makes sure the nav-bar is over the recipes grid*/
+.viewNavBar{
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+  background-color: lightpink;
+  border-bottom: 3px solid black;
+  z-index: 10;
+  
+}
+
+/*CSS for the recipes grid*/
+.outlet{
+  margin-left: 20%;
+  margin-right: 20%;
+  
+}

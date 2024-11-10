@@ -2,9 +2,9 @@ name: Unit Tests # name of the test
 
 on:
  push:
-   branches: [ StarterCodeDrafts ]  # or 'master' if that's your primary branch name
+   branches: [ main ]  # or 'master' if that's your primary branch name
  pull_request:
-   branches: [ StarterCodeDrafts ] # the Github Action will activate "on" the event that you "push" to the repo
+   branches: [ main ] # the Github Action will activate "on" the event that you "push" to the repo
 
 jobs: # the things being executed
  tests: # the name of your status check, will become important when you do branch protection
@@ -12,6 +12,8 @@ jobs: # the things being executed
    steps:
      - uses: actions/checkout@v4 # using version 4 of Actions
      - name: Install Dependencies
+       working-directory: ./my-app/client
        run: npm install
      - name: Unit Test
+       working-directory: ./my-app/client
        run: npm test # the actual testing line
