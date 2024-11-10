@@ -39,12 +39,17 @@ NOTE: Other files are configuration that I am not too familiar with, mostly setu
 ### Instructions
 
 1. Open a new terminal and cd to my-app/server.
-2. Plug this into the terminal to start the server:
+2. Make sure you have installed the following dependencies:
+   > npm install mongodb express cors
+   >
+4. Plug this into the terminal to start the server:
    > node --env-file=config.env server
    > 
    If this does not output "Connected to MongoDB" and "Server on ${PORT}", then you may not have properly updated config.env.
-3. Open a seperate terminal and cs to my-app/client.
-4. Plug this into the terminal to start the client:
+5. Open a seperate terminal and cs to my-app/client.
+6. Make sure you have installed the following dependencies:
+   >react install
+8. Plug this into the terminal to start the client:
    > npm run dev
    >
    This will start a node.js runtime environment of the client.
