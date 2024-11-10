@@ -26,8 +26,8 @@ function NavBar() {
     
     return (
       <div className="d-flex" id="wholebar">  {/* code for side bar, top bar and right bar*/}
-        <aside className={`sidebar p-0 ${isOpen ? 'active' : ''}`}> 
-          <ul className="top-sidebar-nav p-0">
+        <aside className={`sidebar p-0 ${isOpen ? 'active' : 'inactive'}`} data-testid="sidebar"> 
+          <ul className="top-sidebar-nav p-0" >
             <li className="sidebar-header">
                 Filter Search Results
             </li>
@@ -81,7 +81,7 @@ function NavBar() {
             <li className ="filter-item"> {/* code for the tags when they are clicked */}
                 {suggestTag.map(item => (
                   <button 
-                  key={item} 
+                  key={item}
                   className={`tag ${isClicked.includes(item) ? "active" : ""}`}
                   onClick={() => toggleClick(item)}
                   >
@@ -92,9 +92,10 @@ function NavBar() {
           </ul>
         </aside>
         {/* handle the hidden menu, appear/disappear when the button is clicked */}
-        <nav className="navbar navbar-expand border-bottom" id="topbar">  
-            <div className={`hamburger-menu ${isOpen ? 'active' : ''}`} 
-                              onClick={() => handleOpen()}>
+        <nav className="navbar navbar-expand border-bottom" id="topbar" data-testid='topbar'>  
+            <div className={`hamburger-menu ${isOpen ? 'active' : 'inactive'}` } 
+                              onClick={() => handleOpen()} 
+                  data-testid='hamburger menu'>
                 <span></span>
                 <span></span>
                 <span></span>
@@ -112,7 +113,7 @@ function NavBar() {
         </nav>
 
         {/* put the + button into a nav bar so it always at the bottom right of the screen*/}
-        <aside className="newPostButton">
+        <aside className="newPostButton" data-testid = "newPostButton">
           <NewPostButton />
         </aside>
             

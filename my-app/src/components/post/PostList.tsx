@@ -9,7 +9,7 @@ const PostList = () => {
     const { recipes } = useContext(AppContext);
 
     return (
-        <div className="row mt-3" style={{ display: "flex", flexWrap: "wrap" }}>
+        <div className="row mt-3" style={{ display: "flex", flexWrap: "wrap" }} data-testid ="posts container">
             {recipes.map((recipe: Recipe) => (
                 <div className="col-sm-4" key={recipe.id}> {/* 3 columns for each post using booststrap*/}
                     <PostItem

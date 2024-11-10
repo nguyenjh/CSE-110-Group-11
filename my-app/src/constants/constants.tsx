@@ -80,6 +80,7 @@ export const recipesList = [  /*dummy recipes to display */
         tags: suggestTag
 
     },
+    
     {
         id: 8,
         name: "My Spaghetti Recipe 8",
@@ -89,11 +90,10 @@ export const recipesList = [  /*dummy recipes to display */
         like: 1600,
         rating: 1.5,
         tags: suggestTag
-
-    }, 
+    },
     {
-        id: 1,
-        name: "My Spaghetti Recipe 1",
+        id: 9,
+        name: "My Spaghetti Recipe 9",
         summary: "My Spaghetti Recipe",
         instruction: "Step1.... Step2 ....",
         time: "5 mins",
@@ -102,18 +102,8 @@ export const recipesList = [  /*dummy recipes to display */
         tags: suggestTag
     },
     {
-        id: 2,
-        name: "My Spaghetti Recipe 2",
-        summary: "My Spaghetti Recipe",
-        instruction: "Step1.... Step2 ....",
-        time: "5 mins",
-        like: 1600,
-        rating: 1.5,
-        tags: suggestTag
-    },
-    {
-        id: 3,
-        name: "My Spaghetti Recipe 3",
+        id: 10,
+        name: "My Spaghetti Recipe 10",
         summary: "My Spaghetti Recipe",
         instruction: "Step1.... Step2 ....",
         time: "5 mins",
@@ -123,8 +113,8 @@ export const recipesList = [  /*dummy recipes to display */
 
     },
     {
-        id: 4,
-        name: "My Spaghetti Recipe 4",
+        id: 11,
+        name: "My Spaghetti Recipe 11",
         summary: "My Spaghetti Recipe",
         instruction: "Step1.... Step2 ....",
         time: "5 mins",
@@ -134,8 +124,8 @@ export const recipesList = [  /*dummy recipes to display */
 
     },
     {
-        id: 5,
-        name: "My Spaghetti Recipe 5",
+        id: 12,
+        name: "My Spaghetti Recipe 12",
         summary: "My Spaghetti Recipe",
         instruction: "Step1.... Step2 ....",
         time: "5 mins",
@@ -145,8 +135,8 @@ export const recipesList = [  /*dummy recipes to display */
 
     },
     {
-        id: 6,
-        name: "My Spaghetti Recipe 6",
+        id: 13,
+        name: "My Spaghetti Recipe 13",
         summary: "My Spaghetti Recipe",
         instruction: "Step1.... Step2 ....",
         time: "5 mins",

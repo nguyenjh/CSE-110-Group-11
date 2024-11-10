@@ -8,7 +8,7 @@ export const MyNewsFeed = () => {
                     <NavBar />
             </div>
 
-            <div className="posts">
+            <div className="posts" data-testid='posts-container'>
                 <PostList />
             </div>
                

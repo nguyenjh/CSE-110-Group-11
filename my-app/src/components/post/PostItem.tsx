@@ -9,7 +9,7 @@ const PostItem = (currentPost: Recipe) => {
             <div className="mb-2">{currentPost.rating}R - {currentPost.like} likes - {currentPost.time}</div>
             <div className="tags-container p-2 mt-2" >
                 {currentPost.tags.map((tag) => (
-                    <span key={tag} className="badge me-2" style = {{ backgroundColor: "lightblue", color: "black", fontSize: "15px"}}>{tag}</span>
+                    <span key={`post-${tag}`} className="badge me-2" style = {{ backgroundColor: "lightblue", color: "black", fontSize: "15px"}}>{tag}</span>
                 ))}
             </div>
         </li>

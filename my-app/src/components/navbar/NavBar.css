@@ -61,7 +61,6 @@ a{
   height: 60%;
   width: 10%;
   min-width: 250px;
-  left: -50%; 
   display: flex; 
   flex-direction: column;
   text-align: center;
@@ -69,7 +68,10 @@ a{
   gap: 15px;
   border-radius: 5%;
 }
-
+.sidebar.inactive{
+  left: -50%; 
+ 
+}
 .sidebar-header{
   padding-top: 145px;
   grid-column: span 2;
@@ -158,11 +160,11 @@ a{
 
   /*CSS to change the 3 horizontal lines to X button*/
 
-  .hamburger-menu span:nth-child(1) {
+  .hamburger-menu.inactive span:nth-child(1) {
     top: 25%;
   }
   
-  .hamburger-menu span:nth-child(3) {
+  .hamburger-menu.inactive span:nth-child(3) {
     top: 75%;
   }
   
