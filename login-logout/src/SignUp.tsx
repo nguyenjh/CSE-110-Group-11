@@ -154,19 +154,16 @@ const SignUp: React.FC = () => {
       {errors.form && <span className="error">{errors.form}</span>}
 
       {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            {/* Close button moved here for alignment */}
-            <button className="close-button" onClick={closeModal}>
-              &times;
-            </button>
-            <h2>Account successfully created!</h2>
-            <button onClick={() => window.location.href = '/login'}>
-              Return to Login
-            </button>
-          </div>
-        </div>
-      )}
+  <div className="modal">
+    <div className="modal-content">
+      <h2>Account successfully created!</h2>
+      <button onClick={() => window.location.href = '/login'}>
+        Return to Login
+      </button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

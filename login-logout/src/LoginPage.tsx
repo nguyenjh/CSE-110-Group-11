@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Added Link import
-import './LoginPage.css'; // Import the CSS file
-export {}; // Make this file a module
+import { Link } from 'react-router-dom'; // Ensure Link is imported correctly
+import './LoginPage.css';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
