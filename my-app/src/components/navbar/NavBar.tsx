@@ -27,7 +27,7 @@ function NavBar() {
     return (
       <div className="d-flex" id="wholebar">  {/* code for side bar, top bar and right bar*/}
         <aside className={`sidebar p-0 ${isOpen ? 'active' : ''}`}> 
-          <ul className="sidebar-nav p-0">
+          <ul className="top-sidebar-nav p-0">
             <li className="sidebar-header">
                 Filter Search Results
             </li>
@@ -75,17 +75,20 @@ function NavBar() {
               </ul>
             </li>
 
-            <li className ="filter-item">  {/* code for the tags when they are clicked */}
-              {suggestTag.map(item => (
-                <button 
-                key={item} 
-                className={`tag ${isClicked.includes(item) ? "active" : ""}`}
-                onClick={() => toggleClick(item)}
-                >
-                  {item}
-                </button>
-              ))}
-            </li>
+            
+          </ul>
+          <ul className='fitlter-tag-container'>
+            <li className ="filter-item"> {/* code for the tags when they are clicked */}
+                {suggestTag.map(item => (
+                  <button 
+                  key={item} 
+                  className={`tag ${isClicked.includes(item) ? "active" : ""}`}
+                  onClick={() => toggleClick(item)}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </li>
           </ul>
         </aside>
         {/* handle the hidden menu, appear/disappear when the button is clicked */}
