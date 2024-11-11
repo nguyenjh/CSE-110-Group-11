@@ -2,7 +2,7 @@ import React, { createContext, useState, ReactNode} from 'react';
 
 interface recipeType {
   name: string;
-  summary: string[];
+  summary: string;
   instructions: string[];
 }
 
@@ -16,7 +16,7 @@ interface RecipeFormType {
 export const recipeContext = createContext<RecipeFormType | undefined>(undefined);
 
 export const RecipeContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [recipeForm, setRecipeForm] = useState<recipeType>({ name: '', summary: [], instructions: []});
+  const [recipeForm, setRecipeForm] = useState<recipeType>({ name: '', summary: '', instructions: []});
 
   return (
     <recipeContext.Provider value={{ recipeForm, setRecipeForm }}>

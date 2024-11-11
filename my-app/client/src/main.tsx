@@ -23,6 +23,7 @@ import PostCreation from "./views/PostCreation";
 import { RecipeContextProvider } from "./context/RecipeContext";
 
 import "./index.css";
+import RecipeContent from "./views/RecipeContent";
 
 const routes: RouteObject[] = [
   {
@@ -44,6 +45,16 @@ const routes: RouteObject[] = [
         element:  <RecipeContextProvider>
                     <PostCreation />
                   </RecipeContextProvider>,
+      },
+    ],
+  },
+  {
+    path: "/recipe/:id",
+    element: <App />,
+    children: [
+      {
+        path: "/recipe/:id",
+        element: <RecipeContent />,
       },
     ],
   },

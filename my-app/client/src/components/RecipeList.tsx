@@ -12,12 +12,13 @@ import React, { useEffect, useState } from "react";
 import {suggestTag} from "../constants/constants";
 import "../css/Post.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from "react-router-dom";
 
 
 interface recipe_content {
   name: string;
   summary: string;
-  instructions: string;
+  instructions: string[];
   _id: string;
 }
 
@@ -27,7 +28,8 @@ interface recipe_props {
 
 // Recipe component called to create the recipeList using the recipes in the database.
 const Recipe: React.FC<recipe_props> = ({recipe}) => (
-  <li className = "list-group-item d-flex flex-column justify-content-between mb-5 p-5 align-items-left border rounded">
+  <Link to={`/recipe/${recipe._id}`} style={{ color: 'inherit', textDecoration: 'none'}}>
+    <li className = "list-group-item d-flex flex-column justify-content-between mb-5 p-5 align-items-left border rounded">
       <div className="mb-2" style = {{fontSize: "20px", fontWeight:"bold"}}>{recipe.name}</div>
       <div className="mb-2">4.2R - 12 likes - Sept 12</div>
       <div className="tags-container p-2 mt-2" >
@@ -35,7 +37,9 @@ const Recipe: React.FC<recipe_props> = ({recipe}) => (
               <span key={tag} className="badge me-2" style = {{ backgroundColor: "lightblue", color: "black", fontSize: "15px"}}>{tag}</span>
           ))}
       </div>
-  </li>
+    </li>
+  </Link>
+  
 );
 
 
