@@ -53,7 +53,7 @@ body {
 
 /* Recipe banner image component */
 #create-recipe #recipe-banner {
-  background-image: url("img/stock-food-banner.jpg");
+  background-image: url("../assets/pasta_img.png");
   background-size: cover;
   background-position: center;
 }

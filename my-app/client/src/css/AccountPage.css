@@ -1,0 +1,55 @@
+/* Grid layout */
+#account-page {
+  padding-top: 10%;
+  padding-bottom: 10%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: auto;
+  grid-template-rows: repeat(4, auto);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+#account-page img {
+  max-width: 100%;
+}
+
+#return-button {
+  grid-area: 1 / 1 / 2 / 2;
+  max-width: 100%;
+  height: auto;
+}
+#profile-pic {
+  grid-area: 1 / 6 / 2 / 8;
+}
+#edit-button {
+  grid-area: 1 / 11 / 2 / 13;
+  height: 50px;
+  overflow: hidden;
+}
+#edit-button img {
+  height: 100%;
+}
+#avatar-button {
+  grid-area: 2 / 6 / 3 / 8;
+}
+#account-button {
+  grid-area: 3 / 5 / 4 / 7;
+}
+#favorite-recipes-button {
+  grid-area: 3 / 7 / 4 / 9;
+}
+#account-details {
+  display: flex;
+  flex-direction: column;
+  grid-area: 4 / 2 / 5 / 12;
+}
+#account-details > div {
+  background-color: lightgray;
+  border-top: 2px solid black;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+}
+#account-details div:last-child {
+    border-bottom: 2px solid black;
+}
