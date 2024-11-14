@@ -3,6 +3,8 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { User } from './models/User';
+import userRoutes from './routes/userRoute';
+
 
 dotenv.config({ path: '/Users/lelezhao/CSE-110-Group-11/.env' });
 // console.log(process.env);
@@ -27,24 +29,24 @@ if (MONGODB_URI) {
 } else {
     console.error("MONGODB_URI is not defined in .env");
 }
+app.use('/api', userRoutes);
 
-app.get('/', async(req: Request, res: Response) => {
-    // res.send("Welcome to the API! The server is running.");
-    const decks = await User.find();
-    res.json(decks);
+// app.get('/', async(req: Request, res: Response) => {
+//     const decks = await User.find();
+//     res.json(decks);
 
-}); 
+// }); 
 
 // Routes example
-app.post('/users', async (req: Request, res: Response) => {
-    try {
-        const user = new User(req.body); 
-        await user.save();
-        res.status(201).send(user);
-    } catch (err) {
-        res.status(400).send(err);
-    }
-});
+// app.post('/users', async (req: Request, res: Response) => {
+//     try {
+//         const user = new User(req.body); 
+//         await user.save();
+//         res.status(201).send(user);
+//     } catch (err) {
+//         res.status(400).send(err);
+//     }
+// });
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
