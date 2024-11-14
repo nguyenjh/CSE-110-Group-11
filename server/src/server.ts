@@ -7,8 +7,8 @@ import { User } from './models/User';
 dotenv.config({ path: '/Users/lelezhao/CSE-110-Group-11/.env' });
 // console.log(process.env);
 const app: Express = express();
-const PORT = process.env.PORT ||8080 ;
-const MONGODB_URI = process.env.MONGODB_URI;
+const PORT = process.env.PORT ||8081 ;
+const MONGODB_URI = process.env.MONGODB_URI||"mongodb+srv://zhaolelellll:OPHBYrR5qKEe8ptC@cluster0.0cawc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 console.log("MongoDB URI:",MONGODB_URI );
 
 // Middleware
