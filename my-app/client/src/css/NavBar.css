@@ -1,0 +1,182 @@
+li{
+  list-style: none;
+}
+a{
+  text-decoration: none;
+}
+
+/*CSS for the sticky note*/
+#topbar{
+  width: 100%;
+  height: 125px;
+  overflow: hidden;
+  background-color: lightpink;
+  position:sticky;
+  left:0;
+  display:inline-flex;
+  border-bottom: 5px solid black;
+}
+
+.topbar-item {
+  margin-left: auto; 
+}
+
+.topbar-item ul li:hover {
+  background-color: aliceblue;
+}
+
+.topbar-item ul {
+  display: flex; 
+  gap: 20px; 
+  padding: 0;
+  margin: 0;
+  list-style-type: none; 
+}
+
+.topbar-item ul li {
+  padding: 5px 10px; 
+}
+
+.topbar-item ul li a {
+  text-decoration: none;
+  color: #000;
+  font-size: 16px; 
+}
+
+
+#hamButton{
+  font-size: x-large;
+}
+
+/*  TRANSFER OVER TO MAIN.TSX
+.newPostButton
+{
+  position: fixed;
+  left: 89%;
+  top: 90%
+}
+*/ 
+
+/*CSS for the hidden menu*/
+.sidebar{
+  background-color:  rgb(165, 215, 243);
+  position: fixed;
+  height: 60%;
+  width: 10%;
+  left: -50%; 
+  display: flex; 
+  flex-direction: column;
+  text-align: center;
+  transition: .3s ease;
+  gap: 15px;
+  border-radius: 5%;
+}
+
+.sidebar-header{
+  padding-top: 145px;
+  grid-column: span 2;
+  font-weight: bold;
+  font-size: 18px;
+  border-bottom: 2px solid black;
+}
+.sidebar.active{
+  left: 0;
+}
+
+.sidebar-item{
+  padding: 5px;
+  font-size: 18px;
+  gap: 50px;
+}
+
+.sidebar-nav{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 30px; 
+  padding: 10px; 
+}
+
+/*CSS for what in the hamburger menu*/
+.sidebar li {
+  display: flex;
+  flex-direction: column;
+  list-style-type: none; 
+  width: 100%;
+  text-align: center;
+  gap: 15px;
+}
+
+.filter-item{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  padding: 10px;
+}
+
+.filter-item .tag{
+  background-color: beige;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3 ease;
+}
+/*CSS for the tags when user hover them*/
+.filter-item .tag:hover{
+  background-color: greenyellow;
+  font-weight: bold;
+}
+/*CSS for the tags when they are chosen*/
+.tag.active {
+  background-color: greenyellow;
+  font-weight: bold;
+}
+
+.hamburger-menu {
+  margin-top: 20px;
+  height: 50px;
+  width: 50px;
+  margin-left: 20px;
+  position: relative;
+  z-index: 15;
+}
+  /*CSS for the 3 lines*/
+  .hamburger-menu span {
+    height: 5px;
+    width: 80%;
+    background-color: grey;
+    position: absolute;
+    border-radius: 25px;
+    top: 50%;
+    right: 10%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    transition: 0.3s ease;
+  }
+  
+
+  /*CSS to change the 3 horizontal lines to X button*/
+
+  .hamburger-menu span:nth-child(1) {
+    top: 25%;
+  }
+  
+  .hamburger-menu span:nth-child(3) {
+    top: 75%;
+  }
+  
+  .hamburger-menu.active span:nth-child(1) {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  
+  .hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .hamburger-menu.active span:nth-child(3) {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  
