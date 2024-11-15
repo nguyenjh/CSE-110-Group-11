@@ -38,7 +38,7 @@ function PostCreation() {
     catch (error) {
       console.error('A problem occurred with your fetch operation: ', error);
     } finally {
-      setRecipeForm({...recipeForm, name: "", summary: [], instructions:[]});
+      setRecipeForm({...recipeForm, name: "", summary: "", instructions:[]});
       navigate("/");
     }
   }
