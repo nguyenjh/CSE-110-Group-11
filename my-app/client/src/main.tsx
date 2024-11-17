@@ -28,7 +28,7 @@ import RecipeContent from "./views/RecipeContent";
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <App />,
+    element: <App />, 
     children: [
       {
         path: "/",

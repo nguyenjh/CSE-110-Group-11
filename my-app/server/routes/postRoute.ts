@@ -8,7 +8,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import express from "express"
-import { ObjectId } from "mongodb";
 import { getAllPosts, getPost, addPost} from "../controllers/postController";
 
 const router = express.Router();
@@ -20,8 +19,7 @@ router.get("/", getAllPosts);
 // recipe with matching id to the database.
 router.get("/:id", getPost);
 
-// POST Request to add recipe to database: When on homepage, compile req form data 
-// into newDocument and add to recipe collection.
+// POST Request to add recipe to database.
 router.post("/", addPost);
 
 // Patch Request to Update a Specific Recipe: When on homepage/:id page, compile the form data 

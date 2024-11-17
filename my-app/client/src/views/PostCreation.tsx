@@ -1,3 +1,5 @@
+
+
 import React, { useContext} from "react";
 import RecipeBanner from "../components/CreatePost/RecipeBanner";
 import RecipeSummary from "../components/CreatePost/RecipeSummary";
@@ -23,6 +25,8 @@ function PostCreation() {
     try {
       let response;
   
+      // Here we add a recipe to the database, however we have a few values that aren't from post, 
+      // which we will either change later or remain default. 
       response = await fetch(`http://localhost:5050/recipe/`, {
         method: "POST",
         headers: {

@@ -1,4 +1,3 @@
-import express from 'express';
 import { Express, Request, Response } from 'express';
 import { Post } from '../models/Post';
 
@@ -32,7 +31,7 @@ export const addPost = async (req: Request, res: Response) => {
       res.status(400).json({ message: 'Missing required fields' });
     }
 
-    // Create a new post using the data from the request body
+    // Create a new post using the data from req.body
     const post = new Post({
       name,
       rating,
