@@ -2,7 +2,6 @@ import React, { createContext, useState, ReactNode} from 'react';
 
 interface recipeType {
   name: string;
-  user: string;
   rating: number;
   likes: number;
   summary: string;
@@ -12,11 +11,12 @@ interface recipeType {
   estimated_total_time_unit: string;
   serving: number;
   calories: number;
-  cost: string;
+  cost: number;
   tags: string[];
   ingredients: string[];
   directions: string[];
 }
+
 
 // Define the type for your context data (optional but recommended)
 interface RecipeFormType {
@@ -30,7 +30,6 @@ export const recipeContext = createContext<RecipeFormType | undefined>(undefined
 export const RecipeContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [recipeForm, setRecipeForm] = useState<recipeType>({ 
     name: "",
-    user: "",
     rating: 0,
     likes: 0,
     summary: "",
@@ -40,7 +39,7 @@ export const RecipeContextProvider: React.FC<{ children: ReactNode }> = ({ child
     estimated_total_time_unit: "",
     serving: 0,
     calories: 0,
-    cost: "",
+    cost: 0,
     tags: [],
     ingredients: [],
     directions: [],

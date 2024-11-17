@@ -23,12 +23,27 @@ function PostCreation() {
     try {
       let response;
   
-      response = await fetch("http://localhost:5050/recipe", {
+      response = await fetch(`http://localhost:5050/recipe/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(post),
+        body: JSON.stringify({
+          name: post.name,
+          rating: 5,
+          likes: 10,
+          summary: "A delicious recipe.",
+          prep_time: 30,
+          prep_time_unit: "minutes",
+          estimated_total_time: 45,
+          estimated_total_time_unit: "minutes",
+          serving: 4,
+          calories: 250,
+          cost: 15,
+          tags: ["easy", "healthy"],
+          ingredients: ["ingredient 1", "ingredient 2"],
+          directions: ["step 1", "step 2"]
+        }),
       });
   
       if (!response.ok) {
@@ -38,7 +53,7 @@ function PostCreation() {
     catch (error) {
       console.error('A problem occurred with your fetch operation: ', error);
     } finally {
-      setRecipeForm({...recipeForm, name: "", summary: "", instructions:[]});
+      setRecipeForm({...recipeForm, name: "", summary: "", directions:[]});
       navigate("/");
     }
   }
