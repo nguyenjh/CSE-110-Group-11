@@ -13,24 +13,11 @@ import {suggestTag} from "../constants/constants";
 import "../css/Post.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
+import { IPost } from "../../../PostInterface";
 
 
-interface recipe_content {
-  name: string;
-  rating: number;
-  likes: number;
-  summary: string;
-  prep_time: number;
-  prep_time_unit: string;
-  estimated_total_time: number;
-  estimated_total_time_unit: string;
-  serving: number;
-  calories: number;
-  cost: number;
-  tags: string[];
-  ingredients: string[];
-  directions: string[];
-  _id: number;
+interface recipe_content extends IPost {
+  _id: string;
 }
 
 interface recipe_props {
@@ -69,7 +56,7 @@ export default function RecipeList() {
         return;
       }
 
-      // response is typed check with our recipe_content interface and then parsed.
+      // response is type checked with our recipe_content interface and then parsed.
       const foundRecipes = await response.json() as recipe_content[];
       setRecipes(foundRecipes);
     }

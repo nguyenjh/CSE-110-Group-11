@@ -1,21 +1,8 @@
 import mongoose, { Schema, Document, Types } from 'mongoose';
+import { IPost } from '../../PostInterface';
 
-interface IPost extends Document {
+interface PostInterface extends IPost, Document{
   _id: Types.ObjectId;
-  name: string;
-  rating: number;
-  likes: number;
-  summary: string;
-  prep_time: number;
-  prep_time_unit: string;
-  estimated_total_time: number;
-  estimated_total_time_unit: string;
-  serving: number;
-  calories: number;
-  cost: number;
-  tags: string[];
-  ingredients: string[];
-  directions: string[];
 }
 
 const PostSchema: Schema = new Schema({
@@ -35,4 +22,4 @@ const PostSchema: Schema = new Schema({
   directions: { type: [String], required: false }
 });
 
-export const Post = mongoose.model<IPost>('Post', PostSchema);
+export const Post = mongoose.model<PostInterface>('Post', PostSchema);

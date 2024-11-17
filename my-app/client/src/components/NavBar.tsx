@@ -1,7 +1,6 @@
 import {useState} from 'react';
 import '../css/NavBar.css';
 import { suggestTag } from '../constants/constants';
-import NewPostButton from "./NewPostButton";
 import {NavLink} from "react-router-dom";
 
 export default function NavBar() {
@@ -107,12 +106,6 @@ export default function NavBar() {
                 <li><a className='SignOut' href="#">Sign Out</a></li>
               </ul>
             </div>
-        </nav>
-
-        <nav>
-          <aside className="newPostButton">
-            <NewPostButton />
-          </aside>
         </nav>
       </div>
     
