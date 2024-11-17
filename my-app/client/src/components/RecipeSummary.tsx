@@ -32,19 +32,31 @@ function RecipeSummary() {
       </div>
       <div>
         <label htmlFor="calories">Calories:</label>
-        <input type="text" id="calories"/>
+        <input type="number" 
+        required
+        value = {recipeForm.calories === 0 ? '' : recipeForm.calories}
+        onChange = {(e) => setRecipeForm({...recipeForm, calories: Number(e.target.value)})}/>
       </div>
       <div>
         <label htmlFor="prep-time">Prep Time:</label>
-        <input type="text" id="prep-time"/>
+        <input type="number" 
+        required
+        value = {recipeForm.prep_time === 0 ? '' : recipeForm.prep_time}
+        onChange = {(e) => setRecipeForm({...recipeForm, prep_time: Number(e.target.value)})}/>
       </div>
       <div>
         <label htmlFor="servings">Servings:</label>
-        <input type="text" id="servings"/>
+        <input type="number" 
+        required
+        value = {recipeForm.serving === 0 ? '' : recipeForm.serving}
+        onChange = {(e) => setRecipeForm({...recipeForm, serving: Number(e.target.value)})}/>
       </div>
       <div>
         <label htmlFor="total-time">Total Time:</label>
-        <input type="text" id="total-time"/>
+        <input type="number" 
+        required
+        value = {recipeForm.estimated_total_time === 0 ? '' : recipeForm.estimated_total_time}
+        onChange = {(e) => setRecipeForm({...recipeForm, estimated_total_time: Number(e.target.value)})}/>
       </div>
     </div>
   );

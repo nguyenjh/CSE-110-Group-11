@@ -33,16 +33,16 @@ function PostCreation() {
           rating: 5,
           likes: 10,
           summary: "A delicious recipe.",
-          prep_time: 30,
+          prep_time: post.prep_time,
           prep_time_unit: "minutes",
-          estimated_total_time: 45,
+          estimated_total_time: post.estimated_total_time,
           estimated_total_time_unit: "minutes",
-          serving: 4,
-          calories: 250,
-          cost: 15,
+          serving: post.serving,
+          calories: post.calories,
+          cost: post.cost,
           tags: ["easy", "healthy"],
           ingredients: ["ingredient 1", "ingredient 2"],
-          directions: ["step 1", "step 2"]
+          directions: post.directions
         }),
       });
   
