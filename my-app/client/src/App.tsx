@@ -20,7 +20,7 @@ import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
 
 import { Outlet } from "react-router-dom";
-import Navbar from "./components/NavBar";
+import Navbar from "./views/NavBar";
 
 export default function App() {
     return (

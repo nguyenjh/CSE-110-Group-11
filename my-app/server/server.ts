@@ -16,7 +16,7 @@ import postRoutes from './routes/postRoute'
 dotenv.config( {path: './config.env'} );
 // console.log(process.env);npm
 const PORT = process.env.PORT || 5050 ;
-const MONGODB_URI = process.env.MONGODB_URI||"mongodb+srv://AlexPazCodes03:r3dlyin03@recipes.x6igc.mongodb.net/?retryWrites=true&w=majority&appName=Recipes";
+const ATLAS_URI = process.env.ATLAS_URI
 
 const app: Express = express();
 
@@ -25,8 +25,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-if (MONGODB_URI) {
-    mongoose.connect(MONGODB_URI)
+if (ATLAS_URI) {
+    mongoose.connect(ATLAS_URI)
         .then(() => {
             console.log("Connected to MongoDB");
         })

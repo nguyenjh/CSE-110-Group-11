@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import '../css/AccountPage.css';
-import EditAccount from "../components/Account Page/EditAccount";
-import FavoritedRecipes from "../components/Account Page/FavoritedRecipes";
-import AccountDetails from "../components/Account Page/AccountDetails";
-import EditAvatar from "../components/Account Page/EditAvatar";
+import EditAccount from "../components/AccountPage/EditAccount";
+import FavoritedRecipes from "../components/AccountPage/FavoritedRecipes";
+import AccountDetails from "../components/AccountPage/AccountDetails";
+import EditAvatar from "../components/AccountPage/EditAvatar";
 import { AccountContextProvider } from "../context/AccountContext";
+
 function AccountPage() {
     const accountComponents = {
         A: <EditAvatar />,

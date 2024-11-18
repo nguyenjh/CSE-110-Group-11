@@ -18,13 +18,13 @@ import {
   RouteObject,
 } from "react-router-dom";
 import App from "./App";
-import RecipeList from "./components/RecipeList";
-import PostCreation from "./views/PostCreation";
 import { RecipeContextProvider } from "./context/RecipeContext";
 import { AccountContextProvider } from "./context/AccountContext";
 import "./index.css";
+import RecipeList from "./views/RecipeList";
+import PostCreation from "./views/PostCreation";
 import RecipeContent from "./views/RecipeContent";
-import AccountPage from "./views/AcccountPage";
+import AccountPage from "./views/AccountPage";
 
 
 const routes: RouteObject[] = [

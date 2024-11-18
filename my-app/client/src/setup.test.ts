@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { it, describe } from 'vitest';
-import Navbar from './components/NavBar'; 
+import Navbar from './views/NavBar'; 
 // import '@testing-library/jest-dom/extend-expect';
 
 // Any other global configuration you want for tests

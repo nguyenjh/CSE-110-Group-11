@@ -13,7 +13,6 @@ export const getAllPosts = async (req: Request, res: Response) => {
 
 export const getPost = async (req: Request, res: Response) => {
   try {
-    
     let  post = await Post.find(req.body._id);
     res.json(post);
   }

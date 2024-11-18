@@ -47,7 +47,7 @@ export default function RecipeList() {
   // This method fetches the recipes from the database once on initialization and anytime the recipe length changes.
   useEffect(() => {
     async function getRecipes() {
-      const response = await fetch(`http://localhost:5050/recipe/`);
+      const response = await fetch(`http://localhost:5050/recipe?`);
 
       // Error checking
       if (!response.ok) {
