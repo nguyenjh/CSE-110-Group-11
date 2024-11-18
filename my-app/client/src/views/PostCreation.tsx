@@ -1,9 +1,9 @@
 import React, { useContext} from "react";
-import RecipeBanner from "../components/RecipeBanner";
-import RecipeSummary from "../components/RecipeSummary";
-import RecipeAdditionalPhoto from "../components/RecipeAdditionalPhoto";
-import RecipeDirections from "../components/RecipeDirections";
-import IngredientsList from "../components/IngredientsList";
+import RecipeBanner from "../components/PostCreationPage/RecipeBanner";
+import RecipeSummary from "../components/PostCreationPage/RecipeSummary";
+import RecipeAdditionalPhoto from "../components/PostCreationPage/RecipeAdditionalPhoto";
+import RecipeDirections from "../components/PostCreationPage/RecipeDirections";
+import IngredientsList from "../components/PostCreationPage/IngredientsList";
 import { recipeContext } from "../context/RecipeContext";
 import { useNavigate } from "react-router-dom";
 import "../css/PostCreation.css";
