@@ -1,7 +1,6 @@
 /* Grid layout */
 #account-page {
-  padding-top: 10%;
-  padding-bottom: 10%;
+  padding-top: 40px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-auto-rows: auto;
@@ -16,8 +15,9 @@
 
 #return-button {
   grid-area: 1 / 1 / 2 / 2;
-  max-width: 100%;
+  max-width: 60%;
   height: auto;
+  visibility: hidden; /* TODO: Is this component necessary? */
 }
 #profile-pic {
   grid-area: 1 / 6 / 2 / 8;
@@ -39,10 +39,33 @@
 #favorite-recipes-button {
   grid-area: 3 / 7 / 4 / 9;
 }
+
+/* Dynamic account component */
+#account-component {
+  grid-area: 4 / 2 / 5 / 12;
+}
+/* Favorite Recipes */
+#favorites-container {
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 10px;
+}
+
+#favorites-container > div {
+  background: lightgray;
+  width: auto;
+  height: 200px;
+}
+
+#pagination {
+  display: flex;
+  justify-content: center;
+}
+/* Account details */
 #account-details {
   display: flex;
   flex-direction: column;
-  grid-area: 4 / 2 / 5 / 12;
 }
 #account-details > div {
   background-color: lightgray;
@@ -51,5 +74,5 @@
   border-right: 2px solid black;
 }
 #account-details div:last-child {
-    border-bottom: 2px solid black;
+  border-bottom: 2px solid black;
 }
