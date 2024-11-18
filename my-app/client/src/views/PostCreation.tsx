@@ -1,3 +1,5 @@
+
+
 import React, { useContext} from "react";
 import RecipeBanner from "../components/RecipeBanner";
 import RecipeSummary from "../components/RecipeSummary";
@@ -23,12 +25,29 @@ function PostCreation() {
     try {
       let response;
   
-      response = await fetch("http://localhost:5050/recipe", {
+      // Here we add a recipe to the database, however we have a few values that aren't from post, 
+      // which we will either change later or remain default. 
+      response = await fetch(`http://localhost:5050/recipe/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(post),
+        body: JSON.stringify({
+          name: post.name,
+          rating: 5,
+          likes: 10,
+          summary: "A delicious recipe.",
+          prep_time: post.prep_time,
+          prep_time_unit: "minutes",
+          estimated_total_time: post.estimated_total_time,
+          estimated_total_time_unit: "minutes",
+          serving: post.serving,
+          calories: post.calories,
+          cost: post.cost,
+          tags: ["easy", "healthy"],
+          ingredients: ["ingredient 1", "ingredient 2"],
+          directions: post.directions
+        }),
       });
   
       if (!response.ok) {
@@ -38,7 +57,7 @@ function PostCreation() {
     catch (error) {
       console.error('A problem occurred with your fetch operation: ', error);
     } finally {
-      setRecipeForm({...recipeForm, name: "", summary: [], instructions:[]});
+      setRecipeForm({...recipeForm, name: "", summary: "", directions:[]});
       navigate("/");
     }
   }

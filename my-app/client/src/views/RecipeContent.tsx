@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import '../css/RecipleContent.css';
+import '../css/RecipeContent.css';
 import pasta_img from '../assets/pasta_img.png'
 import { useParams } from "react-router-dom";
+import { IPost } from '../../../PostInterface';
 
 // Define the Comment interface to ensure each comment has a text and likes property
 interface Comment {
@@ -9,10 +10,7 @@ interface Comment {
   likes: number;
 }
 
-interface recipe_content {
-    name: string;
-    summary: string;
-    instructions: string[];
+interface recipe_content extends IPost{
     _id: string;
 }
 

@@ -30,7 +30,7 @@ import AccountPage from "./views/AcccountPage";
 const routes: RouteObject[] = [
   {
     path: "/",
-    element: <App />,
+    element: <App />, 
     children: [
       {
         path: "/",
