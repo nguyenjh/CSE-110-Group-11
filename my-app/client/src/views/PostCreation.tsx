@@ -1,11 +1,11 @@
 
 
 import React, { useContext} from "react";
-import RecipeBanner from "../components/CreatePost/RecipeBanner";
-import RecipeSummary from "../components/CreatePost/RecipeSummary";
-import RecipeAdditionalPhoto from "../components/CreatePost/RecipeAdditionalPhoto";
-import RecipeDirections from "../components/CreatePost/RecipeDirections";
-import IngredientsList from "../components/CreatePost/IngredientsList";
+import RecipeBanner from "../components/RecipeBanner";
+import RecipeSummary from "../components/RecipeSummary";
+import RecipeAdditionalPhoto from "../components/RecipeAdditionalPhoto";
+import RecipeDirections from "../components/RecipeDirections";
+import IngredientsList from "../components/IngredientsList";
 import { recipeContext } from "../context/RecipeContext";
 import { useNavigate } from "react-router-dom";
 import "../css/PostCreation.css";

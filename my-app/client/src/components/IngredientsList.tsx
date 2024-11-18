@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { IngredientsContext } from "../../context/IngredientsContext";
+import { IngredientsContext } from "../context/IngredientsContext";
 
 function IngredientsList() {
   const { ingredients, setIngredients } = useContext(IngredientsContext);
