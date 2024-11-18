@@ -101,7 +101,7 @@ export default function NavBar() {
             <div className='topbar-item'>  
               <ul>
                 <li><NavLink to="/create">Create</NavLink></li>
-                <li><a className='Account' href="#">Account</a></li>
+                <li><NavLink to="/account" className='Account'>Account</NavLink></li>
                 <li><a className='Favorite' href="#">Favorite</a></li>
                 <li><a className='Setting' href="#">Setting</a></li>
                 <li><a className='SignOut' href="#">Sign Out</a></li>

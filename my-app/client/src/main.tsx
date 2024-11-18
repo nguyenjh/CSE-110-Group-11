@@ -21,9 +21,11 @@ import App from "./App";
 import RecipeList from "./components/RecipeList";
 import PostCreation from "./views/PostCreation";
 import { RecipeContextProvider } from "./context/RecipeContext";
-
+import { AccountContextProvider } from "./context/AccountContext";
 import "./index.css";
 import RecipeContent from "./views/RecipeContent";
+import AccountPage from "./views/AcccountPage";
+
 
 const routes: RouteObject[] = [
   {
@@ -58,6 +60,16 @@ const routes: RouteObject[] = [
       },
     ],
   },
+  {
+    path: "/account",
+    element: <App />,
+    children: [
+      {
+        path: "/account",
+        element: <AccountContextProvider><AccountPage /></AccountContextProvider>
+      },
+    ],
+  }
 ];
 
 const router = createBrowserRouter(routes);
