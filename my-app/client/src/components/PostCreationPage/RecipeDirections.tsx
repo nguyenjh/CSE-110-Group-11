@@ -9,11 +9,11 @@ function RecipeDirections() {
   const { recipeForm, setRecipeForm } = context;
 
   const addDirection = () => {
-    setRecipeForm({...recipeForm, instructions: [...recipeForm.instructions, ""]});
+    setRecipeForm({...recipeForm, directions: [...(recipeForm.directions ?? []), ""]});
   };
 
   const removeDirection = (index:number) => {
-    setRecipeForm({...recipeForm, instructions: recipeForm.instructions.filter((_, i) => i !== index)});
+    setRecipeForm({...recipeForm, directions: (recipeForm.directions ?? []).filter((_, i) => i !== index)});
   };
 
   return (
@@ -22,15 +22,15 @@ function RecipeDirections() {
         <h2>Directions</h2>
         <div id="directions-list">
           <ol>
-            {recipeForm.instructions.map((input, index) => (
+            {(recipeForm.directions ?? []).map((input, index) => (
               <li key={index}>
                 <input
                   type="text"
                   value={input}
                   onChange={(e) => {
-                    const newDirections = [...recipeForm.instructions];
+                    const newDirections = [...(recipeForm.directions ?? [])];
                     newDirections[index] = e.target.value;
-                    setRecipeForm({...recipeForm, instructions: newDirections});
+                    setRecipeForm({...recipeForm, directions: newDirections});
                   }}
                 />
                 <button type="button" onClick={() => removeDirection(index)}>x</button>

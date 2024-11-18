@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+      "target": "es2016",
+      "jsx": "preserve",
+      "module": "commonjs",
+      "allowJs": true,
+      "outDir": "./dist",
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,
+      "skipLibCheck": true,
+      "moduleResolution": "node",
+      "allowSyntheticDefaultImports": true
+
+  },
+  "exclude": ["node_modules", "dist", "client"]
+}

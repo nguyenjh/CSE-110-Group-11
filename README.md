@@ -1,4 +1,4 @@
-# Homepage Demo V.2 - Working Database, Including CSS
+# Project V.4 - Database Merge / Interface Updates / Account Page Frontend 
 
 ---
 
