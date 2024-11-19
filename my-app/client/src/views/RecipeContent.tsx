@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
-import '../css/RecipleContent.css';
+import '../css/RecipeContent.css';
 import pasta_img from '../assets/pasta_img.png'
 import { useParams } from "react-router-dom";
+import blackRibbon from '../assets/blackRibbon.svg';
+import whiteRibbon from '../assets/whiteRibbon.svg';
 
 // Define the Comment interface to ensure each comment has a text and likes property
 interface Comment {
@@ -78,6 +80,33 @@ function RecipeContent() {
     return;
   }, [params.id]);
 
+
+    /*Favorite Button*/
+    const [favoriteList, setFavoriteList] = useState<string[]>([]); //favorite list per user
+        
+    function ToggleBookmark({recipeID} : {recipeID: string}) {
+      const [isFav, setIsFav] = useState(favoriteList.includes(recipeID));
+
+      const bookmarkToggle = () => {
+        setIsFav(!isFav);
+      };
+
+      useEffect(() => {
+        if(isFav && !favoriteList.includes(recipeID)){
+          setFavoriteList((prev) => [...prev, recipeID]);
+        } else if( !isFav && favoriteList.includes(recipeID)){
+          setFavoriteList((prev)=>prev.filter((checkingRecipe) => checkingRecipe != recipeID));
+          }
+      }, [isFav]);
+      
+      return (
+        <img style={{ color: isFav ? 'red' : 'black' , width: '20px'}}  id ="save-icon" onClick={bookmarkToggle} role='button'
+          src={isFav ? blackRibbon : whiteRibbon} alt="savemark">
+        </img>
+    );
+  };
+
+
   return (
     <div className="app">
       <div className="recipe">
@@ -89,6 +118,7 @@ function RecipeContent() {
               <div className="titleSection">
                 <h1>{recipeData?.name}</h1>
                 <p className="rating">Rating: {recipeData?.rating} / 5 | Likes: {recipeData?.likes}</p>
+                <ToggleBookmark recipeID={'2'} />  {/*hardcode for now, can change later */}
               </div>
 
               {/* Recipe Details Section */}
@@ -127,7 +157,7 @@ function RecipeContent() {
               {/* Action Buttons Section */}
               <div className="actions">
                 <button>Share: 🔗</button>
-                <button>Bookmark: 🔖</button>
+                <button>Bookmark: <ToggleBookmark recipeID={'2'} /></button> {/*hardcode for now, can change later */}
                 <button>Like: ❤️</button>
                 <div className="rating">Rating: ⭐⭐⭐☆☆</div>
               </div>
