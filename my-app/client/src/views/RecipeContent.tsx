@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import '../css/RecipleContent.css';
+import '../css/RecipeContent.css';
 import pasta_img from '../assets/pasta_img.png'
 import { useParams } from "react-router-dom";
 
