@@ -43,7 +43,7 @@ NOTE: Other files are configuration that I am not too familiar with, mostly setu
    > npm install mongodb express cors
    >
 4. Plug this into the terminal to start the server:
-   > node --env-file=config.env server
+   > npm start
    > 
    If this does not output "Connected to MongoDB" and "Server on ${PORT}", then you may not have properly updated config.env.
 5. Open a seperate terminal and cs to my-app/client.
