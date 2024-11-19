@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
-import '../css/RecipeContent.css';
+import '../css/RecipleContent.css';
 import pasta_img from '../assets/pasta_img.png'
 import { useParams } from "react-router-dom";
-import { IPost } from '../../../PostInterface';
 
 // Define the Comment interface to ensure each comment has a text and likes property
 interface Comment {
@@ -10,7 +9,22 @@ interface Comment {
   likes: number;
 }
 
-interface recipe_content extends IPost{
+interface recipe_content {
+    name: string;
+    user: string;
+    rating: number;
+    likes: number;
+    summary: string;
+    prep_time: number;
+    prep_time_unit: string;
+    estimated_total_time: number;
+    estimated_total_time_unit: string;
+    serving: number;
+    calories: number;
+    cost: string;
+    tags: string[];
+    ingredients: string[];
+    directions: string[];
     _id: string;
 }
 
@@ -74,32 +88,39 @@ function RecipeContent() {
               {/* Recipe Title and Rating */}
               <div className="titleSection">
                 <h1>{recipeData?.name}</h1>
-                <p className="rating">Rating: 4.2 / 5 | Likes: 1.6k</p>
+                <p className="rating">Rating: {recipeData?.rating} / 5 | Likes: {recipeData?.likes}</p>
               </div>
 
               {/* Recipe Details Section */}
               <div className="details">
-                <p>🕒 Prep: 20 min | 🕒 Estimated Total: 1.1 hr | Serves: 6 | Calories: 550</p>
-                <p>Tags: <span className="tag fast">Fast</span> <span className="tag cheap">Cheap</span> <span className="tag italian">Italian</span></p>
-                <p>Created by: [User]</p>
+                <p>🕒 Prep: {recipeData?.prep_time} {recipeData?.prep_time_unit} | 🕒 Estimated Total: {recipeData?.estimated_total_time} {recipeData?.estimated_total_time_unit} | Serves: {recipeData?.serving} | Calories: {recipeData?.calories} | Cost: {recipeData?.cost}</p>
+                <p>Tags: 
+                    {recipeData?.tags.map((tag, index) => (
+                        <span key={index} className={`tag ${tag.toLowerCase()}`}>{tag}</span>
+                    ))}
+                </p>
+                <p>Created by: {recipeData?.user}</p>
+              </div>
+
+              {/* Summary */}
+              <div className="summary">
+                <h3>Summary:</h3>
+                <p>{recipeData?.summary}</p>
               </div>
 
               {/* Ingredients List */}
               <div className="ingredients">
                 <h3>Ingredients:</h3>
-                <p>1 small onion (chopped), 1 bell pepper (chopped), 2 tbsp garlic powder, 3 tbsp butter, 1 tsp salt, 1 tsp pepper, 2 cans (15 oz) tomato sauce, 1 box (16 oz) spaghetti noodles, 1 - 1 1/2 lb hamburger meat</p>
+                <p>{recipeData?.ingredients}</p>
               </div>
 
               {/* Cooking Directions */}
               <div className="directions">
                 <h3>Directions:</h3>
                 <ol>
-                  <li>On medium heat, melt the butter and saute the onion and bell peppers.</li>
-                  <li>Add the hamburger meat and cook until meat is well done.</li>
-                  <li>Add the tomato sauce, salt, pepper, and garlic powder.</li>
-                  <li>Adjust salt, pepper, and garlic powder to taste.</li>
-                  <li>Cook noodles as directed.</li>
-                  <li>Mix the sauce and noodles if you like; I keep them separated.</li>
+                    {recipeData?.directions.map((direction, index) => (
+                        <li key={index}>{direction}</li>
+                    ))}
                 </ol>
               </div>
 
