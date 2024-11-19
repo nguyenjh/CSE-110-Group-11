@@ -1,9 +1,41 @@
-import {useState} from 'react';
+import { useState, useContext } from 'react';
 import '../css/NavBar.css';
 import { suggestTag } from '../constants/constants';
 import {NavLink} from "react-router-dom";
+import { filterContext } from "../context/FilterContext";
 
 export default function NavBar() {
+
+  const context = useContext(filterContext);
+  if (!context) {
+    throw new Error('Component must be used within a RecipeProvider');
+  }
+  const { filterForm, setFilterForm } = context;
+
+  const updateFilterFormString = (factor: string, value: string) => {
+    switch(factor) {
+      case "cost":
+        setFilterForm(prev => ({...prev, cost: value}));
+        console.log("clicked");
+        console.log(filterForm);
+        break;
+      case "calories":
+        setFilterForm(prev => ({...prev, calories: value}));
+        console.log("clicked");
+        console.log(filterForm);
+        break;
+      case "time":
+        setFilterForm(prev => ({...prev, time: value}));
+        console.log("clicked");
+        console.log(filterForm);
+        break;
+      case "sortBy":
+        setFilterForm(prev => ({...prev, sortBy: value}));
+        console.log("clicked");
+        console.log(filterForm);
+        break;
+    }
+  }
 
     const [isOpen, setIsOpen] = useState(false); //handle the hidden menu
     const [isClicked, setIsClicked] = useState<string[]>([]);  
@@ -32,26 +64,34 @@ export default function NavBar() {
                 Filter Search Results
             </li>
 
-            <li className="sidebar-item dropdown"> {/* code for the hidden bar*/} {/* data-bs-display="static" this part force the dropdown to always droppdown, */}
-              <a className="btn btn-secondary dropdown-toggle" id="costDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" >
-                Cost
-              </a>
-              <ul className="dropdown-menu" aria-labelledby="costDropdown">
-                <li><a className="dropdown-item" href="#">Under $5</a></li>
-                <li><a className="dropdown-item" href="#">$5-$15</a></li>
-                <li><a className="dropdown-item" href="#">$15-$30</a></li>
-                <li><a className="dropdown-item" href="#">Over $30</a></li>
-              </ul>
-            </li>
+          <li className="sidebar-item dropdown">
+            <a className="btn btn-secondary dropdown-toggle" id="costDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static">
+              Cost
+            </a>
+            <ul className="dropdown-menu" aria-labelledby="costDropdown">
+              <li>
+                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("cost","Under $5")}>Under $5</a>
+              </li>
+              <li>
+                <a className="dropdown-item" href="#" onClick={() =>updateFilterFormString("cost","$5-$15")}>$5-$15</a>
+              </li>
+              <li>
+                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("cost","$15-$30")}>$15-$30</a>
+              </li>
+              <li>
+                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("cost","Over $30")}>Over $30</a>
+              </li>
+            </ul>
+          </li>
 
             <li className="sidebar-item dropdown"> {/*role="button": act as button, data-bs-toggle="dropdown" is dropdown type */}
               <a className="btn btn-secondary dropdown-toggle" id="caloDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" >
                 Calories
               </a>
               <ul className="dropdown-menu" aria-labelledby="caloDropdown">
-                <li><a className="dropdown-item" href="#">Under 50 Calo</a></li>
-                <li><a className="dropdown-item" href="#">50-150 Calo</a></li>
-                <li><a className="dropdown-item" href="#">Over 150 Calo</a></li>
+                <li><a className="dropdown-item" href="#" onClick={() => updateFilterFormString("calories", "Under 50 Calo")}>Under 50 Calo</a></li>
+                <li><a className="dropdown-item" href="#" onClick={() => updateFilterFormString("calories", "50-150 Calo")}>50-150 Calo</a></li>
+                <li><a className="dropdown-item" href="#" onClick={() => updateFilterFormString("calories", "Over 150 Calo")}>Over 150 Calo</a></li>
               </ul>
             </li>
 
@@ -60,9 +100,9 @@ export default function NavBar() {
                 Time
               </a>
               <ul className="dropdown-menu" aria-labelledby="timeDropdown">
-                <li><a className="dropdown-item" href="#">Under 10 mins</a></li>
-                <li><a className="dropdown-item" href="#">10-30mins</a></li>
-                <li><a className="dropdown-item" href="#">Over 30mins</a></li>
+                <li><a className="dropdown-item" href="#" onClick = {() => updateFilterFormString("time", "Under 10 mins")}>Under 10 mins</a></li>
+                <li><a className="dropdown-item" href="#" onClick = {() => updateFilterFormString("time", "10-30mins")}>10-30mins</a></li>
+                <li><a className="dropdown-item" href="#" onClick = {() => updateFilterFormString("time", "Over 30mins")}>Over 30mins</a></li>
               </ul>
             </li>
 
@@ -71,7 +111,7 @@ export default function NavBar() {
                 Sort By
               </a>
               <ul className="dropdown-menu" aria-labelledby="sidebarDropdown">
-                <li><a className="dropdown-item" href="#">Something</a></li>
+                <li><a className="dropdown-item" href="#" onClick = {() => updateFilterFormString("sortBy", "Something")}>Something</a></li>
               </ul>
             </li>
 
@@ -106,6 +146,8 @@ export default function NavBar() {
                 <li><a className='SignOut' href="#">Sign Out</a></li>
               </ul>
             </div>
+
+
         </nav>
       </div>
     

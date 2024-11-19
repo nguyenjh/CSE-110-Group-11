@@ -8,12 +8,13 @@
 // Assembled by Alex Paz.
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {suggestTag} from "../constants/constants";
 import "../css/Post.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
 import { IPost } from "../../../PostInterface";
+import { filterContext } from "../context/FilterContext";
 
 
 interface recipe_content extends IPost {
@@ -42,27 +43,45 @@ const Recipe: React.FC<recipe_props> = ({recipe}) => (
 
 
 export default function RecipeList() {
+  const context = useContext(filterContext);
+  if (!context) {
+    throw new Error('Component must be used within a RecipeProvider');
+  }
+  const { filterForm, setFilterForm } = context;
   const [recipes, setRecipes] = useState<recipe_content[]>([]);
 
-  // This method fetches the recipes from the database once on initialization and anytime the recipe length changes.
   useEffect(() => {
-    async function getRecipes() {
-      const response = await fetch(`http://localhost:5050/recipe?`);
+    console.log("ran query");
+    console.log(filterForm);
+    async function filterQuery(){
+      const params = new URLSearchParams();
+      if(filterForm.cost != ""){
+        params.append('cost', filterForm.cost);
+      }
+      if(filterForm.calories != ""){
+        params.append('calories', filterForm.calories);
+      }
+      if(filterForm.time != ""){
+        params.append('time', filterForm.time);
+      }
+      if(filterForm.sortBy != ""){
+        params.append('sortBy', filterForm.sortBy);
+      }
+  
+      const url = `http://localhost:5050/recipe/filter?${params.toString()}`;
+      const response = await fetch(url);
 
-      // Error checking
       if (!response.ok) {
         const message = `An error occurred: ${response.statusText}`;
         console.error(message);
         return;
       }
 
-      // response is type checked with our recipe_content interface and then parsed.
       const foundRecipes = await response.json() as recipe_content[];
       setRecipes(foundRecipes);
     }
-    getRecipes();
-    return;
-  }, [recipes.length]);
+    filterQuery();
+  }, [filterForm]);
 
   // This following section will display the table with the recipes of individuals.
   return (

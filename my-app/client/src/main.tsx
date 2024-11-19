@@ -20,6 +20,7 @@ import {
 import App from "./App";
 import { RecipeContextProvider } from "./context/RecipeContext";
 import { AccountContextProvider } from "./context/AccountContext";
+import { FilterContextProvider } from "./context/FilterContext";
 import "./index.css";
 import RecipeList from "./views/RecipeList";
 import PostCreation from "./views/PostCreation";
@@ -34,7 +35,9 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "/",
-        element: <RecipeList />,
+        element:  <FilterContextProvider>
+                    <RecipeList />
+                  </FilterContextProvider>,
       },
     ],
   },
