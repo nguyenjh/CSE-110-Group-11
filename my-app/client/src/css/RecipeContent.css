@@ -69,7 +69,8 @@
   
   /* Ingredients and Directions Section */
   .ingredients, 
-  .directions {
+  .directions,
+  .summary {
     max-width: 500px;
   }
   
