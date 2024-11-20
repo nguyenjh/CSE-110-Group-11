@@ -1,21 +1,18 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// RecipeList.tsx
-// Code is modified from MongoDB MERN tutorial
-//
-// Component to create a recipe list from recipes in the database. This component defines the delete function 
-// and button as the edit button.
-//
-// Assembled by Alex Paz.
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 import React, { useEffect, useState, useContext } from "react";
-import {suggestTag} from "../constants/constants";
+import { suggestTag } from "../constants/constants";
 import "../css/Post.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import { IPost } from "../../../PostInterface";
 import { filterContext } from "../context/FilterContext";
 
+// Define the type for filterForm
+interface FilterForm {
+  cost?: string;
+  calories?: string;
+  time?: string;
+  sortBy?: string;
+}
 
 interface recipe_content extends IPost {
   _id: string;
@@ -25,74 +22,89 @@ interface recipe_props {
   recipe: recipe_content;
 }
 
-// Recipe component called to create the recipeList using the recipes in the database.
-const Recipe: React.FC<recipe_props> = ({recipe}) => (
-  <Link to={`/recipe/${recipe._id}`} style={{ color: 'inherit', textDecoration: 'none'}}>
-    <li className = "list-group-item d-flex flex-column justify-content-between mb-5 p-5 align-items-left border rounded">
-      <div className="mb-2" style = {{fontSize: "20px", fontWeight:"bold"}}>{recipe.name}</div>
+// Recipe component to display individual recipes
+const Recipe: React.FC<recipe_props> = ({ recipe }) => (
+  <Link to={`/recipe/${recipe._id}`} style={{ color: "inherit", textDecoration: "none" }}>
+    <li className="list-group-item d-flex flex-column justify-content-between mb-5 p-5 align-items-left border rounded">
+      <div className="mb-2" style={{ fontSize: "20px", fontWeight: "bold" }}>{recipe.name}</div>
       <div className="mb-2">4.2R - 12 likes - Sept 12</div>
-      <div className="tags-container p-2 mt-2" >
-          {suggestTag.map((tag) => (
-              <span key={tag} className="badge me-2" style = {{ backgroundColor: "lightblue", color: "black", fontSize: "15px"}}>{tag}</span>
-          ))}
+      <div className="tags-container p-2 mt-2">
+        {suggestTag.map((tag) => (
+          <span key={tag} className="badge me-2" style={{ backgroundColor: "lightblue", color: "black", fontSize: "15px" }}>{tag}</span>
+        ))}
       </div>
     </li>
   </Link>
-  
 );
-
 
 export default function RecipeList() {
   const context = useContext(filterContext);
   if (!context) {
-    throw new Error('Component must be used within a RecipeProvider');
+    throw new Error("Component must be used within a RecipeProvider");
   }
-  const { filterForm, setFilterForm } = context;
+
+  const { filterForm } = context;
   const [recipes, setRecipes] = useState<recipe_content[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("ran query");
-    console.log(filterForm);
-    async function filterQuery(){
-      const params = new URLSearchParams();
-      if(filterForm.cost != ""){
-        params.append('cost', filterForm.cost);
-      }
-      if(filterForm.calories != ""){
-        params.append('calories', filterForm.calories);
-      }
-      if(filterForm.time != ""){
-        params.append('time', filterForm.time);
-      }
-      if(filterForm.sortBy != ""){
-        params.append('sortBy', filterForm.sortBy);
-      }
-  
-      const url = `http://localhost:5050/recipe/filter?${params.toString()}`;
-      const response = await fetch(url);
+    const controller = new AbortController();
+    const { signal } = controller;
 
-      if (!response.ok) {
-        const message = `An error occurred: ${response.statusText}`;
-        console.error(message);
-        return;
-      }
+    async function fetchRecipes() {
+      setLoading(true);
+      setError(null);
 
-      const foundRecipes = await response.json() as recipe_content[];
-      setRecipes(foundRecipes);
+      try {
+        // Log the filter form for debugging
+        console.log("Applying filters:", filterForm);
+
+        const params = new URLSearchParams();
+        if (filterForm.cost) params.append("cost", filterForm.cost);
+        if (filterForm.calories) params.append("calories", filterForm.calories);
+        if (filterForm.time) params.append("time", filterForm.time);
+        if (filterForm.sortBy) params.append("sortBy", filterForm.sortBy);
+
+        const url = `http://localhost:5050/recipe/filter?${params.toString()}`;
+        console.log("Fetching recipes with URL:", url);
+
+        const response = await fetch(url, { signal });
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch recipes: ${response.statusText}`);
+        }
+
+        const foundRecipes = await response.json() as recipe_content[];
+        console.log("Fetched recipes:", foundRecipes);
+
+        setRecipes(foundRecipes);
+      } catch (err: any) {
+        if (err.name !== "AbortError") {
+          console.error("Error fetching recipes:", err);
+          setError("Failed to fetch recipes. Please try again.");
+        }
+      } finally {
+        setLoading(false);
+      }
     }
-    filterQuery();
-  }, [filterForm]);
 
-  // This following section will display the table with the recipes of individuals.
+    fetchRecipes();
+
+    return () => controller.abort(); // Clean up request if the component unmounts or `filterForm` changes
+  }, [filterForm]); // Re-run effect whenever filterForm changes
+
   return (
     <div className="row mt-3" style={{ display: "flex", flexWrap: "wrap" }}>
+      {loading && <div className="text-center w-100">Loading recipes...</div>}
+      {error && <div className="text-danger text-center w-100">{error}</div>}
+      {!loading && !error && recipes.length === 0 && (
+        <div className="text-center w-100">No recipes match your criteria.</div>
+      )}
       {recipes.map((recipe) => (
-          <div className="col-sm-4" key={recipe._id}> {/* 3 columns for each post using booststrap*/}
-              <Recipe
-                  recipe={recipe}
-                  key={recipe._id}
-              />
-          </div>
+        <div className="col-sm-4" key={recipe._id}>
+          <Recipe recipe={recipe} />
+        </div>
       ))}
     </div>
   );
