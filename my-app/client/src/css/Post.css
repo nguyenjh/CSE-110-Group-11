@@ -32,12 +32,12 @@
     transform: translate(-50%, -50%) rotate(-90deg);
 }
 
-/*when hover, the + button turns red and increases the size, this is just for fun*/
+/*when hover, the + button turns red and increases the size, this is just for fun
 button:hover span {
     height: 10px; 
     width: 75%;  
     background-color: red; 
-}
+}*/
 
 
 .list-group-item:hover {

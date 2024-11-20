@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import '../css/RecipeContent.css';
 import pasta_img from '../assets/pasta_img.png'
 import { useParams } from "react-router-dom";
+import blackRibbon from '../assets/blackRibbon.svg';
+import whiteRibbon from '../assets/whiteRibbon.svg';
+import RatingStars from '../components/RecipeContent/RatingStars';
 
 // Define the Comment interface to ensure each comment has a text and likes property
 interface Comment {
@@ -78,6 +81,91 @@ function RecipeContent() {
     return;
   }, [params.id]);
 
+
+  /*Favorite Button*/
+  const [favoriteList, setFavoriteList] = useState<string[]>([]); //favorite list per user, get from db later
+        
+  function ToggleBookmark({recipeID} : {recipeID: string}) {
+    const [isFav, setIsFav] = useState(favoriteList.includes(recipeID));
+
+    const bookmarkToggle = () => {
+      setIsFav(!isFav);
+    };
+
+    useEffect(() => {
+      if(isFav && !favoriteList.includes(recipeID)){
+        setFavoriteList((prev) => [...prev, recipeID]);
+      } else if( !isFav && favoriteList.includes(recipeID)){
+        setFavoriteList((prev)=>prev.filter((checkingRecipe) => checkingRecipe != recipeID));
+        }
+    }, [isFav]);
+      
+    return (
+      <img style={{ color: isFav ? 'red' : 'black' , width: '20px'}}  id ="save-icon" onClick={bookmarkToggle} role='button'
+        src={isFav ? blackRibbon : whiteRibbon} alt="savemark">
+      </img>
+    );
+  };
+
+  /* Like Button for recipe*/
+
+  const [numberLikes, setNumberLikes] = useState<number>(0); // change initial by getting number of likes from db later
+  const [isLiked, setIsLiked] = useState<boolean>(false); //change initial by getting from db
+
+  function LikeRecipeButton() {
+
+    const likeRecipeToggle = () => {
+      setIsLiked((prevIsLiked) => {
+        const newIsLiked = !prevIsLiked;
+        setNumberLikes((prevLikes) => (newIsLiked ? prevLikes + 1 : Math.max(0, prevLikes - 1)));
+        return newIsLiked;
+      });
+    };
+  
+    return(
+      <button
+        id="heart"
+        onClick={likeRecipeToggle}
+      >
+        Like: {isLiked ?'💖' : '🩶'}
+      </button>
+    );
+  }
+
+   /* Like Button for comment*/
+
+   
+  function LikeComment() {
+    const [numberLikesPerComment, setnumberLikesPerComment] = useState<number>(0); // change initial by getting number of likes from db later
+    const [likeComment, setLikeComment] = useState<boolean>(false); //change initial by getting from db
+ 
+    const likeCommentToggle = () => {
+      setLikeComment((prevIsLiked) => {
+        const newIsLiked = !prevIsLiked;
+        setnumberLikesPerComment((prevLikes) => (newIsLiked ? prevLikes + 1 : Math.max(0, prevLikes - 1)));
+        return newIsLiked;
+      });
+    };
+   
+    return(
+      <div>
+        <button
+        id="heart"
+        onClick={likeCommentToggle}
+        style={{ border:'none', background:'none', fontSize:'20px'}}
+        >
+          {likeComment ? '💖' : '🩶'}
+        </button>
+        <span>{numberLikesPerComment}</span>
+      </div>
+    );
+  }
+ 
+  /* Rating Star */
+  const recipeID = '2'; // Hard code for demo, change to const recipeID = recipeData?._id;
+  const ratings = localStorage.getItem(`starRating ${recipeID}`); // Change to get it from db later
+
+
   return (
     <div className="app">
       <div className="recipe">
@@ -89,6 +177,7 @@ function RecipeContent() {
               <div className="titleSection">
                 <h1>{recipeData?.name}</h1>
                 <p className="rating">Rating: {recipeData?.rating} / 5 | Likes: {recipeData?.likes}</p>
+                <ToggleBookmark recipeID={'2'} />  {/*hardcode for now, can change later */}
               </div>
 
               {/* Recipe Details Section */}
@@ -127,9 +216,9 @@ function RecipeContent() {
               {/* Action Buttons Section */}
               <div className="actions">
                 <button>Share: 🔗</button>
-                <button>Bookmark: 🔖</button>
-                <button>Like: ❤️</button>
-                <div className="rating">Rating: ⭐⭐⭐☆☆</div>
+                <button>Bookmark: <ToggleBookmark recipeID={'2'} /></button> {/*hardcode for now, can change later */}
+                <LikeRecipeButton />
+                <RatingStars ratings={ratings} index={'2'} />
               </div>
             </div>
 
@@ -159,7 +248,7 @@ function RecipeContent() {
                   {comments.map((comment, index) => (
                     <div key={index} className="comment">
                       <p>{comment.text}</p>
-                      <p>❤️ {comment.likes}</p>
+                      <LikeComment />
                     </div>
                   ))}
                 </div>

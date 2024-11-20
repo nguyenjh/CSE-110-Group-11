@@ -9,6 +9,6 @@ export default defineConfig({
 
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/setup.test.ts', // Ensure this file exists for setting up Vitest
+    setupFiles: './src/setup.test.tsx', // Ensure this file exists for setting up Vitest
   },
 });

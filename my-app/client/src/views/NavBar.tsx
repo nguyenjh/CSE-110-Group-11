@@ -1,7 +1,9 @@
 import {useState} from 'react';
 import '../css/NavBar.css';
 import { suggestTag } from '../constants/constants';
+import NewPostButton from "./NewPostButton";
 import {NavLink} from "react-router-dom";
+import logo from "../assets/logo.svg";
 
 export default function NavBar() {
 
@@ -26,8 +28,8 @@ export default function NavBar() {
     
     return (
       <div className="d-flex" id="wholebar">  {/* code for side bar, top bar and right bar*/}
-        <aside className={`sidebar p-0 ${isOpen ? 'active' : ''}`}> 
-          <ul className="sidebar-nav p-0">
+        <aside className={`sidebar p-0 ${isOpen ? 'active' : 'inactive'}`} data-testid="sidebar"> 
+          <ul className="top-sidebar-nav p-0">
             <li className="sidebar-header">
                 Filter Search Results
             </li>
@@ -75,22 +77,25 @@ export default function NavBar() {
               </ul>
             </li>
 
-            <li className ="filter-item">  {/* code for the tags*/}
-              {suggestTag.map(item => (
-                <button 
-                key={item} 
-                className={`tag ${isClicked.includes(item) ? "active" : ""}`}
-                onClick={() => toggleClick(item)}
-                >
-                  {item}
-                </button>
-              ))}
-            </li>
+            </ul>
+            <ul className='fitlter-tag-container'>
+              <li className ="filter-item"> {/* code for the tags when they are clicked */}
+                {suggestTag.map(item => (
+                  <button 
+                  key={item} 
+                  className={`tag ${isClicked.includes(item) ? "active" : ""}`}
+                  onClick={() => toggleClick(item)}
+                  >
+                    {item}
+                  </button>
+                ))}
+              </li>
+
           </ul>
         </aside>
         
-        <nav className="navbar navbar-expand border-bottom" id="topbar">  {/* create another 'hidden' navbar so that the + button always at the bottom right of the screen*/}
-            <div className={`hamburger-menu ${isOpen ? 'active' : ''}`} 
+        <nav className="navbar navbar-expand border-bottom" id="topbar" data-testid = "topbar">  {/* create another 'hidden' navbar so that the + button always at the bottom right of the screen*/}
+            <div className={`hamburger-menu ${isOpen ? 'active' : 'inactive'}`} data-testid="hamburger menu"
                               onClick={() => handleOpen()}>
                 <span></span>
                 <span></span>
@@ -99,14 +104,21 @@ export default function NavBar() {
               {/*code for the top nav bar*/} 
             <div className='topbar-item'>  
               <ul>
+                <li><NavLink to="/"><img src={logo} className='logo' style={{width:'30px'}}/></NavLink></li>
                 <li><NavLink to="/create">Create</NavLink></li>
-                <li><NavLink to="/account" className='Account'>Account</NavLink></li>
+                <li><a className='Account' href="#">Account</a></li>
                 <li><a className='Favorite' href="#">Favorite</a></li>
                 <li><a className='Setting' href="#">Setting</a></li>
                 <li><a className='SignOut' href="#">Sign Out</a></li>
               </ul>
             </div>
         </nav>
+
+        {/* <nav>
+          <aside className="newPostButton">
+            <NewPostButton />
+          </aside>
+        </nav> */}
       </div>
     
     );
