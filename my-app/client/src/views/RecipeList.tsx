@@ -49,12 +49,8 @@ export default function RecipeList() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const controller = new AbortController();
-    const { signal } = controller;
 
     async function fetchRecipes() {
-      setLoading(true);
-      setError(null);
 
       try {
         // Log the filter form for debugging
@@ -69,7 +65,7 @@ export default function RecipeList() {
         const url = `http://localhost:5050/recipe/filter?${params.toString()}`;
         console.log("Fetching recipes with URL:", url);
 
-        const response = await fetch(url, { signal });
+        const response = await fetch(url);
 
         if (!response.ok) {
           throw new Error(`Failed to fetch recipes: ${response.statusText}`);
@@ -90,8 +86,6 @@ export default function RecipeList() {
     }
 
     fetchRecipes();
-
-    return () => controller.abort(); // Clean up request if the component unmounts or `filterForm` changes
   }, [filterForm]); // Re-run effect whenever filterForm changes
 
   return (
