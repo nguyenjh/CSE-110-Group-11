@@ -161,8 +161,9 @@ function RecipeContent() {
     );
   }
  
-
   /* Rating Star */
+  const recipeID = '2'; // Hard code for demo, change to const recipeID = recipeData?._id;
+  const ratings = localStorage.getItem(`starRating ${recipeID}`); // Change to get it from db later
 
 
   return (
@@ -217,7 +218,7 @@ function RecipeContent() {
                 <button>Share: 🔗</button>
                 <button>Bookmark: <ToggleBookmark recipeID={'2'} /></button> {/*hardcode for now, can change later */}
                 <LikeRecipeButton />
-                <div className="rating">Rating: ⭐⭐⭐☆☆</div>
+                <RatingStars ratings={ratings} index={'2'} />
               </div>
             </div>
 
