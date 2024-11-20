@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
-import '../css/NavBar.css';
+import '../css/FilterBar.css';
 import { suggestTag } from '../constants/constants';
 import { NavLink } from "react-router-dom";
 import { filterContext } from "../context/FilterContext";
@@ -143,12 +143,15 @@ export default function FilterBar() {
         </ul>
       </aside>
       
-      {/* Top Navbar */}
-      <nav className="navbar navbar-expand border-bottom" id="topbar">
+      {/* Top Navbar with Recipes Title */}
+      <div className="topbar" id="topbar">
+        {/* Hamburger Menu */}
         <div className={`hamburger-menu ${isOpen ? 'active' : ''}`} onClick={handleOpen}>
           <span></span><span></span><span></span>
         </div>
-      </nav>
+        {/* Recipes Title */}
+        <h1 className="topbar-title">Recipes</h1>
+      </div>
     </div>
   );
 }

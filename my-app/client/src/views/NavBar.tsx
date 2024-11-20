@@ -15,9 +15,6 @@ export default function NavBar() {
       
       {/* Top Navbar */}
       <nav className="navbar navbar-expand border-bottom" id="topbar">
-        <div className={`hamburger-menu ${isOpen ? 'active' : ''}`} onClick={handleOpen}>
-          <span></span><span></span><span></span>
-        </div>
         <div className='topbar-item'>
           <ul>
             <li><NavLink to="/create">Create</NavLink></li>
