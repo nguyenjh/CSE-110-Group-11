@@ -13,7 +13,7 @@ export default function RatingStars({ratings, index}) {
     let stars = Array(numberOfSymbols).fill(symbol);
     const handleClickSymbol = (rating) => {
         setRating(rating);
-        localStorage.setItem(`starRating ${index}`, rating);//change this later to store it to the db
+        localStorage.setItem(`starRating ${index}`, rating); //change this later to store it to the db
     }
 
     return (

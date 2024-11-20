@@ -4,6 +4,7 @@ import { suggestTag } from './constants/constants';
 import { it, describe, test, expect } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
+import PostCreation from './views/PostCreation';
 // import '@testing-library/jest-dom/extend-expect';
 
 // Any other global configuration you want for tests
