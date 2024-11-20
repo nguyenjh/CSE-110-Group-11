@@ -85,7 +85,7 @@ function RecipeContent() {
   /*Favorite Button*/
   const [favoriteList, setFavoriteList] = useState<string[]>([]); //favorite list per user, get from db later
         
-  function ToggleBookmark({recipeID} : {recipeID: string}) {
+  function ToggleBookmark({recipeID, testID} : {recipeID: string, testID: string}) {
     const [isFav, setIsFav] = useState(favoriteList.includes(recipeID));
 
     const bookmarkToggle = () => {
@@ -101,7 +101,7 @@ function RecipeContent() {
     }, [isFav]);
       
     return (
-      <img style={{ color: isFav ? 'red' : 'black' , width: '20px'}}  id ="save-icon" onClick={bookmarkToggle} role='button'
+      <img data-testid={testID} style={{ color: isFav ? 'red' : 'black' , width: '20px'}}  id ="save-icon" onClick={bookmarkToggle} role='button'
         src={isFav ? blackRibbon : whiteRibbon} alt="savemark">
       </img>
     );
@@ -112,7 +112,7 @@ function RecipeContent() {
   const [numberLikes, setNumberLikes] = useState<number>(0); // change initial by getting number of likes from db later
   const [isLiked, setIsLiked] = useState<boolean>(false); //change initial by getting from db
 
-  function LikeRecipeButton() {
+  function LikeRecipeButton({testID}: {testID:string}) {
 
     const likeRecipeToggle = () => {
       setIsLiked((prevIsLiked) => {
@@ -124,6 +124,7 @@ function RecipeContent() {
   
     return(
       <button
+        data-testid={testID}
         className='likeRecipe'
         id="likeRecipe"
         onClick={likeRecipeToggle}
@@ -150,7 +151,7 @@ function RecipeContent() {
               <div className="titleSection">
                 <h1>{recipeData?.name}</h1>
                 <p className="rating">Rating: {recipeData?.rating} / 5 | Likes: {recipeData?.likes}</p>
-                <ToggleBookmark recipeID={'2'} />  {/*hardcode for now, can change later */}
+                <ToggleBookmark recipeID={'2'} testID="bookmark-up" />  {/*hardcode for now, can change later */}
               </div>
 
               {/* Recipe Details Section */}
@@ -189,8 +190,8 @@ function RecipeContent() {
               {/* Action Buttons Section */}
               <div className="actions">
                 <button>Share: 🔗</button>
-                <button>Bookmark: <ToggleBookmark recipeID={'2'} /></button> {/*hardcode for now, can change later */}
-                <LikeRecipeButton />
+                <button>Bookmark: <ToggleBookmark recipeID={'2'} testID="bookmark-down" /></button> {/*hardcode for now, can change later */}
+                <LikeRecipeButton testID = "like-post"/>
                 <RatingStars ratings={ratings} index={'2'} />
               </div>
             </div>

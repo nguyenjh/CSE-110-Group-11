@@ -4,17 +4,10 @@ import { suggestTag } from './constants/constants';
 import { it, describe, test, expect } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
-import PostCreation from './views/PostCreation';
+import RecipeContent from './views/RecipeContent';
 // import '@testing-library/jest-dom/extend-expect';
 
 // Any other global configuration you want for tests
-
-
-describe('Dummy test', () => {
-  it('should always pass', () => {
-    expect(true).toBe(true);
-  });
-});
 
 
 describe('Test nav bar', () => {
@@ -75,3 +68,27 @@ test('feeds interface',  () => {
   expect(sidebar).toHaveClass('inactive');
 
 });
+
+
+describe('Test buttons in Recipe Page', () => {
+  it('should render the recipe page', async () => {
+    render(
+      <MemoryRouter>
+        <RecipeContent />  
+      </MemoryRouter>
+    );
+
+    //test for favorite button (bookmark)
+    const bookmarkButton = screen.getByTestId('bookmark-up');
+    expect(bookmarkButton).toHaveAttribute('src', expect.stringContaining('whiteRibbon.svg'));
+    fireEvent.click(bookmarkButton);
+    expect(bookmarkButton).toHaveAttribute('src', expect.stringContaining('blackRibbon.svg'));
+
+
+    //test for like button
+    const likeButton = screen.getByTestId('like-post');
+    expect(likeButton).toHaveTextContent('🩶');
+    fireEvent.click(likeButton);
+    //expect(likeButton).toHaveTextContent('💖');
+  })
+})
