@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import blackRibbon from '../assets/blackRibbon.svg';
 import whiteRibbon from '../assets/whiteRibbon.svg';
 import RatingStars from '../components/RecipeContent/RatingStars';
+import CommentLike from '../components/RecipeContent/CommentLike';
 
 // Define the Comment interface to ensure each comment has a text and likes property
 interface Comment {
@@ -112,28 +113,15 @@ function RecipeContent() {
   const [numberLikes, setNumberLikes] = useState<number>(0); // change initial by getting number of likes from db later
   const [isLiked, setIsLiked] = useState<boolean>(false); //change initial by getting from db
 
-  function LikeRecipeButton({testID}: {testID:string}) {
 
-    const likeRecipeToggle = () => {
-      setIsLiked((prevIsLiked) => {
-        const newIsLiked = !prevIsLiked;
-        setNumberLikes((prevLikes) => (newIsLiked ? prevLikes + 1 : Math.max(0, prevLikes - 1)));
-        return newIsLiked;
-      });
-    };
+  const likeRecipeToggle = () => {
+    setIsLiked(!isLiked);      
+  };
+    
+  useEffect(() => {
+    setNumberLikes((prevLikes) => (isLiked ? prevLikes + 1 : Math.max(0, prevLikes - 1)));
+  }, [isLiked]);
   
-    return(
-      <button
-        data-testid={testID}
-        className='likeRecipe'
-        id="likeRecipe"
-        onClick={likeRecipeToggle}
-      >
-        Like: {isLiked ?'💖' : '🩶'}
-      </button>
-    );
-  }
-
    
   /* Rating Star */
   const recipeID = '1'; // Hard code for demo, change to const recipeID = recipeData?._id;
@@ -191,7 +179,14 @@ function RecipeContent() {
               <div className="actions">
                 <button>Share: 🔗</button>
                 <button>Bookmark: <ToggleBookmark recipeID={'2'} testID="bookmark-down" /></button> {/*hardcode for now, can change later */}
-                <LikeRecipeButton testID = "like-post"/>
+                <button
+                  data-testid='like-post'
+                  className='likeRecipe'
+                  id="likeRecipe"
+                  onClick={likeRecipeToggle}
+                >
+                  Like: {isLiked ? '💖' : '🩶'}
+                </button>
                 <RatingStars ratings={ratings} index={'2'} />
               </div>
             </div>
@@ -219,35 +214,12 @@ function RecipeContent() {
                 
                 {/* Display each comment */}
                 <div className="comment-section">
-                  {comments.map((comment, index) => {
-                     /* Like Button for comment*/
-                     const [numberLikesPerComment, setnumberLikesPerComment] = useState<number>(0); // change initial by getting number of likes from db later
-                     const [likeComment, setLikeComment] = useState<boolean>(false); //change initial by getting from db
-                 
-                     const likeCommentToggle = () => {
-                       setLikeComment((prevIsLiked) => {
-                         const newIsLiked = !prevIsLiked;
-                         setnumberLikesPerComment((prevLikes) => (newIsLiked ? prevLikes + 1 : Math.max(0, prevLikes - 1)));
-                         return newIsLiked;
-                       });
-                     }
-                 
-                      return(
-                        <div key={index} className="comment">
-                          <p>{comment.text}</p>
-                          <div>
-                            <button
-                            id="likeComment"
-                            onClick={likeCommentToggle}
-                            style={{ border:'none', background:'none', fontSize:'20px'}}
-                            >
-                              {likeComment ? '💖' : '🩶'}
-                            </button>
-                            <span>{numberLikesPerComment}</span>
-                          </div>
-                        </div>
-                      )  
-                  })}
+                  {comments.map((comment, index) => (
+                    <div>
+                     <p>{comment.text}</p>
+                     <CommentLike comment={comment} index={index} />
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

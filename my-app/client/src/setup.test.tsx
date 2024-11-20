@@ -83,12 +83,18 @@ describe('Test buttons in Recipe Page', () => {
     expect(bookmarkButton).toHaveAttribute('src', expect.stringContaining('whiteRibbon.svg'));
     fireEvent.click(bookmarkButton);
     expect(bookmarkButton).toHaveAttribute('src', expect.stringContaining('blackRibbon.svg'));
+  });
 
-
+  test('like buttons', () => {
+    render(
+      <MemoryRouter>
+        <RecipeContent />  
+      </MemoryRouter>
+    );
     //test for like button
     const likeButton = screen.getByTestId('like-post');
-    expect(likeButton).toHaveTextContent('🩶');
+    expect(likeButton).toHaveTextContent('Like: 🩶');
     fireEvent.click(likeButton);
-    //expect(likeButton).toHaveTextContent('💖');
+    expect(likeButton).toHaveTextContent('Like: 💖');
   })
-})
+  });
