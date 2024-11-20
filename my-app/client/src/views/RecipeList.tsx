@@ -15,15 +15,17 @@ interface recipe_props {
 
 const Recipe: React.FC<recipe_props> = ({ recipe }) => (
   <Link to={`/recipe/${recipe._id}`} style={{ color: 'inherit', textDecoration: 'none' }}>
-    <li className="list-group-item d-flex flex-column justify-content-between mb-5 p-5 align-items-left border rounded">
-      <div className="mb-2" style={{ fontSize: "20px", fontWeight: "bold" }}>{recipe.name}</div>
-      <div className="mb-2">4.2R - 12 likes - Sept 12</div>
-      <div className="tags-container p-2 mt-2">
-        {suggestTag.map((tag) => (
-          <span key={tag} className="badge me-2" style={{ backgroundColor: "lightblue", color: "black", fontSize: "15px" }}>{tag}</span>
-        ))}
+    <div className="card shadow-sm mb-4" style={{ height: '100%' }}>
+      <div className="card-body d-flex flex-column justify-content-between">
+        <h5 className="card-title">{recipe.name}</h5>
+        <p className="card-text text-muted">4.2R - 12 likes - Sept 12</p>
+        <div className="tags-container mt-3">
+          {suggestTag.map((tag) => (
+            <span key={tag} className="badge bg-info text-dark me-2" style={{ fontSize: "14px" }}>{tag}</span>
+          ))}
+        </div>
       </div>
-    </li>
+    </div>
   </Link>
 );
 
@@ -34,35 +36,34 @@ export default function RecipeList() {
 
   useEffect(() => {
     async function getRecipes() {
-      setLoading(true); // Start loading
+      setLoading(true);
 
-      // Construct the query string based on selected filters
       let query = `http://localhost:5050/recipe?`;
       Object.keys(filters).forEach((key, index) => {
         query += `${key}=${filters[key]}${index < Object.keys(filters).length - 1 ? '&' : ''}`;
       });
 
       const response = await fetch(query);
-      
+
       if (!response.ok) {
         console.error(`An error occurred: ${response.statusText}`);
-        setLoading(false); // Stop loading
+        setLoading(false);
         return;
       }
 
       const foundRecipes = await response.json() as recipe_content[];
       setRecipes(foundRecipes);
-      setLoading(false); // Stop loading after data is fetched
+      setLoading(false);
     }
 
-    getRecipes(); // Fetch recipes, even if no filters are set
+    getRecipes();
 
-  }, [filters]); // Only re-fetch when filters change
+  }, [filters]);
 
   const handleDropdownChange = (filterType: string, value: string) => {
     const updatedFilters = { ...filters, [filterType]: value };
     setFilters(updatedFilters);
-    console.log(`Updated Filters: `, updatedFilters); // Log the selected filters
+    console.log(`Updated Filters: `, updatedFilters);
   };
 
   return (
@@ -71,7 +72,6 @@ export default function RecipeList() {
 
       {/* Dropdown filters */}
       <div className="mb-3">
-        {/* Cost dropdown filter */}
         <div className="dropdown d-inline-block me-2">
           <button className="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             Cost
@@ -83,8 +83,6 @@ export default function RecipeList() {
             <li><a className="dropdown-item" onClick={() => handleDropdownChange("cost", "Over $30")}>Over $30</a></li>
           </ul>
         </div>
-
-        {/* Calories dropdown filter */}
         <div className="dropdown d-inline-block me-2">
           <button className="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             Calories
@@ -95,8 +93,6 @@ export default function RecipeList() {
             <li><a className="dropdown-item" onClick={() => handleDropdownChange("calories", "Over 150 Calo")}>Over 150 Calo</a></li>
           </ul>
         </div>
-
-        {/* Time dropdown filter */}
         <div className="dropdown d-inline-block me-2">
           <button className="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             Time
@@ -107,8 +103,6 @@ export default function RecipeList() {
             <li><a className="dropdown-item" onClick={() => handleDropdownChange("time", "Over 30 mins")}>Over 30 mins</a></li>
           </ul>
         </div>
-
-        {/* Sort By dropdown */}
         <div className="dropdown d-inline-block me-2">
           <button className="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             Sort By
@@ -119,19 +113,18 @@ export default function RecipeList() {
         </div>
       </div>
 
-      {/* Loading state */}
       {loading ? (
-        <div>Loading recipes...</div> // Show loading message or spinner
+        <div>Loading recipes...</div>
       ) : (
         <div className="row">
           {recipes.length > 0 ? (
             recipes.map((recipe) => (
-              <div className="col-sm-4" key={recipe._id}>
+              <div className="col-sm-4 d-flex" key={recipe._id}>
                 <Recipe recipe={recipe} />
               </div>
             ))
           ) : (
-            <div>No recipes found</div> // Show message if no recipes match the filters
+            <div>No recipes found</div>
           )}
         </div>
       )}

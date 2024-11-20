@@ -1,67 +1,29 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// recipe_route.js
-// Code is modified from MongoDB MERN tutorial
-//
-// Our express router file that will define the behavior between frontend requests(GET, POST, etc.) 
-// and backend responses(relaying requests back to MongoDB Atlas). 
-// Assembled by Alex Paz
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-import express from "express"
-import { getAllPosts, getPost, addPost, getFilteredPosts} from "../controllers/postController";
+import express, { Request, Response } from 'express';
+import { Post } from '../models/Post';
 
 const router = express.Router();
 
-// GET Request for All Recipes: If the route is homepage and a default request was made, send full recipe database.
-router.get("/", getAllPosts);
+router.get('/filter', async (req: Request, res: Response) => {
+  const { cost, calories, time, sortBy } = req.query;
 
-// GET Request for Specific Recipe: If the route is homepage/:id and a default request is made, send the single 
-// recipe with matching id to the database.
-router.get("/:id", getPost);
-
-// POST Request to add recipe to database.
-router.post("/", addPost);
-
-router.get("/filter",getFilteredPosts);
-// Patch Request to Update a Specific Recipe: When on homepage/:id page, compile the form data 
-// from req and update the recipe found from the id param. 
-
-/*router.patch("/:id", async(req,res) => {
   try {
-    const query = { _id: new ObjectId(req.params.id)};
-    const updates = {
-      $set: {
-        name: req.body.name,
-        summary: req.body.summary,
-        instructions: req.body.instructions,
-      },};
+    // Create filter object based on query parameters
+    const filters: any = {};
+    if (cost) filters.cost = { $lte: Number(cost) };
+    if (calories) filters.calories = { $lte: Number(calories) };
+    if (time) filters.estimated_total_time = { $lte: Number(time) };
 
-    let collection = await db.collection("recipe");
-    let result = await collection.updateOne(query, updates);
-    res.send(result).status(200);
-  }
+    // Fetch and sort data
+    const sortOptions: any = {};
+    if (sortBy) sortOptions[sortBy as string] = 1;
 
-  catch{
-    console.error(err);
-    res.status(500).send("Error updating recipe");
+    const recipes = await Post.find(filters).sort(sortOptions);
+
+    res.status(200).json(recipes);
+  } catch (error) {
+    console.error('Error fetching recipes:', error);
+    res.status(500).json({ error: 'Failed to fetch recipes' });
   }
 });
-
-// DELETE Request to Delete a Specific Recipe: When on homepage/:id, get the recipe through 
-// the id param and delete the query from the collection.
-router.delete("/:id", async (req, res) => {
-  try {
-    const query = { _id: new ObjectId(req.params.id)};
-    const collection = db.collection("recipe");
-    let result = await collection.deleteOne(query);
-
-    res.send(result).status(200);
-  }
-
-  catch(err){
-    console.error(err);
-    res.status(500).send("Error deleting recipe");
-  }
-});*/
 
 export default router;
