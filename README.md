@@ -39,6 +39,7 @@ NOTE: Other files are configuration that I am not too familiar with, mostly setu
 ### Instructions
 
 Open a new terminal and cd to my-app/server.
+
 1. Make sure you have installed the following dependencies:
    > npm install mongodb express cors
    >
@@ -48,6 +49,7 @@ Open a new terminal and cd to my-app/server.
    If this does not output "Connected to MongoDB" and "Server on ${PORT}", then you may not have properly updated config.env.
    
 Then, open a seperate terminal and cd to my-app/client.
+
 3. Make sure you have installed the following dependencies:
    > react install
    >
