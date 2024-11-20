@@ -46,7 +46,22 @@ export const getFilteredPosts = async (req: Request, res: Response) => {
       query.calories = { $gt: 150 };
     }
 
-    let result = await Post.find(query);
+    if (time === "Under 10 mins") {
+      query.prep_time = { $lt: 10 };
+    } else if (time === "10-30 mins") {
+      query.prep_time = { $gte: 10, $lte: 30 };
+    } else if (time === "Over 30 mins") {
+      query.prep_time = { $gt: 30 };
+    }
+
+    let sortOption: any = {};
+    if (sortBy === "Newest") {
+      sortOption.createdAt = -1; // Sort by creation time, newest first
+    } else if (sortBy === "Most Popular") {
+      sortOption.likes = -1; // Sort by likes, most popular first
+    }
+
+    const result = await Post.find(query).sort(sortOption);
     console.log("Filtered posts result:", result);
 
     res.json(result);
