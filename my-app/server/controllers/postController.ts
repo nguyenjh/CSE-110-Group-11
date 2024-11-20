@@ -13,16 +13,17 @@ export const getAllPosts = async (req: Request, res: Response) => {
 
 export const getFilteredPosts = async (req: Request, res: Response) => {
   try {
-    const cost = req.query.cost;
-    const calories = req.query.calories;
-    const time = req.query.time;
-    const sortBy = req.query.sortBy;
+    const cost = decodeURIComponent(req.query.cost as string || '');
+    const calories = decodeURIComponent(req.query.cost as string || '');
+    const time = decodeURIComponent(req.query.cost as string || '');
+    const sortBy = decodeURIComponent(req.query.cost as string || '');
 
 
     const query: any = {};
 
     if(cost == "Under $5"){
       query.cost = {$lt: 5};
+      console.log("Searching below 5 dollars");
     }
     else if(cost == "$5-$15"){
       query.cost = { $gt: 5, $lt: 15 };
@@ -30,15 +31,22 @@ export const getFilteredPosts = async (req: Request, res: Response) => {
     else if(cost == "$15-$30"){
       query.cost = { $gt: 15, $lt: 30 };
     }
+    else {
+      console.log("Did not get a query for cost");
+    }
 
     if(calories == "Under 50 Calo"){
       query.calories = {$lt: 50};
+      console.log("Searching below 50 calories");
     }
     else if(calories == "50-150 Calo"){
       query.calories = {$gt: 50, $lt: 150};
     }
     else if(calories == "Over 150 Calo"){
       query.calories = {$gt: 150};
+    }
+    else {
+      console.log("Did not get a query for calories");
     }
 
     let result = await Post.find(query);
