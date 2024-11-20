@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import '../css/RecipeContent.css';
-import pasta_img from '../assets/pasta_img.png'
+import pasta_img from '../assets/pasta_img.png';
 import { useParams } from "react-router-dom";
 
 // Define the Comment interface to ensure each comment has a text and likes property
@@ -10,22 +10,22 @@ interface Comment {
 }
 
 interface recipe_content {
-    name: string;
-    user: string;
-    rating: number;
-    likes: number;
-    summary: string;
-    prep_time: number;
-    prep_time_unit: string;
-    estimated_total_time: number;
-    estimated_total_time_unit: string;
-    serving: number;
-    calories: number;
-    cost: string;
-    tags: string[];
-    ingredients: string[];
-    directions: string[];
-    _id: string;
+  name: string;
+  user: string;
+  rating: number;
+  likes: number;
+  summary: string;
+  prep_time: number;
+  prep_time_unit: string;
+  estimated_total_time: number;
+  estimated_total_time_unit: string;
+  serving: number;
+  calories: number;
+  cost: string;
+  tags: string[];
+  ingredients: string[];
+  directions: string[];
+  _id: string;
 }
 
 // Main component function
@@ -53,29 +53,43 @@ function RecipeContent() {
 
   const params = useParams();
 
-  const [recipeData, setRecipeData] = useState<recipe_content>();
+  // Initialize recipeData with default values to prevent undefined access
+  const [recipeData, setRecipeData] = useState<recipe_content>({
+    name: '',
+    user: '',
+    rating: 0,
+    likes: 0,
+    summary: '',
+    prep_time: 0,
+    prep_time_unit: '',
+    estimated_total_time: 0,
+    estimated_total_time_unit: '',
+    serving: 0,
+    calories: 0,
+    cost: '',
+    tags: [],
+    ingredients: [],
+    directions: [],
+    _id: ''
+  });
 
   useEffect(() => {
     async function fetchData() {
       const id = params.id?.toString() || undefined;
-      if(!id) return;
-      const response = await fetch(
-        `http://localhost:5050/recipe/${params.id}`
-      );
+      if (!id) return;
+      const response = await fetch(`http://localhost:5050/recipe/${params.id}`);
       if (!response.ok) {
-        const message = 'An error has occurred: ${response.statusText}';
-        console.error(message);
+        console.error(`An error has occurred: ${response.statusText}`);
         return;
       }
       const recipe = await response.json();
       if (!recipe) {
-        console.warn('Record with id ${id} not found');
+        console.warn(`Record with id ${id} not found`);
         return;
       }
       setRecipeData(recipe);
     }
     fetchData();
-    return;
   }, [params.id]);
 
   return (
@@ -95,9 +109,13 @@ function RecipeContent() {
               <div className="details">
                 <p>🕒 Prep: {recipeData?.prep_time} {recipeData?.prep_time_unit} | 🕒 Estimated Total: {recipeData?.estimated_total_time} {recipeData?.estimated_total_time_unit} | Serves: {recipeData?.serving} | Calories: {recipeData?.calories} | Cost: {recipeData?.cost}</p>
                 <p>Tags: 
-                    {recipeData?.tags.map((tag, index) => (
-                        <span key={index} className={`tag ${tag.toLowerCase()}`}>{tag}</span>
-                    ))}
+                  {Array.isArray(recipeData?.tags) && recipeData?.tags.length > 0 ? (
+                    recipeData?.tags.map((tag, index) => (
+                      <span key={index} className={`tag ${tag.toLowerCase()}`}>{tag}</span>
+                    ))
+                  ) : (
+                    <span>No tags available</span>
+                  )}
                 </p>
                 <p>Created by: {recipeData?.user}</p>
               </div>
@@ -111,16 +129,28 @@ function RecipeContent() {
               {/* Ingredients List */}
               <div className="ingredients">
                 <h3>Ingredients:</h3>
-                <p>{recipeData?.ingredients}</p>
+                <ul>
+                  {Array.isArray(recipeData?.ingredients) && recipeData?.ingredients.length > 0 ? (
+                    recipeData?.ingredients.map((ingredient, index) => (
+                      <li key={index}>{ingredient}</li>
+                    ))
+                  ) : (
+                    <p>No ingredients available</p>
+                  )}
+                </ul>
               </div>
 
               {/* Cooking Directions */}
               <div className="directions">
                 <h3>Directions:</h3>
                 <ol>
-                    {recipeData?.directions.map((direction, index) => (
-                        <li key={index}>{direction}</li>
-                    ))}
+                  {Array.isArray(recipeData?.directions) && recipeData?.directions.length > 0 ? (
+                    recipeData?.directions.map((direction, index) => (
+                      <li key={index}>{direction}</li>
+                    ))
+                  ) : (
+                    <p>No directions available</p>
+                  )}
                 </ol>
               </div>
 
