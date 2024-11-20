@@ -8,12 +8,12 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import express from "express"
-import { getAllPosts, getPost, addPost, getFilteredPosts} from "../controllers/postController";
+import { getPost, addPost, getFilteredPosts} from "../controllers/postController";
 
 const router = express.Router();
 
 // GET Request for All Recipes: If the route is homepage and a default request was made, send full recipe database.
-router.get("/", getAllPosts);
+router.get("/", getFilteredPosts);
 
 // GET Request for Specific Recipe: If the route is homepage/:id and a default request is made, send the single 
 // recipe with matching id to the database.
@@ -21,8 +21,6 @@ router.get("/:id", getPost);
 
 // POST Request to add recipe to database.
 router.post("/", addPost);
-
-router.get("/filter",getFilteredPosts);
 // Patch Request to Update a Specific Recipe: When on homepage/:id page, compile the form data 
 // from req and update the recipe found from the id param. 
 
