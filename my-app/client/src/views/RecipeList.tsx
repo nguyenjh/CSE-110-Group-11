@@ -62,7 +62,7 @@ export default function RecipeList() {
         if (filterForm.time) params.append("time", filterForm.time);
         if (filterForm.sortBy) params.append("sortBy", filterForm.sortBy);
 
-        const url = `http://localhost:5050/recipe/filter?${params.toString()}`;
+        const url = `http://localhost:5050/recipe?${params.toString()}`;
         console.log("Fetching recipes with URL:", url);
 
         const response = await fetch(url);

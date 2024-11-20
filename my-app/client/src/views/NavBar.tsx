@@ -1,23 +1,13 @@
 import { useState, useContext, useEffect } from 'react';
 import '../css/NavBar.css';
-import { suggestTag } from '../constants/constants';
 import { NavLink } from "react-router-dom";
 
 export default function NavBar() {
 
   const [isOpen, setIsOpen] = useState(false); // handle the hidden menu
-  const [isClicked, setIsClicked] = useState<string[]>([]);  // handle the clicked tags
 
   const handleOpen = () => {
     setIsOpen(!isOpen);
-  };
-
-  const toggleClick = (clickedTag: string) => {
-    if (isClicked.includes(clickedTag)) {
-      setIsClicked(prevClicked => prevClicked.filter((f) => f !== clickedTag));
-    } else {
-      setIsClicked(prevClicked => [...prevClicked, clickedTag]);
-    }
   };
 
   return (

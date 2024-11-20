@@ -148,15 +148,6 @@ export default function FilterBar() {
         <div className={`hamburger-menu ${isOpen ? 'active' : ''}`} onClick={handleOpen}>
           <span></span><span></span><span></span>
         </div>
-        <div className='topbar-item'>
-          <ul>
-            <li><NavLink to="/create">Create</NavLink></li>
-            <li><NavLink to="/account" className='Account'>Account</NavLink></li>
-            <li><a className='Favorite' href="#">Favorite</a></li>
-            <li><a className='Setting' href="#">Setting</a></li>
-            <li><a className='SignOut' href="#">Sign Out</a></li>
-          </ul>
-        </div>
       </nav>
     </div>
   );
