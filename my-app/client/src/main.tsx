@@ -26,6 +26,7 @@ import RecipeList from "./views/RecipeList";
 import PostCreation from "./views/PostCreation";
 import RecipeContent from "./views/RecipeContent";
 import AccountPage from "./views/AccountPage";
+import HomePage from "./views/HomePage";
 
 
 const routes: RouteObject[] = [
@@ -35,9 +36,7 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "/",
-        element:  <FilterContextProvider>
-                    <RecipeList />
-                  </FilterContextProvider>,
+        element:  <HomePage/>
       },
     ],
   },
