@@ -42,7 +42,6 @@ a {
   width: 50px;
   position: relative;
   z-index: 15;
-  left: 100px;
   bottom: 10px;
 }
 
@@ -76,7 +75,7 @@ a {
   background-color: rgb(165, 215, 243);
   position: fixed;
   height: 60%;
-  width: 30%;
+  width: 20%;
   left: -50%;
   display: flex;
   flex-direction: column;
