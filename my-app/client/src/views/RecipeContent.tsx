@@ -6,6 +6,7 @@ import blackRibbon from '../assets/blackRibbon.svg';
 import whiteRibbon from '../assets/whiteRibbon.svg';
 import RatingStars from '../components/RecipeContent/RatingStars';
 import CommentLike from '../components/RecipeContent/CommentLike';
+import { IPost } from '../../../PostInterface';
 
 // Define the Comment interface to ensure each comment has a text and likes property
 interface Comment {
@@ -13,22 +14,7 @@ interface Comment {
   likes: number;
 }
 
-interface recipe_content {
-    name: string;
-    user: string;
-    rating: number;
-    likes: number;
-    summary: string;
-    prep_time: number;
-    prep_time_unit: string;
-    estimated_total_time: number;
-    estimated_total_time_unit: string;
-    serving: number;
-    calories: number;
-    cost: string;
-    tags: string[];
-    ingredients: string[];
-    directions: string[];
+interface recipe_content extends IPost {
     _id: string;
 }
 
@@ -61,27 +47,40 @@ function RecipeContent() {
 
   useEffect(() => {
     async function fetchData() {
-      const id = params.id?.toString() || undefined;
-      if(!id) return;
-      const response = await fetch(
-        `http://localhost:5050/recipe/${params.id}`
-      );
-      if (!response.ok) {
-        const message = 'An error has occurred: ${response.statusText}';
-        console.error(message);
+      const id = params.id?.toString();
+      if (!id) {
+        console.warn('No recipe ID provided');
         return;
       }
-      const recipe = await response.json();
-      if (!recipe) {
-        console.warn('Record with id ${id} not found');
-        return;
+  
+      try {
+        console.log(`Fetching recipe with ID: ${id}`);
+        const response = await fetch(`http://localhost:5050/recipe/${id}`);
+        if (!response.ok) {
+          throw new Error(`An error has occurred: ${response.statusText}`);
+        }
+        const recipes = await response.json();
+        if (!recipes || recipes.length === 0) {
+          console.warn(`No recipes found with id ${id}`);
+          return;
+        }
+  
+        // Find the specific recipe matching the ID from the fetched recipes
+        const recipe = recipes.find((recipe: recipe_content) => recipe._id === id);
+        
+        if (recipe) {
+          console.log('Fetched recipe data:', recipe);
+          setRecipeData(recipe); // Store the specific recipe in the state
+        } else {
+          console.warn(`Recipe with ID ${id} not found`);
+        }
+      } catch (err) {
+        console.error('Fetch error:', err);
       }
-      setRecipeData(recipe);
     }
+  
     fetchData();
-    return;
   }, [params.id]);
-
 
   /*Favorite Button*/
   const [favoriteList, setFavoriteList] = useState<string[]>([]); //favorite list per user, get from db later
@@ -145,12 +144,17 @@ function RecipeContent() {
               {/* Recipe Details Section */}
               <div className="details">
                 <p>🕒 Prep: {recipeData?.prep_time} {recipeData?.prep_time_unit} | 🕒 Estimated Total: {recipeData?.estimated_total_time} {recipeData?.estimated_total_time_unit} | Serves: {recipeData?.serving} | Calories: {recipeData?.calories} | Cost: {recipeData?.cost}</p>
-                <p>Tags: 
-                    {recipeData?.tags.map((tag, index) => (
-                        <span key={index} className={`tag ${tag.toLowerCase()}`}>{tag}</span>
-                    ))}
+                <p>
+                  Tags: 
+                  {recipeData?.tags?.length ? (
+                    recipeData.tags.map((tag, index) => (
+                      <span key={index} className={`tag ${tag.toLowerCase()}`}>{tag}</span>
+                    ))
+                  ) : (
+                    <span>No tags available</span>
+                  )}
                 </p>
-                <p>Created by: {recipeData?.user}</p>
+                {/* <p>Created by: {recipeData?.user}</p> */}
               </div>
 
               {/* Summary */}
@@ -169,9 +173,13 @@ function RecipeContent() {
               <div className="directions">
                 <h3>Directions:</h3>
                 <ol>
-                    {recipeData?.directions.map((direction, index) => (
-                        <li key={index}>{direction}</li>
-                    ))}
+                  {recipeData?.directions?.length ? (
+                    recipeData.directions.map((direction, index) => (
+                      <li key={index}>{direction}</li>
+                    ))
+                  ) : (
+                    <li>No directions available</li>
+                  )}
                 </ol>
               </div>
 
@@ -185,7 +193,7 @@ function RecipeContent() {
                   id="likeRecipe"
                   onClick={likeRecipeToggle}
                 >
-                  Like: {isLiked ? '💖' : '🩶'}
+                  Like: {isLiked ? '💖' : '🤍'}
                 </button>
                 <RatingStars ratings={ratings} index={'2'} />
               </div>
