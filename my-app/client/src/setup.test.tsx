@@ -91,7 +91,7 @@ describe('Test buttons in Recipe Page', () => {
     );
     //test for like button
     const likeButton = screen.getByTestId('like-post');
-    expect(likeButton).toHaveTextContent('Like: 🩶');
+    expect(likeButton).toHaveTextContent('Like: 🤍');
     fireEvent.click(likeButton);
     expect(likeButton).toHaveTextContent('Like: 💖');
   })
