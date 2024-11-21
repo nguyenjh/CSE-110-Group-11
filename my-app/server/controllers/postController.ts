@@ -24,33 +24,38 @@ export const getFilteredPosts = async (req: Request, res: Response) => {
 
     const query: any = {};
 
-    if (cost === "Under $5") {
+    if (cost === "< $5") {
       console.log("Filtering posts with cost under $5");
       query.cost = { $lt: 5 };
     } else if (cost === "$5-$15") {
       console.log("Filtering posts with cost between $5 and $15");
       query.cost = { $gt: 5, $lt: 15 };
-    } else if (cost === "$15-$30") {
-      console.log("Filtering posts with cost between $15 and $30");
-      query.cost = { $gt: 15, $lt: 30 };
+    }
+    else if (cost === "$15-$30") {
+    console.log("Filtering posts with cost between $15 and $30");
+    query.cost = { $gt: 15, $lt: 30 };
+    }
+    else if (cost === "> $30") {
+      console.log("Filtering posts with cost over $30");
+      query.cost = { $gt: 30};
     }
 
-    if (calories === "Under 50 Calo") {
+    if (calories === "< 50 Calo") {
       console.log("Filtering posts with calories under 50");
       query.calories = { $lt: 50 };
     } else if (calories === "50-150 Calo") {
       console.log("Filtering posts with calories between 50 and 150");
       query.calories = { $gt: 50, $lt: 150 };
-    } else if (calories === "Over 150 Calo") {
+    } else if (calories === "> 150 Calo") {
       console.log("Filtering posts with calories over 150");
       query.calories = { $gt: 150 };
     }
 
-    if (time === "Under 10 mins") {
+    if (time === "< 10 mins") {
       query.prep_time = { $lt: 10 };
     } else if (time === "10-30 mins") {
       query.prep_time = { $gte: 10, $lte: 30 };
-    } else if (time === "Over 30 mins") {
+    } else if (time === "> 30 mins") {
       query.prep_time = { $gt: 30 };
     }
 

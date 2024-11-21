@@ -1,7 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import '../css/FilterBar.css';
 import { suggestTag } from '../constants/constants';
-import { NavLink } from "react-router-dom";
 import { filterContext } from "../context/FilterContext";
 
 export default function FilterBar() {
@@ -11,23 +10,34 @@ export default function FilterBar() {
   }
   const { filterForm, setFilterForm } = context;
 
+  const [selectedFilters, setSelectedFilters] = useState({
+    cost: 'Cost',
+    calories: 'Calories',
+    time: 'Time',
+    sortBy: 'Sort By',
+  });
+
   // This useEffect will log the updated filterForm each time it changes
   useEffect(() => {
     console.log("Updated filterForm:", filterForm); // Log the updated filterForm here
   }, [filterForm]); // Only run when filterForm changes
 
   const updateFilterFormString = (factor: string, value: string) => {
-    switch(factor) {
+    switch (factor) {
       case "cost":
+        setSelectedFilters(prev => ({ ...prev, cost: value }));
         setFilterForm(prev => ({ ...prev, cost: value }));
         break;
       case "calories":
+        setSelectedFilters(prev => ({ ...prev, calories: value }));
         setFilterForm(prev => ({ ...prev, calories: value }));
         break;
       case "time":
+        setSelectedFilters(prev => ({ ...prev, time: value }));
         setFilterForm(prev => ({ ...prev, time: value }));
         break;
       case "sortBy":
+        setSelectedFilters(prev => ({ ...prev, sortBy: value }));
         setFilterForm(prev => ({ ...prev, sortBy: value }));
         break;
       default:
@@ -36,7 +46,7 @@ export default function FilterBar() {
   };
 
   const [isOpen, setIsOpen] = useState(false); // handle the hidden menu
-  const [isClicked, setIsClicked] = useState<string[]>([]);  // handle the clicked tags
+  const [isClicked, setIsClicked] = useState<string[]>([]); // handle the clicked tags
 
   const handleOpen = () => {
     setIsOpen(!isOpen);
@@ -50,6 +60,25 @@ export default function FilterBar() {
     }
   };
 
+  // Clear all filters
+  const clearFilters = () => {
+    setSelectedFilters({
+      cost: 'Cost',
+      calories: 'Calories',
+      time: 'Time',
+      sortBy: 'Sort By',
+    });
+    setFilterForm({
+      cost: '',
+      calories: '',
+      time: '',
+      sortBy: '',
+      tags: [],  // Reset tags to an empty array
+    });
+    setIsClicked([]);  // Clear the selected tags
+  };
+  
+
   return (
     <div className="d-flex" id="wholebar">
       <aside className={`sidebar p-0 ${isOpen ? 'active' : ''}`}>
@@ -59,11 +88,11 @@ export default function FilterBar() {
           {/* Cost Filter */}
           <li className="sidebar-item dropdown">
             <a className="btn btn-secondary dropdown-toggle" id="costDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static">
-              Cost
+              {selectedFilters.cost}
             </a>
             <ul className="dropdown-menu" aria-labelledby="costDropdown">
               <li>
-                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("cost", "Under $5")}>Under $5</a>
+                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("cost", "< $5")}>&lt; $5</a>
               </li>
               <li>
                 <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("cost", "$5-$15")}>$5-$15</a>
@@ -72,7 +101,7 @@ export default function FilterBar() {
                 <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("cost", "$15-$30")}>$15-$30</a>
               </li>
               <li>
-                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("cost", "Over $30")}>Over $30</a>
+                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("cost", "> $30")}>&gt; $30</a>
               </li>
             </ul>
           </li>
@@ -80,17 +109,17 @@ export default function FilterBar() {
           {/* Calories Filter */}
           <li className="sidebar-item dropdown">
             <a className="btn btn-secondary dropdown-toggle" id="caloDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static">
-              Calories
+              {selectedFilters.calories}
             </a>
             <ul className="dropdown-menu" aria-labelledby="caloDropdown">
               <li>
-                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("calories", "Under 50 Calo")}>Under 50 Calo</a>
+                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("calories", "< 50 Calo")}>&lt; 50 Calo</a>
               </li>
               <li>
                 <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("calories", "50-150 Calo")}>50-150 Calo</a>
               </li>
               <li>
-                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("calories", "Over 150 Calo")}>Over 150 Calo</a>
+                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("calories", "> 150 Calo")}>&gt; 150 Calo</a>
               </li>
             </ul>
           </li>
@@ -98,17 +127,17 @@ export default function FilterBar() {
           {/* Time Filter */}
           <li className="sidebar-item dropdown">
             <a className="btn btn-secondary dropdown-toggle" id="timeDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static">
-              Time
+              {selectedFilters.time}
             </a>
             <ul className="dropdown-menu" aria-labelledby="timeDropdown">
               <li>
-                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("time", "Under 10 mins")}>Under 10 mins</a>
+                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("time", "< 10 mins")}>&lt; 10 mins</a>
               </li>
               <li>
                 <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("time", "10-30 mins")}>10-30 mins</a>
               </li>
               <li>
-                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("time", "Over 30 mins")}>Over 30 mins</a>
+                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("time", "> 30 mins")}>&gt; 30 mins</a>
               </li>
             </ul>
           </li>
@@ -116,7 +145,7 @@ export default function FilterBar() {
           {/* SortBy Filter */}
           <li className="sidebar-item dropdown">
             <a className="btn btn-secondary dropdown-toggle" id="sortDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static">
-              Sort By
+              {selectedFilters.sortBy}
             </a>
             <ul className="dropdown-menu" aria-labelledby="sortDropdown">
               <li>
@@ -141,8 +170,13 @@ export default function FilterBar() {
             ))}
           </li>
         </ul>
+
+        {/* Clear Filters Button */}
+        <button className="btn btn-danger clear-filters-btn" onClick={clearFilters}>
+          Clear Filters
+        </button>
       </aside>
-      
+
       {/* Top Navbar with Recipes Title */}
       <div className="topbar" id="topbar">
         {/* Hamburger Menu */}
