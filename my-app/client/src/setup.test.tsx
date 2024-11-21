@@ -116,7 +116,8 @@ describe('PostCreation Component', () => {
     expect(screen.getByText("Total Time:")).toBeVisible();
     expect(screen.getByText("Ingredients")).toBeVisible();
     expect(screen.getByText("Add Ingredient")).toBeVisible();
-    expect(screen.getByText("Upload Additional Photos")).toBeVisible();
+    // TODO: hidden until photos can be handled
+    expect(screen.getByText("Upload Additional Photos")).toBeInTheDocument();
     expect(screen.getByText("Directions")).toBeVisible();
     expect(screen.getByText("Add Step")).toBeVisible();
     expect(screen.getByText("Submit")).toBeVisible();

@@ -1,7 +1,6 @@
-import React from "react";
-
+// TODO: hidden until photos can be handled
 function RecipeBanner() {
-  return <div id="recipe-banner"></div>;
+  return <div id="recipe-banner" hidden></div>;
 }
 
 export default RecipeBanner;

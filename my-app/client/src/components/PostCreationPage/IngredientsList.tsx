@@ -11,6 +11,7 @@ function IngredientsList() {
   const removeIngredient = (index:number) => {
     setIngredients(ingredients.filter((_, i) => i !== index));
   };
+  
   return (
     <div id="ingredients">
       <div>
@@ -19,6 +20,8 @@ function IngredientsList() {
           {ingredients.map((input, index) => (
             <div key={index}>
               <input
+
+                className="long-text-input"
                 type="text"
                 value={input}
                 onChange={(e) => {

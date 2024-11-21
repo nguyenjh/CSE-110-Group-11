@@ -2,13 +2,14 @@
 
 import React, { useContext} from "react";
 import RecipeBanner from "../components/PostCreationPage/RecipeBanner";
-import RecipeSummary from "../components/PostCreationPage/RecipeSummary";
+import RecipeDetails from "../components/PostCreationPage/RecipeDetails";
 import RecipeAdditionalPhoto from "../components/PostCreationPage/RecipeAdditionalPhoto";
 import RecipeDirections from "../components/PostCreationPage/RecipeDirections";
 import IngredientsList from "../components/PostCreationPage/IngredientsList";
 import { recipeContext } from "../context/RecipeContext";
 import { useNavigate } from "react-router-dom";
 import "../css/PostCreation.css";
+import RecipeMain from "../components/PostCreationPage/RecipeMain";
 
 function PostCreation() {
   const navigate = useNavigate();
@@ -66,7 +67,8 @@ function PostCreation() {
     <form onSubmit = {onSubmit}>
       <div id="create-recipe">
           <RecipeBanner />
-          <RecipeSummary />
+          <RecipeMain />
+          <RecipeDetails />
           <IngredientsList />
           <RecipeAdditionalPhoto />
           <RecipeDirections />
