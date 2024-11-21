@@ -10,7 +10,7 @@ a {
 /* Sticky top bar */
 #topbar {
   width: 100%;
-  height: 125px;
+  height: 80px;
   background-color: transparent;
   overflow: hidden;
   position: sticky;
@@ -42,6 +42,8 @@ a {
   width: 50px;
   position: relative;
   z-index: 15;
+  left: 100px;
+  bottom: 10px;
 }
 
 .hamburger-menu span {
@@ -74,7 +76,7 @@ a {
   background-color: rgb(165, 215, 243);
   position: fixed;
   height: 60%;
-  width: 20%;
+  width: 30%;
   left: -50%;
   display: flex;
   flex-direction: column;
@@ -82,6 +84,7 @@ a {
   transition: .2s ease;
   gap: 15px;
   border-radius: 5%;
+  z-index: 1000;  /* Ensure it's above other content */
 }
 
 .sidebar-header {
