@@ -18,7 +18,7 @@ export default function CommentLike (comment: any, index: any) {
              onClick={likeCommentToggle}
              style={{ border:'none', background:'none', fontSize:'20px'}}
             >
-               {isCommentLiked ? '💖' : '🩶'}
+               {isCommentLiked ? '💖' : '🤍'}
             </button>
             <span>{numberLikesPerComment}</span>
          </div>
