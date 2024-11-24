@@ -1,6 +1,6 @@
-import { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { recipeContext } from "../../context/RecipeContext";
-import { priceRanges, suggestTag } from "../../constants/constants";
+import { suggestTag } from "../../constants/constants";
 
 function RecipeDetails() {
   const context = useContext(recipeContext);
@@ -17,37 +17,44 @@ function RecipeDetails() {
     setRecipeForm({ ...recipeForm, tags: selectedTags });
   };
 
+  // State and handlers of units to display an empty string by default and 
+  // this requires users to choose a valid unit (hours or minutes)
+  const [selectedPrepUnit, setSelectedPrepUnit] = useState("");
+  
+  const handlePrepUnitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+      setRecipeForm({...recipeForm, prep_time_unit: event.target.value});
+      setSelectedPrepUnit(event.target.value);
+  }
+
+  const [selectedTotalUnit, setSelectedTotalUnit] = useState("");
+
+  const handleTotalUnitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+      setRecipeForm({...recipeForm, estimated_total_time_unit: event.target.value});
+      setSelectedTotalUnit(event.target.value);
+  }
 
   return (
     <div id="recipe-details">
+      {/* Cost input */}
       <div id="recipe-cost">
-        <h2>Cost:</h2>
+        <h2>Cost ($):</h2>
       </div>
       <div id="recipe-cost-input">
-        <select
+        <input
+          type="number"
           name="cost-ranges"
-          className="multiple-selector"
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-            setRecipeForm({
-              ...recipeForm,
-              cost: 5, // TODO
-            })}
-        >
-          {priceRanges.map((item, index) => (
-            <option
-              data-testid={`price-option-${index}`}
-              key={index}
-              label={item}
-            >
-              {item}
-            </option>
-          ))}
-        </select>
+          id="cost"
+          onChange={(e) =>
+            setRecipeForm({ ...recipeForm, cost: Number(e.target.value) })
+          }
+          required
+        />
       </div>
 
       {/* Tags input */}
       <div id="recipe-tags">
         <h2>Tags:</h2>
+        <span>CTRL+click to select multiple</span>
       </div>
       
       <div id="tag-selection" className="large-input-field">
@@ -67,15 +74,15 @@ function RecipeDetails() {
       
       {/* Calories input */}
       <div>
-        <label htmlFor="calories">Calories:</label>
+        <label htmlFor="calories">Calories (kcal):</label>
         <input
           type="number"
           id="calories"
-          required
           value={recipeForm.calories === 0 ? "" : recipeForm.calories}
           onChange={(e) =>
             setRecipeForm({ ...recipeForm, calories: Number(e.target.value) })
           }
+          required
         />
       </div>
       
@@ -85,54 +92,50 @@ function RecipeDetails() {
         <input
           type="number"
           id="prep-time"
-          required
           value={recipeForm.prep_time === 0 ? "" : recipeForm.prep_time}
           onChange={(e) =>
             setRecipeForm({ ...recipeForm, prep_time: Number(e.target.value) })
           }
+          required
         />
-        
+        {/* Prep time units */}
         <select
           name="time-unit-input"
           className="time-unit-input"
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-            setRecipeForm({
-              ...recipeForm,
-              prep_time_unit: e.target.value,
-            })
-          }
+          onChange={handlePrepUnitChange}
+          value={selectedPrepUnit}
           required
         >
-          <option>Hours</option>
-          <option>Minutes</option>
+          <option value="" disabled>--Select an option--</option>
+          <option value="Hours">Hours</option>
+          <option value="Minutes">Minutes</option>
         </select>
       </div>
       
-      
+      {/* Serving size input */}
       <div>
-        <label htmlFor="servings">Servings:</label>
+        <label htmlFor="servings">Servings (#):</label>
         <input
           type="number"
           id="servings"
-          required
           value={recipeForm.serving === 0 ? "" : recipeForm.serving}
           onChange={(e) =>
             setRecipeForm({ ...recipeForm, serving: Number(e.target.value) })
           }
-        />
+          required
+          />
       </div>
 
-
+      {/* Total time input */}
       <div>
         <label htmlFor="total-time">Total Time:</label>
         <input
           type="number"
           id="total-time"
-          required
           value={
             recipeForm.estimated_total_time === 0
-              ? ""
-              : recipeForm.estimated_total_time
+            ? ""
+            : recipeForm.estimated_total_time
           }
           onChange={(e) =>
             setRecipeForm({
@@ -140,21 +143,19 @@ function RecipeDetails() {
               estimated_total_time: Number(e.target.value),
             })
           }
+          required
         />
-
+        {/* Total time units */}
         <select
           name="time-unit-input"
           className="time-unit-input"
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-            setRecipeForm({
-              ...recipeForm,
-              estimated_total_time_unit: e.target.value,
-            })
-          }
+          value={selectedTotalUnit}
+          onChange={handleTotalUnitChange}
           required
         >
-          <option>Hours</option>
-          <option>Minutes</option>
+          <option value="" disabled>--Select an option--</option>
+          <option value="Hours">Hours</option>
+          <option value="Minutes">Minutes</option>
         </select>
       </div>
     </div>

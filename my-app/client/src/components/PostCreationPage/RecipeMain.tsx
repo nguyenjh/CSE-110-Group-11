@@ -35,7 +35,8 @@ function RecipeMain() {
                 <textarea 
                 id="recipe-summary-input"
                 ref={textareaRef}
-                onInput={handleInput}  />
+                onInput={handleInput}
+                onChange={(e) => setRecipeForm({...recipeForm, summary: e.target.value})}  />
             </div>
         </div>
     )

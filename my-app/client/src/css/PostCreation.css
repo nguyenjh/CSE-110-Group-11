@@ -51,7 +51,9 @@ ol {
   justify-self: center;
   text-align: left;
 }
-
+#create-recipe ol li {
+  list-style: decimal;
+}
 #create-recipe input[type="text"] {
   font-size: 1.2rem;
   margin: 5px;
