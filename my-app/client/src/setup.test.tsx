@@ -18,7 +18,7 @@ describe('Test nav bar', () => {
 
     // Test if dropdown elements are rendered after clicking
     const cost = screen.getByText('Cost');
-    const calories = screen.getByText('Calories');
+    const calories = screen.getByText('Calories)');
     const time = screen.getByText('Time');
     const sort = screen.getByText('Sort By');
   
@@ -109,14 +109,17 @@ describe('PostCreation Component', () => {
 
     // Adjust the text based on actual content in the PostCreation component
     expect(screen.getByText("Title:")).toBeVisible();
+    expect(screen.getByText("Summary:")).toBeVisible();
+    expect(screen.getByText("Cost ($):")).toBeVisible();
     expect(screen.getByText("Tags:")).toBeVisible();
-    expect(screen.getByText("Calories:")).toBeVisible();
+    expect(screen.getByText("Calories (kcal):")).toBeVisible();
     expect(screen.getByText("Prep Time:")).toBeVisible();
-    expect(screen.getByText("Servings:")).toBeVisible();
+    expect(screen.getByTestId("prep-unit-input")).toBeVisible();
+    expect(screen.getByText("Servings (#):")).toBeVisible();
     expect(screen.getByText("Total Time:")).toBeVisible();
+    expect(screen.getByTestId("total-unit-input")).toBeVisible();
     expect(screen.getByText("Ingredients")).toBeVisible();
     expect(screen.getByText("Add Ingredient")).toBeVisible();
-    // TODO: hidden until photos can be handled
     expect(screen.getByText("Upload Additional Photos")).toBeInTheDocument();
     expect(screen.getByText("Directions")).toBeVisible();
     expect(screen.getByText("Add Step")).toBeVisible();

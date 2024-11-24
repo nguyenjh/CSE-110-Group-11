@@ -100,7 +100,8 @@ function RecipeDetails() {
         />
         {/* Prep time units */}
         <select
-          name="time-unit-input"
+          data-testid="prep-unit-input"
+          name="prep-unit-input"
           className="time-unit-input"
           onChange={handlePrepUnitChange}
           value={selectedPrepUnit}
@@ -147,7 +148,8 @@ function RecipeDetails() {
         />
         {/* Total time units */}
         <select
-          name="time-unit-input"
+          data-testid="total-unit-input"
+          name="total-unit-input"
           className="time-unit-input"
           value={selectedTotalUnit}
           onChange={handleTotalUnitChange}
