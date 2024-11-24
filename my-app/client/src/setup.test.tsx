@@ -18,7 +18,7 @@ describe('Test nav bar', () => {
 
     // Test if dropdown elements are rendered after clicking
     const cost = screen.getByText('Cost');
-    const calories = screen.getByText('Calories)');
+    const calories = screen.getByText('Calories');
     const time = screen.getByText('Time');
     const sort = screen.getByText('Sort By');
   

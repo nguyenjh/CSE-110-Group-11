@@ -31,7 +31,7 @@ function RecipeMain() {
                 required/>
             </div>
             <div id='recipe-summary' className="large-input-field">
-                <label htmlFor="recipe-summary-input"><h2>Summary</h2></label>
+                <label htmlFor="recipe-summary-input"><h2>Summary:</h2></label>
                 <textarea 
                 id="recipe-summary-input"
                 ref={textareaRef}
