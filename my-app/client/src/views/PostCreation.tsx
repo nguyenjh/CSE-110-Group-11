@@ -1,14 +1,13 @@
-
-
 import React, { useContext} from "react";
 import RecipeBanner from "../components/PostCreationPage/RecipeBanner";
-import RecipeSummary from "../components/PostCreationPage/RecipeSummary";
+import RecipeDetails from "../components/PostCreationPage/RecipeDetails";
 import RecipeAdditionalPhoto from "../components/PostCreationPage/RecipeAdditionalPhoto";
 import RecipeDirections from "../components/PostCreationPage/RecipeDirections";
 import IngredientsList from "../components/PostCreationPage/IngredientsList";
 import { recipeContext } from "../context/RecipeContext";
 import { useNavigate } from "react-router-dom";
 import "../css/PostCreation.css";
+import RecipeMain from "../components/PostCreationPage/RecipeMain";
 
 function PostCreation() {
   const navigate = useNavigate();
@@ -36,16 +35,16 @@ function PostCreation() {
           name: post.name,
           rating: 5,
           likes: 10,
-          summary: "A delicious recipe.",
+          summary: post.summary,
           prep_time: post.prep_time,
-          prep_time_unit: "minutes",
+          prep_time_unit: post.prep_time_unit,
           estimated_total_time: post.estimated_total_time,
-          estimated_total_time_unit: "minutes",
+          estimated_total_time_unit: post.estimated_total_time_unit,
           serving: post.serving,
           calories: post.calories,
-          cost: post.cost,
-          tags: ["easy", "healthy"],
-          ingredients: ["ingredient 1", "ingredient 2"],
+          cost: 5,
+          tags: post.tags,
+          ingredients: post.ingredients,
           directions: post.directions
         }),
       });
@@ -66,7 +65,8 @@ function PostCreation() {
     <form onSubmit = {onSubmit}>
       <div id="create-recipe">
           <RecipeBanner />
-          <RecipeSummary />
+          <RecipeMain />
+          <RecipeDetails />
           <IngredientsList />
           <RecipeAdditionalPhoto />
           <RecipeDirections />

@@ -1,37 +1,43 @@
 import { useContext } from "react";
-import { IngredientsContext } from "../../context/IngredientsContext";
+import { recipeContext } from "../../context/RecipeContext";
 
 function IngredientsList() {
-  const { ingredients, setIngredients } = useContext(IngredientsContext);
+  const context = useContext(recipeContext);
+  if (!context) {
+    throw new Error('Component must be used within a RecipeProvider');
+  }
+  const { recipeForm, setRecipeForm } = context;
 
   const addIngredient = () => {
-    setIngredients([...ingredients, ""]);
+    setRecipeForm({...recipeForm, ingredients: [...(recipeForm.ingredients ?? []), ""]});
   };
 
   const removeIngredient = (index:number) => {
-    setIngredients(ingredients.filter((_, i) => i !== index));
+    setRecipeForm({...recipeForm, ingredients: (recipeForm.ingredients ?? []).filter((_, i) => i !== index)});
   };
+
+  
   return (
     <div id="ingredients">
       <div>
         <h2>Ingredients</h2>
         <div id="ingredients-list">
-          {ingredients.map((input, index) => (
-            <div key={index}>
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => {
-                  const newIngredients = [...ingredients];
-                  newIngredients[index] = e.target.value;
-                  setIngredients(newIngredients);
-                }}
-              />
-              <button type="button" onClick={() => removeIngredient(index)}>
-                x
-              </button>
-            </div>
-          ))}
+        <ol>
+            {(recipeForm.ingredients ?? []).map((input, index) => (
+              <li key={index}>
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => {
+                    const newIngredients = [...(recipeForm.ingredients ?? [])];
+                    newIngredients[index] = e.target.value;
+                    setRecipeForm({...recipeForm, ingredients: newIngredients});
+                  }}
+                />
+                <button type="button" onClick={() => removeIngredient(index)}>x</button>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
       <button type="button" className="recipe-button" onClick={addIngredient}>

@@ -2,6 +2,14 @@ body {
   text-align: center;
 }
 
+input {
+  width: 100%; /* Ensure the input field stretches inside its parent */
+  border-radius: 0.2rem;
+  border: none;
+  padding: 8px;
+  font-size: 16px;
+}
+
 /* Page main content formatting */
 #create-recipe {
   padding: 20px 0;
@@ -29,22 +37,23 @@ body {
   height: 50px;
 }
 
-#create-recipe input {
-  width: 80%; /* Ensure the input field stretches inside its parent */
-  border-radius: .2rem;
-  border: none;
+.long-text-input {
+  width: 90%;
 }
 
 .large-input-field {
   align-self: center; /* align the text field vertically within div */
 }
 
-#create-recipe ul, ol {
+#create-recipe ul,
+ol {
   width: 100%;
   justify-self: center;
   text-align: left;
 }
-
+#create-recipe ol li {
+  list-style: decimal;
+}
 #create-recipe input[type="text"] {
   font-size: 1.2rem;
   margin: 5px;
@@ -58,36 +67,63 @@ body {
   background-position: center;
 }
 
-/* Recipe summary fields component */
+/* Recipe title and summary component */
+#recipe-main {
+  height: minmax(200px, auto);
+  padding: 20px;
+}
+
+#recipe-title {
+  align-items: center;
+  display: flex;
+  justify-content: left;
+}
+
+#recipe-title input {
+  width: stretch;
+}
+
 #recipe-summary {
+  padding-top: 15px;
+}
+
+#recipe-summary textarea {
+  width: 100%;
+  resize: none;
+  padding: 8px;
+  font-size: 16px;
+}
+
+/* Recipe summary fields component */
+#recipe-details {
   /* min 200 pix height, max auto */
   border-radius: 1rem;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(2, 1fr);
   overflow: hidden;
+  padding: 20px;
 }
 
-#recipe-summary > div {
+#recipe-details > div {
   border-radius: 1rem;
-  padding: 15px;
+  padding: 5px;
   width: 80%; /* Ensure input fields fill the available space */
   align-self: center;
 }
 
-#recipe-summary #recipe-title-input input {
+#recipe-details #recipe-title-input input {
   padding: 10px;
   font-size: 1.8rem;
 }
 
-#recipe-summary label {
+#recipe-details label {
   font-size: 1.2rem;
   font-weight: bold;
   margin: 5px;
 }
 
-
-select[multiple] {
+.multiple-selector {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
@@ -99,12 +135,33 @@ select[multiple] {
   overflow-y: auto; /* Adds scroll if there are many options */
   outline: none; /* Remove outline on focus */
 }
-select[multiple] option:hover {
+
+.multiple-selector option:hover {
   background-color: #eaeaea;
 }
 
+.multiple-selector::-webkit-scrollbar {
+  display: block;
+  width: 8px; /* Width for vertical scrollbar */
+  height: 8px; /* Height for horizontal scrollbar */
+}
+
+.multiple-selector::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Scrollbar track background */
+}
+
+.multiple-selector::-webkit-scrollbar-thumb {
+  background: #888; /* Scrollbar thumb color */
+  border-radius: 3px; /* Round corners */
+}
+
+.multiple-selector::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Change color on hover */
+}
+
 /* Ingredients component */
-#create-recipe #ingredients, #create-recipe #directions{
+#create-recipe #ingredients,
+#create-recipe #directions {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 50px;
@@ -133,7 +190,7 @@ select[multiple] option:hover {
   padding: 15px;
 }
 
-#photo-upload input{
+#photo-upload input {
   width: 70%;
   height: 200px;
   border: 2px dashed black;
@@ -147,56 +204,60 @@ select[multiple] option:hover {
 }
 
 /* Directions component */
-
-#directions > div { /* override default coloring to distinguish button and box */
+#directions > div {
+  /* override default coloring to distinguish button and box */
   padding: 15px;
   background: none;
 }
 
-#directions > div, #directions > button{
+#directions > div,
+#directions > button {
   border-radius: 1rem;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
-
-
 /* Placement of recipe descriptors within the recipe-summary grid */
-#recipe-summary #recipe-title {
+#recipe-details #recipe-cost {
   grid-column: 1 / 2;
   grid-row: 1 / 2;
 }
 
-#recipe-summary #recipe-title-input {
+#recipe-details #recipe-cost-input {
+  grid-column: 2 / 4;
+  grid-row: 1 / 2;
+}
+
+#recipe-details #recipe-title-input {
   grid-column: 2/4;
   grid-row: 1 / 2;
 }
 
-#recipe-summary #recipe-tags {
+#recipe-details #recipe-tags {
   grid-column: 1 / 2;
   grid-row: 2 / 3;
 }
 
-#recipe-summary #tag-selection {
+#recipe-details #tag-selection {
   grid-column: 2 / 4;
   grid-row: 2 / 3;
 }
 
-#recipe-summary #calories {
+#recipe-details #calories {
   grid-column: 4/5;
   grid-row: 1/2;
 }
 
-#recipe-summary #servings {
+#recipe-details #servings {
   grid-column: 5/6;
   grid-row: 1/2;
 }
 
-#recipe-summary #prep-time {
+#recipe-details #prep-time {
   grid-column: 4/5;
   grid-row: 2/3;
 }
 
-#recipe-summary #total-time {
+#recipe-details #total-time {
   grid-column: 5/6;
   grid-row: 2/3;
 }
