@@ -20,11 +20,13 @@ import {
 import App from "./App";
 import { RecipeContextProvider } from "./context/RecipeContext";
 import { AccountContextProvider } from "./context/AccountContext";
+import { FilterContextProvider } from "./context/FilterContext";
 import "./index.css";
 import RecipeList from "./views/RecipeList";
 import PostCreation from "./views/PostCreation";
 import RecipeContent from "./views/RecipeContent";
 import AccountPage from "./views/AccountPage";
+import HomePage from "./views/HomePage";
 
 
 const routes: RouteObject[] = [
@@ -34,7 +36,7 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "/",
-        element: <RecipeList />,
+        element:  <HomePage/>
       },
     ],
   },

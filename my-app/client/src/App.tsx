@@ -22,13 +22,18 @@ import { MantineProvider } from '@mantine/core';
 import { Outlet } from "react-router-dom";
 import Navbar from "./views/NavBar";
 
+import { FilterContextProvider } from "./context/FilterContext";
+
 export default function App() {
     return (
     <MantineProvider>
       <div>
         
         <div className="viewNavBar" >
-          <Navbar />
+          <FilterContextProvider>
+            <Navbar />
+          </FilterContextProvider>
+          
         </div>
 
         <div className="outlet">

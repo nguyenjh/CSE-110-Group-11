@@ -1,0 +1,204 @@
+/* Global styles for consistency */
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Sticky top bar */
+#topbar {
+  width: 100%;
+  height: 80px;
+  background-color: transparent;
+  overflow: hidden;
+  position: sticky;
+  left: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 20px;
+  border: none;
+  box-shadow: none;
+}
+
+/* Top bar title centered */
+.topbar-title {
+  font-size: 2rem; /* Use rem for scaling font size */
+  font-weight: bold;
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+/* Hamburger menu */
+.hamburger-menu {
+  height: 50px;
+  width: 50px;
+  position: relative;
+  z-index: 15;
+  bottom: 10px;
+}
+
+.hamburger-menu span {
+  height: 5px;
+  width: 80%;
+  background-color: grey;
+  position: absolute;
+  border-radius: 25px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.3s ease;
+}
+
+.hamburger-menu.active span:nth-child(1) {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.hamburger-menu.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-menu.active span:nth-child(3) {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Sidebar (hidden menu) */
+.sidebar {
+  background-color: rgb(165, 215, 243);
+  position: fixed;
+  height: 60%;
+  width: 20%;
+  left: -50%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  transition: .2s ease;
+  gap: 15px;
+  border-radius: 5%;
+  z-index: 1000;  /* Ensure it's above other content */
+}
+
+.sidebar-header {
+  padding-top: 20px;
+  font-weight: bold;
+  font-size: 1.125rem; /* Use rem for scaling font size */
+  border-bottom: 2px solid black;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar-item {
+  padding: 5px;
+  font-size: 5px; /* Use rem for scaling font size */
+  gap: 40px;
+}
+
+.sidebar-nav {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 10px;
+}
+
+.sidebar li {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: center;
+  gap: 15px;
+}
+
+/* Filter tags in sidebar */
+.filter-item {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  padding: 10px;
+}
+
+.filter-item .tag {
+  background-color: beige;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 1rem; /* Adjust font size for tags */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-item .tag:hover {
+  background-color: greenyellow;
+  font-weight: bold;
+}
+
+/* Tags when active */
+.tag.active {
+  background-color: greenyellow;
+  font-weight: bold;
+}
+
+/* Ensure dropdown buttons maintain fixed size and prevent overflow */
+.dropdown-toggle {
+  width: 100%;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem; /* Use rem to adjust font size */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-menu {
+  width: 100%;
+  font-size: 0.875rem; /* Slightly smaller font for dropdown items */
+}
+
+/* Handle hover effect for sidebar items */
+.sidebar-item ul li:hover {
+  background-color: aliceblue;
+}
+
+/* Ensure the layout of the sidebar remains fixed */
+.sidebar-nav {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 10px;
+}
+
+#hamButton {
+  font-size: x-large;
+}
+
+/* FilterBar.css */
+
+/* Style for the Clear Filters button */
+.clear-filters-btn {
+  margin-top: 10px;  /* Reduce the space from the filters */
+  padding: 5px 15px; /* Adjust padding to make the button skinnier */
+  background-color: #a03e37; /* Soft red color */
+  color: white;
+  border: none;
+  border-radius: 20px; /* Slightly rounded corners */
+  font-size: 14px;  /* Smaller font size */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+  width: 80%;  /* Make the button width auto to adjust to text */
+  display: block;  /* Ensure the button is block-level to center it */
+  margin-left: auto;  /* Center horizontally */
+  margin-right: auto;  /* Center horizontally */
+}
+
+.clear-filters-btn:hover {
+  background-color: #e55b59; /* Darker red on hover */
+}
+
+

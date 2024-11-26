@@ -7,6 +7,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import express, { Express } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -39,6 +40,10 @@ if (ATLAS_URI) {
 
 app.use('/recipe', postRoutes);
 app.use('/api', userRoutes);
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    console.error("Error occurred:", err);
+    res.status(500).send("Something went wrong!");
+});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
