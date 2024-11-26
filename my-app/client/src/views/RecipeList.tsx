@@ -48,6 +48,21 @@ export default function RecipeList() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const resultsPerPage = 21;
+
+  // Pagination logic
+  const totalPages = Math.ceil(recipes.length / resultsPerPage);
+  const indexOfLastRecipe = currentPage * resultsPerPage;
+  const indexOfFirstRecipe = indexOfLastRecipe - resultsPerPage;
+  const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
+
+  // Handle page change
+  const goToPage = (pageNumber:number) => {
+    setCurrentPage(pageNumber);
+  };
+
+
   useEffect(() => {
 
     async function fetchRecipes() {
@@ -89,17 +104,34 @@ export default function RecipeList() {
   }, [filterForm]); // Re-run effect whenever filterForm changes
 
   return (
-    <div className="row mt-3" style={{ display: "flex", flexWrap: "wrap" }}>
-      {loading && <div className="text-center w-100">Loading recipes...</div>}
-      {error && <div className="text-danger text-center w-100">{error}</div>}
-      {!loading && !error && recipes.length === 0 && (
-        <div className="text-center w-100">No recipes match your criteria.</div>
-      )}
-      {recipes.map((recipe) => (
-        <div className="col-sm-4" key={recipe._id}>
-          <Recipe recipe={recipe} />
-        </div>
-      ))}
+    <div>
+      <div className="row mt-3" style={{ display: "flex", flexWrap: "wrap" }}>
+        {loading && <div className="text-center w-100">Loading recipes...</div>}
+        {error && <div className="text-danger text-center w-100">{error}</div>}
+        {!loading && !error && recipes.length === 0 && (
+          <div className="text-center w-100">No recipes match your criteria.</div>
+        )}
+
+        {/* Displaying the list of recipes */}
+        {currentRecipes.map((recipe) => (
+          <div className="col-sm-4" key={recipe._id}>
+            <Recipe recipe={recipe} />
+          </div>
+        ))}
+      </div>
+
+      {/* Pagination Controls */}
+      <div id="pagination">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => goToPage(index + 1)}
+            disabled={currentPage === index + 1}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
-}
+};
