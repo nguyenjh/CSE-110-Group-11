@@ -10,8 +10,8 @@ import express, { Express } from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import userRoutes from './routes/userRoute'
-import postRoutes from './routes/postRoute'
+import userRoutes from './src/routes/userRoute'
+import postRoutes from './src/routes/postRoute'
 
 dotenv.config( {path: './config.env'} );
 // console.log(process.env);npm

@@ -25,7 +25,8 @@ import RecipeList from "./views/RecipeList";
 import PostCreation from "./views/PostCreation";
 import RecipeContent from "./views/RecipeContent";
 import AccountPage from "./views/AccountPage";
-
+import { store } from "./store"; 
+import { Provider } from "react-redux";
 
 const routes: RouteObject[] = [
   {
@@ -76,6 +77,8 @@ const router = createBrowserRouter(routes);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store = {store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
