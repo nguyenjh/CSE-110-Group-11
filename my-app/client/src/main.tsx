@@ -27,6 +27,8 @@ import PostCreation from "./views/PostCreation";
 import RecipeContent from "./views/RecipeContent";
 import AccountPage from "./views/AccountPage";
 import HomePage from "./views/HomePage";
+import LoginPage from "./views/LoginPage";
+import SignUp from "./views/SignUp";
 
 
 const routes: RouteObject[] = [
@@ -69,6 +71,26 @@ const routes: RouteObject[] = [
       {
         path: "/account",
         element: <AccountContextProvider><AccountPage /></AccountContextProvider>
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <App />,
+    children: [
+      {
+        path: "/login",
+        element: <LoginPage />
+      },
+    ],
+  },
+  {
+    path: "/signup",
+    element: <App />,
+    children: [
+      {
+        path: "/signup",
+        element: <SignUp />
       },
     ],
   }

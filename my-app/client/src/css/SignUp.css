@@ -1,20 +1,20 @@
 /* General reset */
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+} */
 
 /* Page background */
-body {
+/* body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     background-color: #f0f0f0;
     font-family: Arial, sans-serif;
-    font-size: 18px; /* Increased base font size */
-}
+    font-size: 18px; 
+} */
 
 /* Sign-up container */
 .signup-container {

@@ -1,12 +1,12 @@
 /* General reset */
-* {
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+} */
 
 /* Page background */
-body {
+/* body {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,7 +14,7 @@ body {
     background-color: #f0f0f0;
     font-family: Arial, sans-serif;
     font-size: 18px; /* Larger base font size */
-}
+/* } */
 
 /* Login container */
 .login-container {
