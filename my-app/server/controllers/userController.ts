@@ -9,8 +9,7 @@ interface AuthenticatedRequest extends Request {
     user?: { id: string };
 }
 
-const JWT_SECRET = process.env.JWT_SECRET;
-console.log('JWT_SECRET:', JWT_SECRET);
+const JWT_SECRET = 'scrumdiddlyumptious'; // Hardcoded JWT secret
 
 const generateToken = (id: string): string => {
     if (!JWT_SECRET) {

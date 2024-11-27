@@ -15,7 +15,7 @@ import userRoutes from './routes/userRoute'
 import postRoutes from './routes/postRoute'
 
 dotenv.config( {path: './config.env'} );
-// console.log(process.env);npm
+console.log(process.env);
 // console.log(process.env.JWT_SECRET);
 const PORT = process.env.PORT || 5050 ;
 const ATLAS_URI = process.env.ATLAS_URI
