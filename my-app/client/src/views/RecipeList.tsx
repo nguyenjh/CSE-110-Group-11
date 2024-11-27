@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import { IPost } from "../../../PostInterface";
 import { filterContext } from "../context/FilterContext";
+import "../css/Pagination.css";
 
 // Define the type for filterForm
 interface FilterForm {
@@ -49,7 +50,7 @@ export default function RecipeList() {
   const [error, setError] = useState<string | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const resultsPerPage = 21;
+  const resultsPerPage = 9;
 
   // Pagination logic
   const totalPages = Math.ceil(recipes.length / resultsPerPage);

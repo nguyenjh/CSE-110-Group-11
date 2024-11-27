@@ -7,6 +7,14 @@ a {
   text-decoration: none;
 }
 
+.searchBar-hamMenu{
+  width: 100%;
+  left:0;
+  display: inline-flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
 /* Sticky top bar */
 #topbar {
   width: 100%;
@@ -21,28 +29,32 @@ a {
   padding: 0 20px;
   border: none;
   box-shadow: none;
+  z-index: 20;
+  align-items: center;
+
+}
+.title-container{
+  align-items: center;
+  text-align: center;
+  width:fit-content;
 }
 
 /* Top bar title centered */
 .topbar-title {
   font-size: 2rem; /* Use rem for scaling font size */
   font-weight: bold;
-  margin: 0;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  border: none;
-  box-shadow: none;
-  outline: none;
+  align-items: center;
+  padding: 10px;
+  margin-left: 50%;
 }
+
 
 /* Hamburger menu */
 .hamburger-menu {
   height: 50px;
   width: 50px;
   position: relative;
-  z-index: 15;
-  bottom: 10px;
+  top: 10px;
 }
 
 .hamburger-menu span {
@@ -55,6 +67,15 @@ a {
   transform: translate(-50%, -50%);
   transition: 0.3s ease;
 }
+
+.hamburger-menu span:nth-child(1) {
+  top: 25%;
+}
+
+.hamburger-menu span:nth-child(3) {
+  top: 75%;
+}
+
 
 .hamburger-menu.active span:nth-child(1) {
   top: 50%;
@@ -83,7 +104,8 @@ a {
   transition: .2s ease;
   gap: 15px;
   border-radius: 5%;
-  z-index: 1000;  /* Ensure it's above other content */
+  align-items: center;
+  z-index: 100;  /* Ensure it's above other content */
 }
 
 .sidebar-header {
@@ -202,3 +224,73 @@ a {
 }
 
 
+/*Search Bar css*/
+.search-bar-container {
+  display: flex;
+  align-items: center;
+
+}
+
+.searchingInput {
+  display: flex;
+  margin-right: -10px;
+}
+
+.searchingInput input {
+  background-color: beige;
+  border: none;
+  font-size: 18px;
+  padding: 15px;
+  height: 45px;
+  width: 250px;
+  border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
+}
+
+input:focus {
+  outline: none;
+}
+
+#searchIcon {
+  height: 45px;
+  width: 45px;
+  background-color: beige;
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+  margin-left: -10px;
+}
+
+.searchingResult {
+  position: absolute; /* Ensures the results overlap other content */
+  width: 250px;
+  background-color: beige;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  overflow: hidden;
+  overflow-y: auto;
+  margin-left: 15px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  max-height:  200px;
+  z-index: 5;
+
+}
+
+.searchingResult .searchingItem {
+  width: 100%;
+  height: 50px;
+
+  align-items: center;
+  color: black;
+  
+}
+
+.searchingResult p {
+  text-decoration: none;
+}
+
+.searchingResult p:hover {
+  background-color: lightgrey;
+}
