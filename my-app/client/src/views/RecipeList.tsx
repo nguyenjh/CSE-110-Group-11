@@ -50,18 +50,35 @@ export default function RecipeList() {
   const [error, setError] = useState<string | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const resultsPerPage = 9;
+  const resultsPerPage = 3;
 
   // Pagination logic
+  const maxVisiblePages = 3; // Max number of page buttons to display
   const totalPages = Math.ceil(recipes.length / resultsPerPage);
   const indexOfLastRecipe = currentPage * resultsPerPage;
   const indexOfFirstRecipe = indexOfLastRecipe - resultsPerPage;
   const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
+  
+  const getPageNumbers = () => {
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+    // Adjust startPage if at the end
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+  };
+
+  const pageNumbers = getPageNumbers();
 
   // Handle page change
   const goToPage = (pageNumber:number) => {
     setCurrentPage(pageNumber);
   };
+
+
 
 
   useEffect(() => {
@@ -123,15 +140,39 @@ export default function RecipeList() {
 
       {/* Pagination Controls */}
       <div id="pagination">
-        {Array.from({ length: totalPages }, (_, index) => (
+        <button 
+          onClick={() => goToPage(1)}
+          disabled={currentPage === 1}
+        > 
+          {"<<"} 
+        </button>
+        <button 
+          onClick={()=> goToPage(currentPage-1)}
+          disabled={currentPage === 1}
+        >
+          {"<"}
+        </button>
+        {pageNumbers.map((page) => (
           <button
-            key={index + 1}
-            onClick={() => goToPage(index + 1)}
-            disabled={currentPage === index + 1}
+            key={page}
+            onClick={() => goToPage(page)}
+            disabled={currentPage === page}
           >
-            {index + 1}
+            {page}
           </button>
         ))}
+        <button
+          onClick={() => goToPage(currentPage+1)}
+          disabled={currentPage === totalPages}
+        > 
+          {">"} 
+        </button>
+        <button 
+          onClick={() => goToPage(totalPages)}
+          disabled={currentPage === totalPages}
+        >
+          {">>"}
+        </button>
       </div>
     </div>
   );

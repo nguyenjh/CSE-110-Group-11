@@ -15,7 +15,8 @@
   }
   
   #pagination button:disabled {
-    background-color: #ccc;
+    background-color: beige;
+    color: black;
     cursor: not-allowed;
   }
   
