@@ -80,23 +80,11 @@ const routes: RouteObject[] = [
 const routesWithoutNavbar: RouteObject[] = [
   {
     path: "/signup",
-    element: <NoNavbarLayout />, 
-    children: [
-      {
-        path: "/signup",
-        element: <SignUp />
-      },
-    ],
+    element: <SignUp />, 
   },
   {
     path: "/login",
-    element: <NoNavbarLayout />, 
-    children: [
-      {
-        path: "/login",
-        element: <LoginPage />
-      },
-    ],
+    element: <LoginPage />, 
   },
 ];
 
