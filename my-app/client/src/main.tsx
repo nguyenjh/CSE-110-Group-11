@@ -71,7 +71,7 @@ const routes: RouteObject[] = [
         element: <AccountContextProvider><AccountPage /></AccountContextProvider>
       },
     ],
-  }
+  },
 ];
 
 const router = createBrowserRouter(routes);

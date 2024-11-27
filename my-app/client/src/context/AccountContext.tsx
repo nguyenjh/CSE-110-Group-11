@@ -1,5 +1,8 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { UserInformation } from "../types/types";
+// import { RootState } from "../store";
+
 
 interface AccountContextType {
   userInfo: UserInformation;
@@ -20,6 +23,18 @@ export const AccountContext = createContext<AccountContextType>(initialState);
 
 export const AccountContextProvider = (props: any) => {
   const [userInfo, setUserInfo] = useState<UserInformation>(initialState.userInfo);
+  // Access the Redux store to get the current logged-in user
+  const loggedInUser = useSelector((state: any) => state.auth.user);
+
+  // Update context state whenever the logged-in user changes
+  useEffect(() => {
+    if (loggedInUser) {
+      setUserInfo({
+        name: loggedInUser.user.name,
+        email: loggedInUser.user.email,
+      });
+    }
+  }, [loggedInUser]);
 
   return (
     <AccountContext.Provider
