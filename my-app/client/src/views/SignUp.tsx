@@ -85,13 +85,52 @@ const SignUp: React.FC = () => {
     setIsModalOpen(false);
   };
 
-  const handleSubmit = () => {
-    if (validateForm()) {
-      console.log("Form is valid, opening modal");
-    } else {
-      console.log("Form is invalid");
+  const handleSubmit = async () => {
+    const isValid = validateForm();
+  
+    if (!isValid) return;
+  
+    try {
+      const response = await fetch('http://localhost:5050/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.username,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+  
+      if (!response.ok) {
+        let errorMessage = 'Registration failed';
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch {
+          // No valid JSON in the response
+        }
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          form: errorMessage,
+        }));
+        return;
+      }
+  
+      const data = await response.json();
+      console.log('User registered:', data);
+      openModal(); // Open modal on successful registration
+    } catch (error) {
+      console.error('Error during registration:', error);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        form: 'Something went wrong. Please try again later.',
+      }));
     }
   };
+  
+  
 
   return (
     <div className="signup-container">

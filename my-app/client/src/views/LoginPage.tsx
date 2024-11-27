@@ -14,43 +14,71 @@ const LoginPage: React.FC = () => {
   });
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
-  const validateLoginForm = () => {
+  const validateLoginForm = async () => {
     let formValid = true;
     const newErrors = { email: '', password: '', robot: '', form: '' };
-
-    // Email validation
+  
     if (!email.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
       newErrors.email = 'Please enter a valid email address.';
       formValid = false;
     }
-
-    // Password validation
+  
     if (password.length === 0) {
       newErrors.password = 'Please enter your password.';
       formValid = false;
     }
-
-    // Checkbox validation
+  
     if (!isRobotChecked) {
       newErrors.robot = 'Please confirm you are not a robot.';
       formValid = false;
     }
-
-    if (!formValid) {
-      newErrors.form = '*Please check the fields above';
-    }
-
+  
     setErrors(newErrors);
-
-    // If form is valid, simulate a processing delay
-    if (formValid) {
+  
+    if (!formValid) {
+      return;
+    }
+  
+    try {
       setIsProcessing(true);
-      setTimeout(() => {
+  
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          form: errorData.message || 'Login failed',
+        }));
         setIsProcessing(false);
-        // Handle successful authentication here (e.g., redirect, etc.)
-      }, 2000); // Simulate 2 seconds of authentication processing
+        return;
+      }
+  
+      const data = await response.json();
+      console.log('Login successful:', data);
+  
+      // Redirect to homepage
+      window.location.href = '/'; // Adjust route as needed
+    } catch (error) {
+      console.error('Error during login:', error);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        form: 'Something went wrong. Please try again later.',
+      }));
+    } finally {
+      setIsProcessing(false);
     }
   };
+  
 
   return (
     <div className="login-container">
