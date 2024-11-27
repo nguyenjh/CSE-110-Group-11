@@ -48,4 +48,7 @@ button:hover span {
 .list-group-item {
     background-color: lightcyan;
     cursor: pointer;
+    width: 325px;
+    height: 350px;
 }
+
