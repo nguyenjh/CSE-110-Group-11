@@ -27,6 +27,7 @@ import PostCreation from "./views/PostCreation";
 import RecipeContent from "./views/RecipeContent";
 import AccountPage from "./views/AccountPage";
 import HomePage from "./views/HomePage";
+import FavoritePage from "./views/FavoritePage";
 
 
 const routes: RouteObject[] = [
@@ -71,7 +72,18 @@ const routes: RouteObject[] = [
         element: <AccountContextProvider><AccountPage /></AccountContextProvider>
       },
     ],
+  },
+  {
+    path: "/favorite",
+    element: <App />,
+    children: [
+      {
+        path: "/favorite",
+        element: <FavoritePage />
+      },
+    ],
   }
+
 ];
 
 const router = createBrowserRouter(routes);

@@ -34,7 +34,7 @@ export default function NavBar() {
                 <li><NavLink to="/"><img src={logo} className='logo' style={{width:'30px'}}/></NavLink></li>
                 <li><NavLink to="/create">Create</NavLink></li>
                 <li><a className='Account' href="#">Account</a></li>
-                <li><a className='Favorite' href="#">Favorite</a></li>
+                <li><NavLink to="/favorite">Favorite</NavLink></li>
                 <li><a className='Setting' href="#">Setting</a></li>
                 <li><a className='SignOut' href="#">Sign Out</a></li>
               </ul>
