@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Ensure Link is imported correctly
+import { Link } from 'react-router-dom';
 import '../css/LoginPage.css';
 
 const LoginPage: React.FC = () => {
@@ -53,18 +53,19 @@ const LoginPage: React.FC = () => {
         }),
       });
   
+      const responseBody = await response.json(); // Read the response body once
+  
       if (!response.ok) {
-        const errorData = await response.json();
+        // If the response is not OK, use the response body for error details
         setErrors((prevErrors) => ({
           ...prevErrors,
-          form: errorData.message || 'Login failed',
+          form: responseBody.message || 'Login failed',
         }));
-        setIsProcessing(false);
         return;
       }
   
-      const data = await response.json();
-      console.log('Login successful:', data);
+      // If the response is OK, use the parsed data for success handling
+      console.log('Login success:', responseBody);
   
       // Redirect to homepage
       window.location.href = '/'; // Adjust route as needed
