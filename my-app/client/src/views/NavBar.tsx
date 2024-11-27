@@ -52,7 +52,7 @@ export default function NavBar() {
                 <li className={isLogin ? 'visible': 'hidden'}><a className='Account' href="#">Account</a></li>
                 <li className={isLogin ? 'visible': 'hidden'}><a className='Favorite' href="#">Favorite</a></li>
                 <li className={isLogin ? 'visible': 'hidden'}><a className='Setting' href="#">Setting</a></li>
-                <li> {isLogin? <button className='SignOut' onClick={toggleSignOutClick}>Sign Out</button> : <a className='SignIn' href="#">Sign In</a>} </li>
+                <li> {isLogin? <a className='SignOut' role='button' onClick={toggleSignOutClick}>Sign Out</a> : <a className='SignIn' href="#">Sign In</a>} </li>
                 
               </ul>
             </div>
