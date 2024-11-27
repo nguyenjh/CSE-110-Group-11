@@ -18,6 +18,7 @@ import {
   RouteObject,
 } from "react-router-dom";
 import App from "./App";
+import NoNavbarLayout from "./NoNav";
 import { RecipeContextProvider } from "./context/RecipeContext";
 import { AccountContextProvider } from "./context/AccountContext";
 import { FilterContextProvider } from "./context/FilterContext";
@@ -39,26 +40,6 @@ const routes: RouteObject[] = [
       {
         path: "/",
         element:  <HomePage/>
-      },
-    ],
-  },
-  {
-    path: "/signup",
-    element: <App />, 
-    children: [
-      {
-        path: "/signup",
-        element:  <SignUp/>
-      },
-    ],
-  },
-  {
-    path: "/login",
-    element: <App />, 
-    children: [
-      {
-        path: "/login",
-        element:  <LoginPage/>
       },
     ],
   },
@@ -96,7 +77,33 @@ const routes: RouteObject[] = [
   }
 ];
 
-const router = createBrowserRouter(routes);
+const routesWithoutNavbar: RouteObject[] = [
+  {
+    path: "/signup",
+    element: <NoNavbarLayout />, 
+    children: [
+      {
+        path: "/signup",
+        element: <SignUp />
+      },
+    ],
+  },
+  {
+    path: "/login",
+    element: <NoNavbarLayout />, 
+    children: [
+      {
+        path: "/login",
+        element: <LoginPage />
+      },
+    ],
+  },
+];
+
+const router = createBrowserRouter([
+  ...routes,
+  ...routesWithoutNavbar,
+]);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

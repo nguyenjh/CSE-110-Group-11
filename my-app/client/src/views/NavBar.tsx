@@ -33,10 +33,10 @@ export default function NavBar() {
               <ul>
                 <li><NavLink to="/"><img src={logo} className='logo' style={{width:'30px'}}/></NavLink></li>
                 <li><NavLink to="/create">Create</NavLink></li>
-                <li><a className='Account' href="#">Account</a></li>
-                <li><a className='Favorite' href="#">Favorite</a></li>
-                <li><a className='Setting' href="#">Setting</a></li>
-                <li><a className='SignOut' href="#">Sign Out</a></li>
+                <li><a className='Account' href="/account">Account</a></li>
+                <li><a className='Favorite' href="/favorite">Favorite</a></li>
+                <li><a className='Setting' href="/setting">Setting</a></li>
+                <li><a className='SignOut' href="/login">Sign Out</a></li>
               </ul>
             </div>
         </nav>

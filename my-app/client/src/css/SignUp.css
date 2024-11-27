@@ -60,7 +60,10 @@ body {
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 1rem; /* Larger font */
+    background-color: white; /* Set background to white */
+    color: black;
 }
+
 
 /* Error messages */
 .error {
@@ -78,6 +81,35 @@ body {
     margin-top: 12px;
     color: #333;
     font-size: 1rem;
+}
+
+/* Checkbox styling */
+.signup-container input[type="checkbox"] {
+    margin-right: 12px;
+    background-color: white; /* White background before clicking */
+    border: 2px solid #333; /* Dark border before clicking */
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    position: relative;
+    cursor: pointer;
+    border-radius: 4px; /* Rounded checkbox */
+}
+
+/* Checked state */
+.signup-container input[type="checkbox"]:checked {
+    background-color: #333; /* Dark background when checked */
+    border-color: black; /* Dark border when checked */
+}
+
+/* Checkmark inside the checkbox */
+.signup-container input[type="checkbox"]:checked::after {
+    content: "\2713"; /* Unicode checkmark character */
+    position: absolute;
+    top: -2px;
+    left: 2px; /* Adjust position for centering */
+    font-size: 18px; /* Make the checkmark large enough */
+    color: white; /* White checkmark */
 }
 
 .signup-container input[type="checkbox"] {
@@ -129,6 +161,7 @@ body {
     font-size: 26px;
     margin-top: 40px;
     margin-bottom: 15px;
+    color: black;
   }
   
   .modal-content button {
