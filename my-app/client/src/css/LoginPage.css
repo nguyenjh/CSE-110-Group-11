@@ -79,14 +79,14 @@ body {
 }
 
 .login-container input[type="checkbox"]:checked {
-    background-color: #333; /* Blue background when checked */
+    background-color: #007bff; /* Blue background when checked */
     border-color: black; /* Blue border when checked */
 }
 
 .login-container input[type="checkbox"]:checked::after {
     content: "\2713"; /* Unicode checkmark character */
     position: absolute;
-    top: -2px;
+    top: -4px;
     left: 2px; /* Adjust position for centering */
     font-size: 18px; /* Make the checkmark large enough */
     color: white; /* White checkmark */

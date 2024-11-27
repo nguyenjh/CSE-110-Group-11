@@ -98,7 +98,7 @@ body {
 
 /* Checked state */
 .signup-container input[type="checkbox"]:checked {
-    background-color: #333; /* Dark background when checked */
+    background-color: #007bff; /* Dark background when checked */
     border-color: black; /* Dark border when checked */
 }
 
@@ -106,7 +106,7 @@ body {
 .signup-container input[type="checkbox"]:checked::after {
     content: "\2713"; /* Unicode checkmark character */
     position: absolute;
-    top: -2px;
+    top: -4px;
     left: 2px; /* Adjust position for centering */
     font-size: 18px; /* Make the checkmark large enough */
     color: white; /* White checkmark */
