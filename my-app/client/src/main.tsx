@@ -30,6 +30,7 @@ import AccountPage from "./views/AccountPage";
 import HomePage from "./views/HomePage";
 import LoginPage from "./views/LoginPage";
 import SignUp from "./views/SignUp";
+import FavoritePage from "./views/FavoritePage";
 
 
 const routes: RouteObject[] = [
@@ -74,7 +75,17 @@ const routes: RouteObject[] = [
         element: <AccountContextProvider><AccountPage /></AccountContextProvider>
       },
     ],
-  }
+  },
+  {
+    path: "/favorite",
+    element: <App />,
+    children: [
+      {
+        path: "/favorite",
+        element: <FavoritePage />
+      },
+    ],
+  } 
 ];
 
 const routesWithoutNavbar: RouteObject[] = [
