@@ -1,19 +1,9 @@
-/* General reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Page background */
-body {
+.login-page {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
-    font-size: 18px; /* Larger base font size */
+    min-height: 100vh; /* Ensures the container takes up full viewport height */
+    background-color: white; /* White background for the entire page */
 }
 
 /* Login container */

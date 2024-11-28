@@ -82,6 +82,7 @@ const LoginPage: React.FC = () => {
   
 
   return (
+    <div className="login-page">
     <div className="login-container">
       <h1>Login</h1>
       <input
@@ -120,6 +121,7 @@ const LoginPage: React.FC = () => {
       {errors.form && <span className="error" id="form-error">{errors.form}</span>}
 
       <p>Not registered? <Link to="/signup">Create an account</Link></p>
+    </div>
     </div>
   );
 };
