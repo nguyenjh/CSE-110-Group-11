@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Ensure Link is imported correctly
+import { Link } from 'react-router-dom';
 import '../css/LoginPage.css';
 
 const LoginPage: React.FC = () => {
@@ -14,45 +14,75 @@ const LoginPage: React.FC = () => {
   });
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
-  const validateLoginForm = () => {
+  const validateLoginForm = async () => {
     let formValid = true;
     const newErrors = { email: '', password: '', robot: '', form: '' };
-
-    // Email validation
+  
     if (!email.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)) {
       newErrors.email = 'Please enter a valid email address.';
       formValid = false;
     }
-
-    // Password validation
+  
     if (password.length === 0) {
       newErrors.password = 'Please enter your password.';
       formValid = false;
     }
-
-    // Checkbox validation
+  
     if (!isRobotChecked) {
       newErrors.robot = 'Please confirm you are not a robot.';
       formValid = false;
     }
-
-    if (!formValid) {
-      newErrors.form = '*Please check the fields above';
-    }
-
+  
     setErrors(newErrors);
-
-    // If form is valid, simulate a processing delay
-    if (formValid) {
+  
+    if (!formValid) {
+      return;
+    }
+  
+    try {
       setIsProcessing(true);
-      setTimeout(() => {
-        setIsProcessing(false);
-        // Handle successful authentication here (e.g., redirect, etc.)
-      }, 2000); // Simulate 2 seconds of authentication processing
+  
+      const response = await fetch('http://localhost:5050/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+  
+      const responseBody = await response.json(); // Read the response body once
+  
+      if (!response.ok) {
+        // If the response is not OK, use the response body for error details
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          form: responseBody.message || 'Login failed',
+        }));
+        return;
+      }
+  
+      // If the response is OK, use the parsed data for success handling
+      console.log('Login success:', responseBody);
+  
+      // Redirect to homepage
+      window.location.href = '/'; // Adjust route as needed
+    } catch (error) {
+      console.error('Error during login:', error);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        form: 'Something went wrong. Please try again later.',
+      }));
+    } finally {
+      setIsProcessing(false);
     }
   };
+  
 
   return (
+    <div className="login-page">
     <div className="login-container">
       <h1>Login</h1>
       <input
@@ -91,6 +121,7 @@ const LoginPage: React.FC = () => {
       {errors.form && <span className="error" id="form-error">{errors.form}</span>}
 
       <p>Not registered? <Link to="/signup">Create an account</Link></p>
+    </div>
     </div>
   );
 };

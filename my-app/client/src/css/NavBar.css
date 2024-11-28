@@ -6,7 +6,7 @@ a{
 }
 
 /*CSS for the sticky note*/
-#topbar{
+#navbar{
   width: 100%;
   height: 125px;
   overflow: hidden;
@@ -15,6 +15,7 @@ a{
   left:0;
   display:inline-flex;
   border-bottom: 5px solid black;
+  z-index: 3000;
 }
 
 .topbar-item {
@@ -57,22 +58,6 @@ a{
 }
 */ 
 
-/*CSS for the hidden menu*/
-.sidebar{
-  background-color:  rgb(165, 215, 243);
-  position: fixed;
-  height: 60%;
-  width: 10%;
-  min-width: 250px;
-  left: -50%; 
-  display: flex; 
-  flex-direction: column;
-  text-align: center;
-  transition: .3s ease;
-  gap: 15px;
-  border-radius: 5%;
-}
-
 .sidebar-header{
   padding-top: 145px;
   grid-column: span 2;
@@ -107,78 +92,12 @@ a{
   gap: 15px;
 }
 
-.filter-tag-container{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 5px;
-  padding: 10px;
+.hidden {
+  display: none;
 }
 
-.filter-item .tag{
-  background-color: beige;
-  color: black;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background-color 0.3 ease;
-  width: 80%;
+.visible {
+  display: block;
+  transition: opacity 0.3s ease;
+  opacity: 1;
 }
-/*CSS for the tags when user hover them*/
-.filter-item .tag:hover{
-  background-color: greenyellow;
-  font-weight: bold;
-}
-/*CSS for the tags when they are chosen*/
-.tag.active {
-  background-color: greenyellow;
-  font-weight: bold;
-}
-
-.hamburger-menu {
-  margin-top: 20px;
-  height: 50px;
-  width: 50px;
-  margin-left: 20px;
-  position: relative;
-  z-index: 15;
-}
-  /*CSS for the 3 lines*/
-  .hamburger-menu span {
-    height: 5px;
-    width: 80%;
-    background-color: grey;
-    position: absolute;
-    border-radius: 25px;
-    top: 50%;
-    right: 10%;
-    left: 60%;
-    transform: translate(-50%, -50%);
-    transition: 0.3s ease;
-  }
-  
-
-  /*CSS to change the 3 horizontal lines to X button*/
-
-  .hamburger-menu span:nth-child(1) {
-    top: 25%;
-  }
-  
-  .hamburger-menu span:nth-child(3) {
-    top: 75%;
-  }
-  
-  .hamburger-menu.active span:nth-child(1) {
-    top: 50%;
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
-  
-  .hamburger-menu.active span:nth-child(2) {
-    opacity: 0;
-  }
-  
-  .hamburger-menu.active span:nth-child(3) {
-    top: 50%;
-    transform: translate(-50%, -50%) rotate(-45deg);
-  }
-  

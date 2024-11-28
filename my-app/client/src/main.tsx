@@ -18,16 +18,20 @@ import {
   RouteObject,
 } from "react-router-dom";
 import App from "./App";
+import NoNavbarLayout from "./NoNav";
 import { RecipeContextProvider } from "./context/RecipeContext";
 import { AccountContextProvider } from "./context/AccountContext";
 import { FilterContextProvider } from "./context/FilterContext";
+import { RecipeFormErrorContextProvider } from "./context/RecipeFormErrorsContext";
 import "./index.css";
 import RecipeList from "./views/RecipeList";
 import PostCreation from "./views/PostCreation";
 import RecipeContent from "./views/RecipeContent";
 import AccountPage from "./views/AccountPage";
 import HomePage from "./views/HomePage";
-import { RecipeFormErrorContextProvider } from "./context/RecipeFormErrorsContext";
+import LoginPage from "./views/LoginPage";
+import SignUp from "./views/SignUp";
+import FavoritePage from "./views/FavoritePage";
 
 
 const routes: RouteObject[] = [
@@ -74,10 +78,34 @@ const routes: RouteObject[] = [
         element: <AccountContextProvider><AccountPage /></AccountContextProvider>
       },
     ],
-  }
+  },
+  {
+    path: "/favorite",
+    element: <App />,
+    children: [
+      {
+        path: "/favorite",
+        element: <FavoritePage />
+      },
+    ],
+  } 
 ];
 
-const router = createBrowserRouter(routes);
+const routesWithoutNavbar: RouteObject[] = [
+  {
+    path: "/signup",
+    element: <SignUp />, 
+  },
+  {
+    path: "/login",
+    element: <LoginPage />, 
+  },
+];
+
+const router = createBrowserRouter([
+  ...routes,
+  ...routesWithoutNavbar,
+]);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
