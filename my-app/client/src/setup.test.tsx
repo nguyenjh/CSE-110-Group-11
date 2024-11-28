@@ -7,12 +7,16 @@ import '@testing-library/jest-dom';
 import RecipeContent from './views/RecipeContent';
 import { RecipeContextProvider } from './context/RecipeContext';
 import PostCreation from './views/PostCreation';
+import FilterBar from './views/FilterBar';
+import { FilterContextProvider } from './context/FilterContext';
 
-describe('Test nav bar', () => {
-  it('should render side navigation bar and dropdowns', async () => {
+describe('Test filter bar', () => {
+  it('should render the hamberger button and dropdowns', async () => {
     render(
       <MemoryRouter>
-        <NavBar />  
+        <FilterContextProvider>
+          <FilterBar />
+        </FilterContextProvider>  
       </MemoryRouter>
     );
 
@@ -28,16 +32,24 @@ describe('Test nav bar', () => {
     expect(sort).toBeInTheDocument();
   
     fireEvent.click(cost);
-    expect(screen.getByText('Under $5')).toBeInTheDocument();
+    expect(screen.getByText('< $5')).toBeInTheDocument();
+    expect(screen.getByText('$5-$15')).toBeInTheDocument();
+    expect(screen.getByText('$15-$30')).toBeInTheDocument();
+    expect(screen.getByText('> $30')).toBeInTheDocument();
   
     fireEvent.click(calories);
-    expect(screen.getByText('Over 150 Calo')).toBeInTheDocument();
+    expect(screen.getByText('< 50 Calo')).toBeInTheDocument();
+    expect(screen.getByText('50-150 Calo')).toBeInTheDocument();
+    expect(screen.getByText('> 150 Calo')).toBeInTheDocument();
   
     fireEvent.click(time);
-    expect(screen.getByText('10-30mins')).toBeInTheDocument();
+    expect(screen.getByText('< 10 mins')).toBeInTheDocument();
+    expect(screen.getByText('10-30 mins')).toBeInTheDocument();
+    expect(screen.getByText('> 30 mins')).toBeInTheDocument();
   
     fireEvent.click(sort);
-    expect(screen.getByText('Something')).toBeInTheDocument();
+    expect(screen.getByText('Newest')).toBeInTheDocument();
+    expect(screen.getByText('Most Popular')).toBeInTheDocument();
   
     suggestTag.forEach(tag => {
       const tagElement = screen.getByText(tag);
@@ -46,26 +58,6 @@ describe('Test nav bar', () => {
   });
 });
 
-test('feeds interface',  () => {
-  render(
-    <MemoryRouter>
-      <NavBar />  {/* Render App component since MyNewsFeed is now inside it */}
-    </MemoryRouter>
-  );
-
-  // Look for the top bar on the screen
-  const navbar = screen.getByTestId('topbar');
-  expect(navbar).toBeInTheDocument();
-
-  // Look for side menu (hamburger)
-  const hamburgerMenu = screen.getByTestId('hamburger menu');
-  expect(hamburgerMenu).toHaveClass('inactive'); 
-
-  // Check if the sidebar is inactive
-  const sidebar = screen.getByTestId('sidebar');
-  expect(sidebar).toHaveClass('inactive');
-
-});
 
 
 describe('Test buttons in Recipe Page', () => {

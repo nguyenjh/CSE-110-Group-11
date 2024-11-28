@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import { IPost } from "../../../PostInterface";
 import { filterContext } from "../context/FilterContext";
+import "../css/Pagination.css";
 
 // Define the type for filterForm
 interface FilterForm {
@@ -48,6 +49,38 @@ export default function RecipeList() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const resultsPerPage = 3;
+
+  // Pagination logic
+  const maxVisiblePages = 3; // Max number of page buttons to display
+  const totalPages = Math.ceil(recipes.length / resultsPerPage);
+  const indexOfLastRecipe = currentPage * resultsPerPage;
+  const indexOfFirstRecipe = indexOfLastRecipe - resultsPerPage;
+  const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
+  
+  const getPageNumbers = () => {
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+    // Adjust startPage if at the end
+    if (endPage - startPage + 1 < maxVisiblePages) {
+      startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+
+    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
+  };
+
+  const pageNumbers = getPageNumbers();
+
+  // Handle page change
+  const goToPage = (pageNumber:number) => {
+    setCurrentPage(pageNumber);
+  };
+
+
+
+
   useEffect(() => {
 
     async function fetchRecipes() {
@@ -89,17 +122,58 @@ export default function RecipeList() {
   }, [filterForm]); // Re-run effect whenever filterForm changes
 
   return (
-    <div className="row mt-3" style={{ display: "flex", flexWrap: "wrap" }}>
-      {loading && <div className="text-center w-100">Loading recipes...</div>}
-      {error && <div className="text-danger text-center w-100">{error}</div>}
-      {!loading && !error && recipes.length === 0 && (
-        <div className="text-center w-100">No recipes match your criteria.</div>
-      )}
-      {recipes.map((recipe) => (
-        <div className="col-sm-4" key={recipe._id}>
-          <Recipe recipe={recipe} />
-        </div>
-      ))}
+    <div>
+      <div className="row mt-3" style={{ display: "flex", flexWrap: "wrap" }}>
+        {loading && <div className="text-center w-100">Loading recipes...</div>}
+        {error && <div className="text-danger text-center w-100">{error}</div>}
+        {!loading && !error && recipes.length === 0 && (
+          <div className="text-center w-100">No recipes match your criteria.</div>
+        )}
+
+        {/* Displaying the list of recipes */}
+        {currentRecipes.map((recipe) => (
+          <div className="col-sm-4" key={recipe._id}>
+            <Recipe recipe={recipe} />
+          </div>
+        ))}
+      </div>
+
+      {/* Pagination Controls */}
+      <div id="pagination">
+        <button 
+          onClick={() => goToPage(1)}
+          disabled={currentPage === 1}
+        > 
+          {"<<"} 
+        </button>
+        <button 
+          onClick={()=> goToPage(currentPage-1)}
+          disabled={currentPage === 1}
+        >
+          {"<"}
+        </button>
+        {pageNumbers.map((page) => (
+          <button
+            key={page}
+            onClick={() => goToPage(page)}
+            disabled={currentPage === page}
+          >
+            {page}
+          </button>
+        ))}
+        <button
+          onClick={() => goToPage(currentPage+1)}
+          disabled={currentPage === totalPages}
+        > 
+          {">"} 
+        </button>
+        <button 
+          onClick={() => goToPage(totalPages)}
+          disabled={currentPage === totalPages}
+        >
+          {">>"}
+        </button>
+      </div>
     </div>
   );
-}
+};
