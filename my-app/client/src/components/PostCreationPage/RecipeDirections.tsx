@@ -1,12 +1,20 @@
 import { useContext } from "react";
 import { recipeContext } from "../../context/RecipeContext";
+import { recipeFormErrorContext } from "../../context/RecipeFormErrorsContext";
 
 function RecipeDirections() {
+  // Recipe context for db post
   const context = useContext(recipeContext);
   if (!context) {
     throw new Error('Component must be used within a RecipeProvider');
   }
   const { recipeForm, setRecipeForm } = context;
+  // Recipe error context from parent wrapper
+  const errorContext = useContext(recipeFormErrorContext);
+  if (!errorContext) {
+    throw new Error('Component must be used within a RecipeProvider');
+  }
+  const { recipeFormError } = errorContext;
 
   const addDirection = () => {
     setRecipeForm({...recipeForm, directions: [...(recipeForm.directions ?? []), ""]});
@@ -42,6 +50,7 @@ function RecipeDirections() {
       <button type="button" className="recipe-button" onClick={addDirection}>
         Add Step
       </button>
+      {recipeFormError.directions && <span className="error">{recipeFormError.directions}</span>}
     </div>
   );
 }

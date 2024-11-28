@@ -1,5 +1,6 @@
 import { ChangeEvent, useContext, useRef } from "react";
 import { recipeContext } from "../../context/RecipeContext";
+import { recipeFormErrorContext } from "../../context/RecipeFormErrorsContext";
 
 function RecipeMain() {
     const context = useContext(recipeContext);
@@ -7,6 +8,13 @@ function RecipeMain() {
         throw new Error('Component must be used within a RecipeProvider');
     }
     const { recipeForm, setRecipeForm } = context;
+
+    // Error context from parent wrapper
+    const errorContext = useContext(recipeFormErrorContext);
+    if (!errorContext) {
+        throw new Error('Component must be used within a RecipeProvider');
+    }
+    const { recipeFormError } = errorContext;
     
     // Use a ref to access the textarea DOM element
     const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -28,15 +36,18 @@ function RecipeMain() {
                 id="recipe-title-input"
                 value = {recipeForm.name}
                 onChange = {(e) => setRecipeForm({...recipeForm, name: e.target.value})}
-                required/>
+                />
             </div>
+            {recipeFormError.title && <span className="error">{recipeFormError.title}</span>}
             <div id='recipe-summary' className="large-input-field">
-                <label htmlFor="recipe-summary-input"><h2>Summary:</h2></label>
+                <label htmlFor="recipe-summary-input"><h2>Summary:</h2></label><br/>
+                <span><i>(300 characters max)</i></span>
                 <textarea 
                 id="recipe-summary-input"
                 ref={textareaRef}
                 onInput={handleInput}
                 onChange={(e) => setRecipeForm({...recipeForm, summary: e.target.value})}  />
+                {recipeFormError.summary && <span className="error">{recipeFormError.summary}</span>}
             </div>
         </div>
     )

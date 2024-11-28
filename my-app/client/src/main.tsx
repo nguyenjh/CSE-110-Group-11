@@ -22,6 +22,7 @@ import NoNavbarLayout from "./NoNav";
 import { RecipeContextProvider } from "./context/RecipeContext";
 import { AccountContextProvider } from "./context/AccountContext";
 import { FilterContextProvider } from "./context/FilterContext";
+import { RecipeFormErrorContextProvider } from "./context/RecipeFormErrorsContext";
 import "./index.css";
 import RecipeList from "./views/RecipeList";
 import PostCreation from "./views/PostCreation";
@@ -50,8 +51,10 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "/create",
-        element:  <RecipeContextProvider>                 
-                    <PostCreation />
+        element:  <RecipeContextProvider>
+                    <RecipeFormErrorContextProvider>
+                      <PostCreation />
+                    </RecipeFormErrorContextProvider>                 
                   </RecipeContextProvider>,
       },
     ],

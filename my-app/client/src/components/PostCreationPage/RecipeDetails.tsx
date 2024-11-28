@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { recipeContext } from "../../context/RecipeContext";
+import { recipeFormErrorContext } from "../../context/RecipeFormErrorsContext";
 import { suggestTag } from "../../constants/constants";
 
 function RecipeDetails() {
@@ -9,29 +10,32 @@ function RecipeDetails() {
   }
   const { recipeForm, setRecipeForm } = context;
 
+  const recipeError = useContext(recipeFormErrorContext);
+  if (!recipeError) {
+    throw new Error('Component must be used within a RecipeProvider');
+  }
+  const { recipeFormError } = recipeError;
+
+  const [disabledTags, setDisabledTags] = useState<Record<string, boolean>>({});
+
   const handleTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedTags = Array.from(
       event.target.selectedOptions,
       (option) => option.value
     );
+    if (selectedTags.length > 3) {
+      const newDisabledTags: Record<string, boolean> = {};
+      Array.from(event.target.options).forEach((option) => {
+        if (!selectedTags.includes(option.value)) {
+          newDisabledTags[option.value] = true; // Disable unselected options
+        }
+      });
+      setDisabledTags(newDisabledTags);
+    } else {
+      setDisabledTags({}); // Reset disabled state when fewer than 3 are selected
+    }
     setRecipeForm({ ...recipeForm, tags: selectedTags });
   };
-
-  // State and handlers of units to display an empty string by default and 
-  // this requires users to choose a valid unit (hours or minutes)
-  const [selectedPrepUnit, setSelectedPrepUnit] = useState("");
-  
-  const handlePrepUnitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-      setRecipeForm({...recipeForm, prep_time_unit: event.target.value});
-      setSelectedPrepUnit(event.target.value);
-  }
-
-  const [selectedTotalUnit, setSelectedTotalUnit] = useState("");
-
-  const handleTotalUnitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-      setRecipeForm({...recipeForm, estimated_total_time_unit: event.target.value});
-      setSelectedTotalUnit(event.target.value);
-  }
 
   return (
     <div id="recipe-details">
@@ -47,16 +51,17 @@ function RecipeDetails() {
           onChange={(e) =>
             setRecipeForm({ ...recipeForm, cost: Number(e.target.value) })
           }
-          required
         />
+        {recipeFormError.cost && <span className="error">{recipeFormError.cost}</span>}
       </div>
 
       {/* Tags input */}
       <div id="recipe-tags">
         <h2>Tags:</h2>
-        <span>CTRL+click to select multiple</span>
+        <span>CTRL+click to select multiple</span><br/>
+        <span><i>(4 tags max)</i></span>
       </div>
-      
+
       <div id="tag-selection" className="large-input-field">
         <select
           name="tags"
@@ -65,13 +70,20 @@ function RecipeDetails() {
           multiple
         >
           {suggestTag.map((item, index) => (
-            <option data-testid={`tag-${index}`} key={index} label={item}>
+            <option
+              data-testid={`tag-${index}`}
+              value={index}
+              key={index}
+              label={item}
+              disabled={disabledTags[index.toString()]}
+            >
               {item}
             </option>
           ))}
         </select>
+        {recipeFormError.tags && <span className="error">{recipeFormError.tags}</span>}
       </div>
-      
+
       {/* Calories input */}
       <div>
         <label htmlFor="calories">Calories (kcal):</label>
@@ -82,13 +94,13 @@ function RecipeDetails() {
           onChange={(e) =>
             setRecipeForm({ ...recipeForm, calories: Number(e.target.value) })
           }
-          required
         />
+        {recipeFormError.calories && <span className="error">{recipeFormError.calories}</span>}
       </div>
-      
+
       {/* Prep Time input */}
       <div>
-        <label htmlFor="prep-time">Prep Time:</label>
+        <label htmlFor="prep-time">Prep Time (minutes):</label>
         <input
           type="number"
           id="prep-time"
@@ -96,23 +108,10 @@ function RecipeDetails() {
           onChange={(e) =>
             setRecipeForm({ ...recipeForm, prep_time: Number(e.target.value) })
           }
-          required
         />
-        {/* Prep time units */}
-        <select
-          data-testid="prep-unit-input"
-          name="prep-unit-input"
-          className="time-unit-input"
-          onChange={handlePrepUnitChange}
-          value={selectedPrepUnit}
-          required
-        >
-          <option value="" disabled>--Select an option--</option>
-          <option value="Hours">Hours</option>
-          <option value="Minutes">Minutes</option>
-        </select>
+        {recipeFormError.prep_time && <span className="error">{recipeFormError.prep_time}</span>}
       </div>
-      
+
       {/* Serving size input */}
       <div>
         <label htmlFor="servings">Servings (#):</label>
@@ -123,20 +122,20 @@ function RecipeDetails() {
           onChange={(e) =>
             setRecipeForm({ ...recipeForm, serving: Number(e.target.value) })
           }
-          required
-          />
+        />
+        {recipeFormError.servings && <span className="error">{recipeFormError.servings}</span>}
       </div>
 
       {/* Total time input */}
       <div>
-        <label htmlFor="total-time">Total Time:</label>
+        <label htmlFor="total-time">Total Time (minutes):</label>
         <input
           type="number"
           id="total-time"
           value={
             recipeForm.estimated_total_time === 0
-            ? ""
-            : recipeForm.estimated_total_time
+              ? ""
+              : recipeForm.estimated_total_time
           }
           onChange={(e) =>
             setRecipeForm({
@@ -144,21 +143,8 @@ function RecipeDetails() {
               estimated_total_time: Number(e.target.value),
             })
           }
-          required
         />
-        {/* Total time units */}
-        <select
-          data-testid="total-unit-input"
-          name="total-unit-input"
-          className="time-unit-input"
-          value={selectedTotalUnit}
-          onChange={handleTotalUnitChange}
-          required
-        >
-          <option value="" disabled>--Select an option--</option>
-          <option value="Hours">Hours</option>
-          <option value="Minutes">Minutes</option>
-        </select>
+        {recipeFormError.total_time && <span className="error">{recipeFormError.total_time}</span>}
       </div>
     </div>
   );
