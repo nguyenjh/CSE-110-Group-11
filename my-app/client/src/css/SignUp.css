@@ -1,19 +1,10 @@
-/* General reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Page background */
-body {
+/* Parent container to center the signup-container */
+.signup-page {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-    font-family: Arial, sans-serif;
-    font-size: 18px; /* Increased base font size */
+    min-height: 100vh; /* Ensures the container takes up full viewport height */
+    background-color: white; /* White background for the entire page */
 }
 
 /* Sign-up container */
@@ -60,6 +51,8 @@ body {
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 1rem; /* Larger font */
+    background-color: white; /* Set background to white */
+    color: black;
 }
 
 /* Error messages */
@@ -78,6 +71,35 @@ body {
     margin-top: 12px;
     color: #333;
     font-size: 1rem;
+}
+
+/* Checkbox styling */
+.signup-container input[type="checkbox"] {
+    margin-right: 12px;
+    background-color: white; /* White background before clicking */
+    border: 2px solid #333; /* Dark border before clicking */
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    position: relative;
+    cursor: pointer;
+    border-radius: 4px; /* Rounded checkbox */
+}
+
+/* Checked state */
+.signup-container input[type="checkbox"]:checked {
+    background-color: #007bff; /* Dark background when checked */
+    border-color: black; /* Dark border when checked */
+}
+
+/* Checkmark inside the checkbox */
+.signup-container input[type="checkbox"]:checked::after {
+    content: "\2713"; /* Unicode checkmark character */
+    position: absolute;
+    top: -4px;
+    left: 2px; /* Adjust position for centering */
+    font-size: 18px; /* Make the checkmark large enough */
+    color: white; /* White checkmark */
 }
 
 .signup-container input[type="checkbox"] {
@@ -101,6 +123,7 @@ body {
     background-color: #555;
 }
 
+/* Modal styles */
 .modal {
     position: fixed;
     top: 0;
@@ -112,9 +135,9 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
-  
-  .modal-content {
+}
+
+.modal-content {
     position: relative;
     background: #d3d3d3;
     padding: 20px;
@@ -123,15 +146,16 @@ body {
     max-width: 375px;
     width: 90%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .modal-content h2 {
+}
+
+.modal-content h2 {
     font-size: 26px;
     margin-top: 40px;
     margin-bottom: 15px;
-  }
-  
-  .modal-content button {
+    color: black;
+}
+
+.modal-content button {
     margin-top: 10px;
     padding: 10px 20px;
     background-color: #333;
@@ -139,8 +163,8 @@ body {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
-  
-  .modal-content button:hover {
+}
+
+.modal-content button:hover {
     background-color: #555;
-  }  
+}

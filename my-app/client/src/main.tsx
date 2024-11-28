@@ -18,6 +18,7 @@ import {
   RouteObject,
 } from "react-router-dom";
 import App from "./App";
+import NoNavbarLayout from "./NoNav";
 import { RecipeContextProvider } from "./context/RecipeContext";
 import { AccountContextProvider } from "./context/AccountContext";
 import { FilterContextProvider } from "./context/FilterContext";
@@ -27,6 +28,8 @@ import PostCreation from "./views/PostCreation";
 import RecipeContent from "./views/RecipeContent";
 import AccountPage from "./views/AccountPage";
 import HomePage from "./views/HomePage";
+import LoginPage from "./views/LoginPage";
+import SignUp from "./views/SignUp";
 
 
 const routes: RouteObject[] = [
@@ -74,7 +77,21 @@ const routes: RouteObject[] = [
   }
 ];
 
-const router = createBrowserRouter(routes);
+const routesWithoutNavbar: RouteObject[] = [
+  {
+    path: "/signup",
+    element: <SignUp />, 
+  },
+  {
+    path: "/login",
+    element: <LoginPage />, 
+  },
+];
+
+const router = createBrowserRouter([
+  ...routes,
+  ...routesWithoutNavbar,
+]);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
