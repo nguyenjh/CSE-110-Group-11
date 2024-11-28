@@ -1,9 +1,6 @@
-body {
-  text-align: center;
-}
 
-input {
-  width: 100%; /* Ensure the input field stretches inside its parent */
+#create-recipe input {
+  width: 100%;
   border-radius: 0.2rem;
   border: none;
   padding: 8px;
@@ -12,6 +9,7 @@ input {
 
 /* Page main content formatting */
 #create-recipe {
+  text-align: center;
   padding: 20px 0;
   display: grid;
   grid-template-columns: 1fr;
@@ -35,10 +33,6 @@ input {
 /* Class/different feature type stylings */
 .recipe-button {
   height: 50px;
-}
-
-.long-text-input {
-  width: 90%;
 }
 
 .large-input-field {
@@ -140,6 +134,10 @@ ol {
   background-color: #eaeaea;
 }
 
+.multiple-selector option:disabled {
+  color: #ccc;
+}
+
 .multiple-selector::-webkit-scrollbar {
   display: block;
   width: 8px; /* Width for vertical scrollbar */
@@ -175,11 +173,13 @@ ol {
 }
 
 #ingredients input {
+  width: calc(100% - 50px); /* Ensure the input field stretches inside its parent */
   padding: 5px;
   margin: 5px;
 }
 
-#ingredients > * {
+#ingredients > div, 
+#ingredients > button {
   border-radius: 1rem;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
@@ -209,11 +209,21 @@ ol {
   padding: 15px;
   background: none;
 }
-
+#directions input {
+  width: calc(100% - 50px); /* Ensure the input field stretches inside its parent */
+}
 #directions > div,
 #directions > button {
   border-radius: 1rem;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Error messages */
+.error {
+  color: red;
+  font-size: 14px;
+  display: block;
+  margin-top: 8px;
 }
 
 /* Placement of recipe descriptors within the recipe-summary grid */

@@ -27,6 +27,7 @@ import PostCreation from "./views/PostCreation";
 import RecipeContent from "./views/RecipeContent";
 import AccountPage from "./views/AccountPage";
 import HomePage from "./views/HomePage";
+import { RecipeFormErrorContextProvider } from "./context/RecipeFormErrorsContext";
 
 
 const routes: RouteObject[] = [
@@ -46,8 +47,10 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "/create",
-        element:  <RecipeContextProvider>                 
-                    <PostCreation />
+        element:  <RecipeContextProvider>
+                    <RecipeFormErrorContextProvider>
+                      <PostCreation />
+                    </RecipeFormErrorContextProvider>                 
                   </RecipeContextProvider>,
       },
     ],

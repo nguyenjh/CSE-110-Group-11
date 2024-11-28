@@ -7,6 +7,7 @@ import '@testing-library/jest-dom';
 import RecipeContent from './views/RecipeContent';
 import { RecipeContextProvider } from './context/RecipeContext';
 import PostCreation from './views/PostCreation';
+import { RecipeFormErrorContextProvider } from './context/RecipeFormErrorsContext';
 
 describe('Test nav bar', () => {
   it('should render side navigation bar and dropdowns', async () => {
@@ -102,7 +103,9 @@ describe('PostCreation Component', () => {
     render(
       <MemoryRouter initialEntries={['/create']}>
         <RecipeContextProvider>
-          <PostCreation />
+          <RecipeFormErrorContextProvider>
+            <PostCreation />
+          </RecipeFormErrorContextProvider>
         </ RecipeContextProvider>
       </ MemoryRouter>
     );
@@ -113,11 +116,9 @@ describe('PostCreation Component', () => {
     expect(screen.getByText("Cost ($):")).toBeVisible();
     expect(screen.getByText("Tags:")).toBeVisible();
     expect(screen.getByText("Calories (kcal):")).toBeVisible();
-    expect(screen.getByText("Prep Time:")).toBeVisible();
-    expect(screen.getByTestId("prep-unit-input")).toBeVisible();
+    expect(screen.getByText("Prep Time (minutes):")).toBeVisible();
     expect(screen.getByText("Servings (#):")).toBeVisible();
-    expect(screen.getByText("Total Time:")).toBeVisible();
-    expect(screen.getByTestId("total-unit-input")).toBeVisible();
+    expect(screen.getByText("Total Time (minutes):")).toBeVisible();
     expect(screen.getByText("Ingredients")).toBeVisible();
     expect(screen.getByText("Add Ingredient")).toBeVisible();
     expect(screen.getByText("Upload Additional Photos")).toBeInTheDocument();
