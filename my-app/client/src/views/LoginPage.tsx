@@ -63,9 +63,11 @@ const LoginPage: React.FC = () => {
         }));
         return;
       }
-  
+      
       // If the response is OK, use the parsed data for success handling
       console.log('Login success:', responseBody);
+      localStorage.setItem('user', JSON.stringify(responseBody));
+      // setIsLogin(true);
   
       // Redirect to homepage
       window.location.href = '/'; // Adjust route as needed

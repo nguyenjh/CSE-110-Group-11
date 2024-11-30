@@ -38,7 +38,11 @@ export default function NavBar() {
     */
     const toggleSignOutClick = () => { 
       setIsLogin(false);
-      setUserInfo({name:"", email: ""})
+      setUserInfo({name:"", email: ""});
+      localStorage.removeItem('user'); // Clear user data
+      localStorage.removeItem('setupTime'); // Clear any other stored items
+      // window.location.href = '/'; // Redirect to home page
+
     };
     
     return (
@@ -50,6 +54,8 @@ export default function NavBar() {
                 <li><NavLink to="/"><img src={logo} className='logo' style={{width:'30px'}}/></NavLink></li>
                 <li className={isLogin ? 'visible': 'hidden'}><NavLink to="/create">Create</NavLink></li>
                 <li className={isLogin ? 'visible': 'hidden'}><a className='Account' href="#">Account</a></li>
+                {/* <li className={isLogin ? 'visible': 'hidden'}><a className='Account' href="#">Account</a></li> */}
+
                 <li className={isLogin ? 'visible': 'hidden'}><NavLink to="/favorite">Favorite</NavLink></li>
                 <li className={isLogin ? 'visible': 'hidden'}><a className='Setting' href="#">Setting</a></li>
                 <li> {isLogin? <a className='SignOut' role='button' onClick={toggleSignOutClick}>Sign Out</a> : <a className='SignIn' href="#">Sign In</a>} </li>
