@@ -11,13 +11,21 @@ export default function NavBar() {
     const [isLogin, setIsLogin] = useState(false);
 
     //can change to token to determine if user is logged in or out
-    useEffect(()=>{
-      if(!userInfo.name){
+    // useEffect(()=>{
+    //   if(!userInfo.name){
+    //     setIsLogin(false);
+    //   } else{
+    //     setIsLogin(true);
+    //   };
+    // }, [userInfo])
+
+    useEffect(() => {
+      if (!userInfo || !userInfo.name) {
         setIsLogin(false);
-      } else{
+      } else {
         setIsLogin(true);
-      };
-    }, [userInfo])
+      }
+    }, [userInfo]);
 
     console.log(`is login: ${isLogin}`)
 
@@ -38,7 +46,12 @@ export default function NavBar() {
     */
     const toggleSignOutClick = () => { 
       setIsLogin(false);
-      setUserInfo({name:"", email: ""})
+
+      setUserInfo({name:"", email: ""});
+      localStorage.removeItem('user'); // Clear user data
+      localStorage.removeItem('setupTime'); // Clear any other stored items
+      // window.location.href = '/'; // Redirect to home page
+
     };
     
     return (
@@ -49,7 +62,9 @@ export default function NavBar() {
               <ul>
                 <li><NavLink to="/"><img src={logo} className='logo' style={{width:'30px'}}/></NavLink></li>
                 <li className={isLogin ? 'visible': 'hidden'}><NavLink to="/create">Create</NavLink></li>
+
                 <li className={isLogin ? 'visible': 'hidden'}><NavLink to="/account">Account</NavLink></li>
+
                 <li className={isLogin ? 'visible': 'hidden'}><NavLink to="/favorite">Favorite</NavLink></li>
                 <li> {isLogin? <NavLink to="/" onClick={toggleSignOutClick}>Sign Out</NavLink> : <NavLink to="/login">Log In</NavLink>} </li>
                 

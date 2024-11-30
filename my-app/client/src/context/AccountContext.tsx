@@ -5,6 +5,8 @@ interface AccountContextType {
   userInfo: UserInformation;
   setUserInfo: React.Dispatch<React.SetStateAction<UserInformation>>;
 }
+const loggedInUser = JSON.parse(localStorage.getItem('user') || 'null');
+
 
 const newUser: UserInformation = {
     name: "John Doe",
@@ -12,7 +14,7 @@ const newUser: UserInformation = {
   };
 
 const initialState: AccountContextType = {
-  userInfo: newUser,
+  userInfo: loggedInUser,
   setUserInfo: () => {},
 };
 
