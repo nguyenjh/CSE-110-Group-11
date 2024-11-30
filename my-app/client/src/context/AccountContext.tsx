@@ -8,10 +8,10 @@ interface AccountContextType {
 const loggedInUser = JSON.parse(localStorage.getItem('user') || 'null');
 
 
-// const newUser: UserInformation = {
-//     name: "John Doe",
-//     email: "johndoe@example.com"
-//   };
+const newUser: UserInformation = {
+    name: "John Doe",
+    email: "johndoe@example.com"
+  };
 
 const initialState: AccountContextType = {
   userInfo: loggedInUser,
