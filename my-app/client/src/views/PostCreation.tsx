@@ -52,6 +52,12 @@ function PostCreation() {
       isValid = false;
     }
 
+    if (recipeForm.name.length > 40) {
+      validationErrors.title = 'Please enter a title shorter than 40 characters.';
+      console.log('Please enter a title shorter than 40 characters.')
+      isValid = false;
+    }
+
     if (recipeForm.summary.length > 300) {
       validationErrors.summary = 'Summary must be less than 300 characters.';
       isValid = false;
