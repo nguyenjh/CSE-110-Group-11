@@ -49,10 +49,9 @@ export default function NavBar() {
               <ul>
                 <li><NavLink to="/"><img src={logo} className='logo' style={{width:'30px'}}/></NavLink></li>
                 <li className={isLogin ? 'visible': 'hidden'}><NavLink to="/create">Create</NavLink></li>
-                <li className={isLogin ? 'visible': 'hidden'}><a className='Account' href="#">Account</a></li>
+                <li className={isLogin ? 'visible': 'hidden'}><NavLink to="/account">Account</NavLink></li>
                 <li className={isLogin ? 'visible': 'hidden'}><NavLink to="/favorite">Favorite</NavLink></li>
-                <li className={isLogin ? 'visible': 'hidden'}><a className='Setting' href="#">Setting</a></li>
-                <li> {isLogin? <a className='SignOut' role='button' onClick={toggleSignOutClick}>Sign Out</a> : <a className='SignIn' href="#">Sign In</a>} </li>
+                <li> {isLogin? <NavLink to="/" onClick={toggleSignOutClick}>Sign Out</NavLink> : <NavLink to="/login">Log In</NavLink>} </li>
                 
               </ul>
             </div>
