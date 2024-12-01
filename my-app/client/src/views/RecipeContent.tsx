@@ -229,36 +229,10 @@ function RecipeContent() {
            </div>
 
 
-           {/* Image and Comments Section */}
-           <div className="imgAndCommentsContainer">
+           {/* Image Section */}
+           <div className="imgContainer">
              <div className="imgHolder">
                <img className='pasta_img' src={pasta_img} alt="Delicious plate of pasta" />
-             </div>
-            
-             {/* Comments Section */}
-             <div className="comments">
-               <h3>Comments:</h3>
-              
-               {/* Input field to post a new comment */}
-               <div className="commentInputAndBtn">
-                 <input
-                   type="text"
-                   placeholder="Post a comment"
-                   value={newComment}
-                   onChange={(e) => setNewComment(e.target.value)}
-                 />
-                 <button onClick={handleAddComment}>Post</button>
-               </div>
-              
-               {/* Display each comment */}
-               <div className="comment-section">
-                 {comments.map((comment, index) => (
-                   <div>
-                    <p>{comment.text}</p>
-                    <CommentLike comment={comment} index={index} />
-                   </div>
-                 ))}
-               </div>
              </div>
            </div>
          </div>
