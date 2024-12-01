@@ -191,7 +191,11 @@ function RecipeContent() {
              {/* Ingredients List */}
              <div className="ingredients">
                <h3>Ingredients:</h3>
-               <p>{recipeData?.ingredients}</p>
+               <p>
+                 {recipeData?.ingredients?.length
+                   ? recipeData.ingredients.join(", ")
+                   : "No ingredients available"}
+               </p>
              </div>
 
 
@@ -199,13 +203,11 @@ function RecipeContent() {
              <div className="directions">
                <h3>Directions:</h3>
                <ol>
-                 {recipeData?.directions?.length ? (
-                   recipeData.directions.map((direction, index) => (
-                     <li key={index}>{direction}</li>
-                   ))
-                 ) : (
-                   <li>No directions available</li>
-                 )}
+                 {recipeData?.directions?.length
+                   ? recipeData.directions.map((direction, index) => (
+                       <li key={index}>{direction}</li>
+                     ))
+                   : <li>No directions available</li>}
                </ol>
              </div>
 

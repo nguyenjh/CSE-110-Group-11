@@ -87,10 +87,14 @@
     text-decoration: underline;
   }
   
-  /* Ordered List Styling */
-  ol {
+  .directions ol {
+    list-style-type: decimal; /* Ensures numbers are displayed */
+    margin-left: 20px; /* Adds indentation for clarity */
     padding-left: 20px;
   }
+  .directions li {
+      list-style-position: inside; /* Ensures numbers align correctly */
+  } 
   
   /* Action Buttons Layout */
   .actions {

@@ -1,7 +1,7 @@
 /* Global styles for consistency */
-li {
+.d-flex li {
   list-style: none;
-}
+ } 
 
 a {
   text-decoration: none;
