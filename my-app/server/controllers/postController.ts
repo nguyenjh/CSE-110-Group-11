@@ -121,3 +121,57 @@ export const addPost = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Failed to add post", error: err });
   }
 };
+
+export const updateRating = async (req: Request, res: Response): Promise<void> => {
+  const postId = req.params.id;
+  const { newRating, incrementCount } = req.body;
+
+  // Validate the incoming rating
+  if (typeof newRating !== 'number') {
+    res.status(400).json({ error: 'Invalid rating. Must be a number.' });
+    return; // Ensure the function exits after responding
+  }
+
+  // Validate incrementCount (optional, if not provided defaults to false)
+  if (typeof incrementCount !== 'boolean') {
+    res.status(400).json({ error: 'Invalid incrementCount. Must be a boolean.' });
+    return;
+  }
+
+  try {
+    // Atomic update logic
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId,
+      [
+        {
+          $set: {
+            ratingsTotal: { $add: ["$ratingsTotal", newRating] }, // Add newRating to ratingsTotal
+            numOfRatings: { $add: ["$numOfRatings", incrementCount ? 1 : 0] }, // Conditionally increment numOfRatings
+            rating: { // Recalculate the average rating
+              $round: [
+                {
+                  $divide: [
+                    { $add: ["$ratingsTotal", newRating] },
+                    { $add: ["$numOfRatings", incrementCount ? 1 : 0] },
+                  ],
+                },
+                1,
+              ],
+            },
+          },
+        },
+      ],
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedPost) {
+      res.status(404).json({ error: 'Post not found' });
+      return;
+    }
+
+    res.status(200).json({ message: 'Rating updated successfully', post: updatedPost });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
