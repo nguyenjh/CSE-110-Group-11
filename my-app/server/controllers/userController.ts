@@ -20,6 +20,9 @@ const generateToken = (id: string): string => {
 // @desc    Register new user
 // @route   POST /api/users
 // @access  Public
+// @desc    Register new user
+// @route   POST /api/users
+// @access  Public
 const registerUser = asyncHandler(async (req: Request, res: Response): Promise<void> => {
   const { name, email, password }: { name: string; email: string; password: string } = req.body;
 
@@ -29,10 +32,25 @@ const registerUser = asyncHandler(async (req: Request, res: Response): Promise<v
   }
 
   try {
-    // Check if user exists
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-      res.status(400).json({ message: 'User already exists' });
+    // Check if user exists by email
+    const emailExists = await User.findOne({ email });
+    // Check if user exists by username
+    const usernameExists = await User.findOne({ name });
+
+    if (emailExists && usernameExists) {
+      res.status(400).json({ message: 'Both email and username already exist' });
+      return;
+    }
+
+    // If only email exists
+    if (emailExists) {
+      res.status(400).json({ message: 'Email already exists' });
+      return;
+    }
+
+    // If only username exists
+    if (usernameExists) {
+      res.status(400).json({ message: 'Username already exists' });
       return;
     }
 
@@ -62,6 +80,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response): Promise<v
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
 
 // @desc    Login user
 // @route   POST /api/users/login

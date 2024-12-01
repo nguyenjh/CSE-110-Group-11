@@ -69,8 +69,6 @@ const SignUp: React.FC = () => {
 
     if (!isValid) {
       validationErrors.form = '*Please check the fields above';
-    } else {
-      openModal();
     }
 
     setErrors(validationErrors);
@@ -87,8 +85,12 @@ const SignUp: React.FC = () => {
 
   const handleSubmit = async () => {
     const isValid = validateForm();
-
+  
+    // Don't proceed if there are validation errors
     if (!isValid) return;
+
+    // Reset modal in case of any previous errors
+    setIsModalOpen(false);
 
     try {
       const response = await fetch('http://localhost:5050/api/register', {
@@ -102,31 +104,41 @@ const SignUp: React.FC = () => {
           password: formData.password,
         }),
       });
-
+  
       if (!response.ok) {
         let errorMessage = 'Registration failed';
         try {
           const errorData = await response.json();
           errorMessage = errorData.message || errorMessage;
         } catch {
-          // No valid JSON in the response
+          // Handle case where the response is not JSON
         }
+  
+        // Set the error message in the state (for display)
         setErrors((prevErrors) => ({
           ...prevErrors,
           form: errorMessage,
         }));
+  
+        // Don't show the modal if there's an error from backend
         return;
       }
-
+  
       const data = await response.json();
       console.log('User registered:', data);
-      openModal(); // Open modal on successful registration
+  
+      // Open the modal only if registration is successful
+      openModal();
     } catch (error) {
       console.error('Error during registration:', error);
+  
+      // Handle network or server errors
       setErrors((prevErrors) => ({
         ...prevErrors,
         form: 'Something went wrong. Please try again later.',
       }));
+  
+      // Don't show the modal if there's a network/server error
     }
   };
 
