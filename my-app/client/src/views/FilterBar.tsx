@@ -2,15 +2,18 @@ import { useState, useContext, useEffect } from 'react';
 import '../css/FilterBar.css';
 import { suggestTag } from '../constants/constants';
 import { filterContext } from "../context/FilterContext";
-import SearchBar from './SearchBar';
+import { searchContext } from "../context/SearchContext";
 import SearchIcon from "../assets/search_icon.svg";
 
 export default function FilterBar() {
-  const context = useContext(filterContext);
-  if (!context) {
+  const filterContextContent = useContext(filterContext);
+  const searchContextContent = useContext(searchContext);
+
+  if (!filterContextContent) {
     throw new Error('Component must be used within a RecipeProvider');
   }
-  const { filterForm, setFilterForm } = context;
+  const { filterForm, setFilterForm } = filterContextContent;
+  const { setSearch } = searchContextContent;
 
   const [selectedFilters, setSelectedFilters] = useState({
     cost: 'Cost',
@@ -79,92 +82,7 @@ export default function FilterBar() {
     });
     setIsClicked([]);  // Clear the selected tags
   };
-  //Search bar functionality
-  const dummyRecipeList = [
-    {
-        name: "Fish-sauce Fried Chicken",
-        rating: 4.8,
-        likes: 1000,
-        summary: "abcdedfgh",
-        prep_time: 15,
-        prep_time_unit: "minutes",
-        estimated_total_time: 45,
-        estimated_total_time_unit: "minutes",
-        serving: 2,
-        calories: 500,
-        cost: 20,
-        tags: ["chicken", "fried", "Vietnamese"],
-        ingredients: ["chicken, fish sauce"],
-        directions: ["fried chicken with fish saure"],
-    },
-    {
-        name: "Burger",
-        rating: 4.8,
-        likes: 1000,
-        summary: "abcdedfgh",
-        prep_time: 15,
-        prep_time_unit: "minutes",
-        estimated_total_time: 45,
-        estimated_total_time_unit: "minutes",
-        serving: 2,
-        calories: 500,
-        cost: 20,
-        tags: ["beef", "burger", "fast-food"],
-        ingredients: ["beef", "burger"],
-        directions: ["buy it"],
-    },
-    {
-        name: "Spaghetti",
-        rating: 4.8,
-        likes: 1000,
-        summary: "abcdedfgh",
-        prep_time: 15,
-        prep_time_unit: "minutes",
-        estimated_total_time: 45,
-        estimated_total_time_unit: "minutes",
-        serving: 2,
-        calories: 500,
-        cost: 20,
-        tags: ["Italy"],
-        ingredients: ["chicken, spaghetti"],
-        directions: ["buy some"],
-    },
-    {
-        name: "Fried Rice",
-        rating: 4.8,
-        likes: 1000,
-        summary: "abcdedfgh",
-        prep_time: 15,
-        prep_time_unit: "minutes",
-        estimated_total_time: 45,
-        estimated_total_time_unit: "minutes",
-        serving: 2,
-        calories: 500,
-        cost: 20,
-        tags: ["chicken", "fried", "Vietnamese"],
-        ingredients: ["chicken, fish sauce"],
-        directions: ["fry rice"],
-    }]
-  const [filterData, setFilterData] = useState([]);
-  const [typingWord, setTypingWord] = useState<string>("");
-  const handleChange = (event) => {
-  const word = event.target.value;
-  //change dummyRecipeList to data
-  const filter = dummyRecipeList.filter((value) => {
-    return value.name.toUpperCase().includes(word.toUpperCase());
-  })
   
-  setTypingWord(word);
-
-  if(word == "")
-  {
-    setFilterData([]);
-  }
-  else {
-    setFilterData(filter);
-  }
-}
-
   return (
     <div className="d-flex" id="wholebar">
 
@@ -279,31 +197,12 @@ export default function FilterBar() {
         <div className = "search-bar-container">
           <div className='search-bar-with-icon'>
             <div className='searchingInput'>
-              <input type ='text' placeholder="Enter a recipe name" onChange={handleChange} />
+              <input type ='text' placeholder="Enter a recipe name" onChange= {(e) => setSearch(e.target.value)} />
               
               <div className='icon'>
                 <img src = {SearchIcon} id="searchIcon"/>
               </div>
             </div>
-
-            {/*the result will only shows if we type in something */}
-            {typingWord.length !== 0 && 
-              (
-                <div className='searchingResult'>
-                  {filterData.length > 0 ? (
-                    filterData.slice(0, 10).map((value, key) => (
-                      <a key={key} className='searchingItem' /* do whatever we want here */>
-                        <p>{value.name}</p>
-                      </a>
-                    ))
-                  ) : (
-                    <a className='searchingItem' /* do whatever we want here */>
-                      <p>No Matching Search Found</p>
-                    </a>
-                  )}
-                </div>
-              )
-            }
           </div>
         </div>   
       </div>

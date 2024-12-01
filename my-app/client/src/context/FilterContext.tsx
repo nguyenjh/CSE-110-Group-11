@@ -24,6 +24,8 @@ export const FilterContextProvider: React.FC<{ children: ReactNode }> = ({ child
     tags: [],
   });
 
+
+
   return (
     <filterContext.Provider value={{ filterForm, setFilterForm }}>
       {children}

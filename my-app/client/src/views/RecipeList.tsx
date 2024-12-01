@@ -5,15 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import { IPost } from "../../../PostInterface";
 import { filterContext } from "../context/FilterContext";
+import { searchContext } from "../context/SearchContext";
 import "../css/Pagination.css";
-
-// Define the type for filterForm
-interface FilterForm {
-  cost?: string;
-  calories?: string;
-  time?: string;
-  sortBy?: string;
-}
 
 interface recipe_content extends IPost {
   _id: string;
@@ -39,26 +32,43 @@ const Recipe: React.FC<recipe_props> = ({ recipe }) => (
 );
 
 export default function RecipeList() {
-  const context = useContext(filterContext);
-  if (!context) {
+  const filterContextContent = useContext(filterContext);
+  const searchContextContent = useContext(searchContext);
+
+  if (!filterContextContent) {
     throw new Error("Component must be used within a RecipeProvider");
   }
 
-  const { filterForm } = context;
+  const { filterForm } = filterContextContent;
+  const { search } = searchContextContent;
   const [recipes, setRecipes] = useState<recipe_content[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [postSearchRecipes, setPostSearchRecipes] = useState<recipe_content[]>(recipes);
 
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPerPage = 18;
 
+  // Change the postSearchRecipes whenever search changes.
+  useEffect (() => {
+    setPostSearchRecipes(recipes.filter((recipe) => {
+      return search.toLowerCase() === '' ? recipe : recipe.name.toLowerCase().includes(search.toLowerCase())}));}
+    , [search, recipes]
+  );
+
+  useEffect(() => {
+    setCurrentPage(1);}, [search]
+  );
+
+
+
   // Pagination logic
   const maxVisiblePages = 3; // Max number of page buttons to display
-  const totalPages = Math.ceil(recipes.length / resultsPerPage);
+  const totalPages = Math.ceil(postSearchRecipes.length / resultsPerPage);
   const indexOfLastRecipe = currentPage * resultsPerPage;
   const indexOfFirstRecipe = indexOfLastRecipe - resultsPerPage;
-  const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
-  
+  const currentRecipes = postSearchRecipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
+
   const getPageNumbers = () => {
     let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
     let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
@@ -126,12 +136,14 @@ export default function RecipeList() {
       <div className="row mt-3" style={{ display: "flex", flexWrap: "wrap" }}>
         {loading && <div className="text-center w-100">Loading recipes...</div>}
         {error && <div className="text-danger text-center w-100">{error}</div>}
-        {!loading && !error && recipes.length === 0 && (
+        {!loading && !error && postSearchRecipes.length === 0 && (
           <div className="text-center w-100">No recipes match your criteria.</div>
         )}
 
         {/* Displaying the list of recipes */}
-        {currentRecipes.map((recipe) => (
+        {currentRecipes.filter((recipe) => {
+          return search.toLowerCase() === '' ? recipe : recipe.name.toLowerCase().includes(search.toLowerCase()); })
+          .map((recipe) => (
           <div className="col-sm-4" key={recipe._id}>
             <Recipe recipe={recipe} />
           </div>
@@ -139,7 +151,9 @@ export default function RecipeList() {
       </div>
 
       {/* Pagination Controls */}
+      {!loading && !error && postSearchRecipes.length !== 0 && (
       <div id="pagination">
+        
         <button 
           onClick={() => goToPage(1)}
           disabled={currentPage === 1}
@@ -173,7 +187,7 @@ export default function RecipeList() {
         >
           {">>"}
         </button>
-      </div>
+      </div>)}
     </div>
   );
 };
