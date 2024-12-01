@@ -54,19 +54,6 @@
     color: white;
   }
   
-  /* Specific Tag Background Colors */
-  .tag.fast {
-    background-color: green;
-  }
-  
-  .tag.cheap {
-    background-color: lightgreen;
-  }
-  
-  .tag.italian {
-    background-color: blue;
-  }
-  
   /* Ingredients and Directions Section */
   .ingredients, 
   .directions,

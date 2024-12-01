@@ -8,8 +8,11 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import express from "express"
-import { getPost, addPost, getFilteredPosts} from "../controllers/postController";
+
 import { protect } from "../middleware/auth"
+
+import { getPost, addPost, getFilteredPosts, updateRating} from "../controllers/postController";
+
 
 const router = express.Router();
 
@@ -21,7 +24,12 @@ router.get("/", getFilteredPosts);
 router.get("/:id", getPost);
 
 // POST Request to add recipe to database.
+
 router.post("/", protect, addPost);
+
+
+router.patch('/:id', updateRating);
+
 // Patch Request to Update a Specific Recipe: When on homepage/:id page, compile the form data 
 // from req and update the recipe found from the id param. 
 

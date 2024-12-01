@@ -144,8 +144,7 @@ function PostCreation() {
         },
         body: JSON.stringify({
           name: post.name,
-          rating: 5,
-          likes: 10,
+          likes: 0,
           summary: post.summary,
           prep_time: post.prep_time,
           prep_time_unit: "minutes",
@@ -153,7 +152,7 @@ function PostCreation() {
           estimated_total_time_unit: "minutes",
           serving: post.serving,
           calories: post.calories,
-          cost: 5,
+          cost: post.cost,
           tags: post.tags,
           ingredients: post.ingredients,
           directions: post.directions
@@ -166,8 +165,18 @@ function PostCreation() {
     }
     catch (error) {
       console.error('A problem occurred with your fetch operation: ', error);
-    } finally {
-      setRecipeForm({...recipeForm, name: "", summary: "", directions:[]});
+    } finally { // Reset form on submit for next recipe submission
+      setRecipeForm({...recipeForm, 
+          name: "",
+          summary: "",
+          prep_time: 0,
+          estimated_total_time: 0,
+          serving: 0,
+          calories: 0,
+          cost: 0,
+          tags: [],
+          ingredients: [],
+          directions: []});
       navigate("/");
     }
   }

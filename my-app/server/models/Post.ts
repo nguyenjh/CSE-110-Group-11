@@ -25,7 +25,9 @@ const PostSchema: Schema = new Schema({
   cost: { type: Number, required: false },
   tags: { type: [String], required: false },
   ingredients: { type: [String], required: false },
-  directions: { type: [String], required: false }
+  directions: { type: [String], required: false },
+  numOfRatings: { type: Number, default: 0 , required: false},
+  ratingsTotal: { type: Number, default: 0, required: false },
 });
 
 export const Post = mongoose.model<PostInterface>('Post', PostSchema);
