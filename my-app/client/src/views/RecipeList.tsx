@@ -50,7 +50,9 @@ export default function RecipeList() {
   const [error, setError] = useState<string | null>(null);
 
   const [currentPage, setCurrentPage] = useState(1);
+  // INCREASE RECIPES PER PAGE FROM 3 TO 18
   const resultsPerPage = 18;
+  // INCREASE RECIPES PER PAGE FROM 3 TO 18
 
   // Pagination logic
   const maxVisiblePages = 3; // Max number of page buttons to display
