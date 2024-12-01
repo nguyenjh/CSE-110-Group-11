@@ -27,6 +27,8 @@ function PostCreation() {
   }
   const { recipeFormError, setRecipeFormError } = recipeError;
 
+  
+
   /* 
    * Checks form is filled in expected format for each field
   */
@@ -126,17 +128,19 @@ function PostCreation() {
     console.log('hello')
     const isValid = validateForm();
     if(!isValid) return;
-
     const post = { ...recipeForm };
     try {
       let response;
-  
+    
       // Here we add a recipe to the database, however we have a few values that aren't from post, 
       // which we will either change later or remain default. 
+      const userString = localStorage.getItem("user");
+      const token = userString ? JSON.parse(userString)?.token : "";
       response = await fetch(`http://localhost:5050/recipe/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           name: post.name,

@@ -3,9 +3,15 @@ import { IPost } from '../../PostInterface';
 
 interface PostInterface extends IPost, Document{
   _id: Types.ObjectId;
+  user: Types.ObjectId;
 }
 
 const PostSchema: Schema = new Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   name: { type: String, required: true },
   rating: { type: Number, required: false },
   likes: { type: Number, required: false },

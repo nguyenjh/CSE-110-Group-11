@@ -85,9 +85,14 @@ export const getPost = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Failed to fetch post by id", error: err });
   }
 };
+interface AuthenticatedRequest extends Request {
+  user?: { id: string }; // Extend the Request type to include the user
+}
 
-export const addPost = async (req: Request, res: Response) => {
+export const addPost = async (req: AuthenticatedRequest, res: Response) => {
   try {
+    const userId = req.user?.id;
+
     const { name, rating, likes, summary, prep_time, prep_time_unit, estimated_total_time, estimated_total_time_unit, serving, calories, cost, tags, ingredients, directions } = req.body;
 
     // Validate that all required fields are provided
@@ -97,6 +102,7 @@ export const addPost = async (req: Request, res: Response) => {
 
     // Create a new post using the data from req.body
     const post = new Post({
+      user: userId,
       name,
       rating,
       likes,

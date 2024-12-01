@@ -8,7 +8,11 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 import express from "express"
+
+import { protect } from "../middleware/auth"
+
 import { getPost, addPost, getFilteredPosts, updateRating} from "../controllers/postController";
+
 
 const router = express.Router();
 
@@ -20,7 +24,9 @@ router.get("/", getFilteredPosts);
 router.get("/:id", getPost);
 
 // POST Request to add recipe to database.
-router.post("/", addPost);
+
+router.post("/", protect, addPost);
+
 
 router.patch('/:id', updateRating);
 
