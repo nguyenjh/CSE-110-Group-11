@@ -20,4 +20,6 @@ export interface IPost {
   tags: string[];
   ingredients: string[];
   directions: string[];
+  numOfRatings: number;
+  ratingsTotal: number;
 }
