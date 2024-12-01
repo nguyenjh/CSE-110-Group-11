@@ -9,14 +9,14 @@ const default_selected_color = '#FFBB00';
 
 // Props interface
 interface RatingStarsProps {
-    initialRating: string | null;
-    recipeID: string;
+    initialRating: number | undefined;
+    recipeID: string | undefined;
 }
 
 export default function RatingStars({initialRating, recipeID}:RatingStarsProps) {
-    initialRating = initialRating ? initialRating : '0'; // Unwrapping optional initialRating
+    initialRating = initialRating ? initialRating : 0; // Unwrapping optional initialRating
     // State to separate onhover and onclick rating star states
-    const [rating, setRating] = useState(parseInt(initialRating)); // Retains old value if post has be reviewed before, else 0 
+    const [rating, setRating] = useState(initialRating); // Retains old value if post has be reviewed before, else 0 
     const [tempRating, setTempRating] = useState(0);
     
     // Star array for the five star symbols display
@@ -29,7 +29,7 @@ export default function RatingStars({initialRating, recipeID}:RatingStarsProps) 
     const handleClickSymbol = async(new_rating_input:number) => {
         setRating(new_rating_input);
         const incrementCount = (!ratingsMap.has(recipeID)); // True means user has never rated this recipe before:+1 to the numRatings
-        const newRating = new_rating_input-parseInt(initialRating); // Difference between new and old
+        const newRating = initialRating; // Difference between new and old
 
         console.log("isThisNewRating?: " + incrementCount)
         console.log("difference of new vs old rating: " + newRating)

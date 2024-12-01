@@ -151,17 +151,6 @@ function RecipeContent() {
   ratings array = [(recipe id, rating), ...] array<tuple<num, num>> 
  */
 
-  /* Rating Star */
-  //  Initial star array display determined from user's rating (if nonexistent then rating is zero)
-  const ratingsMap = new Map(); // TODO: get current session's user's ratings list
-  ratingsMap.set(`673bbff9ef36b9f360142f4a`, 4); // Temp testing hardcoded user's ratings list 
-  const recipeID = params.id?.toString(); // Get recipe ID to use as key to find current user's initial rating (old rating or 0 if novel)
-  if (!recipeID) {
-    console.warn("No recipe ID provided");
-    return;
-  }
-  const rating = ratingsMap.get(recipeID);
-
   return (
     <div className="app">
       <div className="recipe">
@@ -244,7 +233,7 @@ function RecipeContent() {
                >
                  Like: {isLiked ? '💖' : '🤍'}
                </button>
-               <RatingStars initialRating={rating} recipeID={recipeID} />
+               <RatingStars initialRating={recipeData?.rating} recipeID={recipeData?._id} />
              </div>
            </div>
 
