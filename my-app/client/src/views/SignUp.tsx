@@ -131,6 +131,7 @@ const SignUp: React.FC = () => {
   };
 
   return (
+    // wrap all content in div signup-page
     <div className="signup-page">
       <div className="signup-container">
         <Link to="/login" className="back-button">

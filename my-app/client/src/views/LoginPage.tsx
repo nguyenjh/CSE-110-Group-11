@@ -84,6 +84,7 @@ const LoginPage: React.FC = () => {
   
 
   return (
+    // wrap all content in div login-page
     <div className="login-page">
     <div className="login-container">
       <h1>Login</h1>
