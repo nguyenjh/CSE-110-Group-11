@@ -34,7 +34,7 @@ export default function RatingStars({initialRating, recipeID}:RatingStarsProps) 
         console.log("isThisNewRating?: " + incrementCount)
         console.log("difference of new vs old rating: " + newRating)
         try {
-            const response = await fetch(`http://localhost:5050/recipe/${recipeID}`, {
+            const response = await fetch(`http://localhost:5050/recipe/${recipeID}/`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

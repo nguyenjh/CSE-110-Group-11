@@ -93,7 +93,7 @@ export const addPost = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const userId = req.user?.id;
 
-    const { name, rating, likes, summary, prep_time, prep_time_unit, estimated_total_time, estimated_total_time_unit, serving, calories, cost, tags, ingredients, directions } = req.body;
+    const { name, rating, likes, summary, prep_time, prep_time_unit, estimated_total_time, estimated_total_time_unit, serving, calories, cost, tags, ingredients, directions, numOfRatings, ratingsTotal } = req.body;
 
     // Validate that all required fields are provided
     if (!name) {
@@ -116,7 +116,9 @@ export const addPost = async (req: AuthenticatedRequest, res: Response) => {
       cost,
       tags,
       ingredients,
-      directions
+      directions,
+      numOfRatings,
+      ratingsTotal,
     });
     await post.save();
     console.log("Just saved post");
