@@ -1,6 +1,7 @@
-li{
+.topbar-item li{
   list-style: none;
 }
+
 a{
   text-decoration: none;
 }
