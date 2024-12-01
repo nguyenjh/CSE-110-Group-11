@@ -19,14 +19,14 @@ function RecipeDetails() {
   const [disabledTags, setDisabledTags] = useState<Record<string, boolean>>({});
 
   const handleTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedTags = Array.from(
+    const selectedTagsIndices = Array.from(
       event.target.selectedOptions,
       (option) => option.value
     );
-    if (selectedTags.length > 3) {
+    if (selectedTagsIndices.length > 3) {
       const newDisabledTags: Record<string, boolean> = {};
       Array.from(event.target.options).forEach((option) => {
-        if (!selectedTags.includes(option.value)) {
+        if (!selectedTagsIndices.includes(option.value)) {
           newDisabledTags[option.value] = true; // Disable unselected options
         }
       });
@@ -34,6 +34,7 @@ function RecipeDetails() {
     } else {
       setDisabledTags({}); // Reset disabled state when fewer than 3 are selected
     }
+    const selectedTags = selectedTagsIndices.map(index => suggestTag[parseInt(index)]);
     setRecipeForm({ ...recipeForm, tags: selectedTags });
   };
 
