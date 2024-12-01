@@ -1,6 +1,5 @@
 import {useContext, useEffect, useState} from 'react';
 import '../css/NavBar.css';
-import { suggestTag } from '../constants/constants';
 import {NavLink} from "react-router-dom";
 import logo from "../assets/logo.svg";
 import { AccountContext } from '../context/AccountContext';

@@ -96,7 +96,7 @@ a {
   background-color: rgb(165, 215, 243);
   position: fixed;
   height: 60%;
-  width: 20%;
+  width: 15%;
   left: -50%;
   display: flex;
   flex-direction: column;
@@ -143,9 +143,14 @@ a {
 /* Filter tags in sidebar */
 .filter-item {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 5px;
-  padding: 10px;
+  background-color: rgb(177, 233, 219);
+  border-radius: 5px;
+  width: 70%;
+  scrollbar-width: thin;
+  scrollbar-color: black;
+  overflow-y: auto;
+  max-height: 400px;
 }
 
 .filter-item .tag {
@@ -275,7 +280,6 @@ input:focus {
   border-bottom-right-radius: 20px;
   max-height:  200px;
   z-index: 5;
-
 }
 
 .searchingResult .searchingItem {
@@ -293,4 +297,57 @@ input:focus {
 
 .searchingResult p:hover {
   background-color: lightgrey;
+}
+
+@media screen and (max-width: 1000px) {
+
+  .hamburger-menu {
+    width: 50x;
+    height: 50px;
+
+  }
+  
+  .title-container {
+    font-size: 10px;
+    text-align: left;
+    margin: 10px 0;
+  }
+
+  .search-bar-container {
+    display: flex;
+    align-items: center;
+  
+  }
+  
+  .searchingInput {
+    display: flex;
+    margin-right: -5px;
+  }
+  
+  .searchingInput input {
+    background-color: beige;
+    border: none;
+    font-size: 18px;
+    padding: 15px;
+    height: 45px;
+    width: 100px;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+  }
+  
+  input:focus {
+    outline: none;
+  }
+  
+  #searchIcon {
+    height: 45px;
+    width: 45px;
+    background-color: beige;
+    display: grid;
+    place-items: center;
+    padding: 10px;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    margin-left: -5px;
+  }
 }

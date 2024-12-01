@@ -102,3 +102,17 @@ a{
   transition: opacity 0.3s ease;
   opacity: 1;
 }
+
+@media screen and (max-width: 700px) {
+  #navbar{
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    background-color: lightpink;
+    position:sticky;
+    left:0;
+    display:inline-flex;
+    border-bottom: 5px solid black;
+    z-index: 3000;
+  }
+}
