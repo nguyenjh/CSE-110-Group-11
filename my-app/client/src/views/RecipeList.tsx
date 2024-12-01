@@ -30,7 +30,7 @@ const Recipe: React.FC<recipe_props> = ({ recipe }) => (
       <div className="mb-2" style={{ fontSize: "20px", fontWeight: "bold" }}>{recipe.name}</div>
       <div className="mb-2">4.2R - 12 likes - Sept 12</div>
       <div className="tags-container p-2 mt-2">
-        {suggestTag.map((tag) => (
+        {recipe.tags.map((tag) => (
           <span key={tag} className="badge me-2" style={{ backgroundColor: "lightblue", color: "black", fontSize: "15px" }}>{tag}</span>
         ))}
       </div>
