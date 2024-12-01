@@ -33,6 +33,8 @@ function RecipeContent() {
 
  // State to manage the input for new comments
  const [newComment, setNewComment] = useState('');
+ // State to mange alert visability for share feature
+ const [alertVisible, setAlertVisible] = useState(false);
 
 
  // Function to handle adding a new comment to the comments list
@@ -91,7 +93,7 @@ function RecipeContent() {
  /*Favorite Button*/
  const [favoriteList, setFavoriteList] = useState<string[]>([]); //favorite list per user, get from db later
 
-
+ // Bookmark/favorite funcionality
  function ToggleBookmark({ recipeID, testID }: { recipeID: string; testID: string }) {
    const [favoriteList, setFavoriteList] = useState<string[]>(() => {
      const savedList = localStorage.getItem("favoriteList");
@@ -146,8 +148,13 @@ function RecipeContent() {
  const recipeID = '1'; // Hard code for demo, change to const recipeID = recipeData?._id;
  const ratings = localStorage.getItem(`starRating ${recipeID}`); // Change to get it from db later
 
-
-
+ // Share button functionality
+ const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setAlertVisible(true);
+      setTimeout(() => setAlertVisible(false), 2000); // Hide alert after 2 seconds
+    });
+ };
 
  return (
    <div className="app">
@@ -214,7 +221,8 @@ function RecipeContent() {
 
              {/* Action Buttons Section */}
              <div className="actions">
-               <button>Share: 🔗</button>
+               <button onClick={handleShare}>Share: 🔗</button>
+               <p className={`alert-box ${alertVisible ? 'visible' : ''}`}>Copied to clipboard!</p>
                <button>Bookmark: <ToggleBookmark recipeID={recipeData?._id ?? ""} testID="bookmark-up" /></button> {/*hardcode for now, can change later*/}
                <button
                  data-testid='like-post'
