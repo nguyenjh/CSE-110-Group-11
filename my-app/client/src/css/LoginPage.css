@@ -1,3 +1,4 @@
+/* instead of global selectors, we use the div made in tsx to serve as a local page holder for login */
 .login-page {
     display: flex;
     justify-content: center;
