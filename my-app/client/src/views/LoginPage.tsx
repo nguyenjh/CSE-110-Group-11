@@ -124,6 +124,13 @@ const LoginPage: React.FC = () => {
       {errors.form && <span className="error" id="form-error">{errors.form}</span>}
 
       <p>Not registered? <Link to="/signup">Create an account</Link></p>
+      
+      <div className="skip-container">
+      <p className="skip-link">
+      Don't want to create an account? <br />
+      <Link to="/">Skip to Home Page</Link>
+      </p>
+      </div>
     </div>
     </div>
   );
