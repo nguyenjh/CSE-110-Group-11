@@ -137,7 +137,7 @@ const updateFavorites = asyncHandler(async (req: AuthenticatedRequest, res: Resp
     return;
   }
 
-  const user = await User.findById(userId);
+  const user = await User.findById(userId).select('-password');
 
   if (!user) {
     res.status(404).json({ message: 'User not found' });
@@ -167,7 +167,7 @@ const updateRatings = asyncHandler(async (req: AuthenticatedRequest, res: Respon
     return;
   }
 
-  const user = await User.findById(userId)
+  const user = await User.findById(userId).select('-password');
 
   // Check that user does exist.
   if (!user) {
