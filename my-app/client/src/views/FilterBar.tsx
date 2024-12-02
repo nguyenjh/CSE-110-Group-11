@@ -61,7 +61,12 @@ export default function FilterBar() {
     if (isClicked.includes(clickedTag)) {
       setIsClicked(prevClicked => prevClicked.filter((f) => f !== clickedTag));
     } else {
-      setIsClicked(prevClicked => [...prevClicked, clickedTag]);
+      if(isClicked.length < 4) {
+        setIsClicked(prevClicked => [...prevClicked, clickedTag]);
+      }
+      else {
+        alert("You are allowed to choose 4 tags only!");
+      }
     }
   };
 
