@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/LoginPage.css';
+import foodBG from '../assets/foodBG.jpg'; // Import image
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -86,6 +87,8 @@ const LoginPage: React.FC = () => {
   return (
     // wrap all content in div login-page
     <div className="login-page">
+      <div className="title">PLATEFUL</div>
+      <div className="background" style={{backgroundImage: `url(${foodBG})`}}></div>
     <div className="login-container">
       <h1>Login</h1>
       <input
