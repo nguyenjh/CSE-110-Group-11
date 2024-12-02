@@ -42,10 +42,10 @@ describe('Test filter bar', () => {
     expect(screen.getByText('> $30')).toBeInTheDocument();
   
     fireEvent.click(calories);
-    expect(screen.getByText('< 500 Calo')).toBeInTheDocument();
-    expect(screen.getByText('500-750 Calo')).toBeInTheDocument();
-    expect(screen.getByText('751-1000 Calo')).toBeInTheDocument();
-    expect(screen.getByText('> 1000 Calo')).toBeInTheDocument();
+    expect(screen.getByText('< 500 Cal')).toBeInTheDocument();
+    expect(screen.getByText('500-750 Cal')).toBeInTheDocument();
+    expect(screen.getByText('751-1000 Cal')).toBeInTheDocument();
+    expect(screen.getByText('> 1000 Cal')).toBeInTheDocument();
   
     fireEvent.click(time);
     expect(screen.getByText('< 10 mins')).toBeInTheDocument();
