@@ -103,7 +103,7 @@ export default function FilterBar() {
                 <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("cost", "$5-$15")}>$5-$15</a>
               </li>
               <li>
-                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("cost", "$15-$30")}>$15-$30</a>
+                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("cost", "$16-$30")}>$16-$30</a>
               </li>
               <li>
                 <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("cost", "> $30")}>&gt; $30</a>
