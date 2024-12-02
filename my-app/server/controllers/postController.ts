@@ -40,15 +40,18 @@ export const getFilteredPosts = async (req: Request, res: Response) => {
       query.cost = { $gt: 30};
     }
 
-    if (calories === "< 50 Calo") {
-      console.log("Filtering posts with calories under 50");
-      query.calories = { $lt: 50 };
-    } else if (calories === "50-150 Calo") {
-      console.log("Filtering posts with calories between 50 and 150");
-      query.calories = { $gte: 50, $lte: 150 };
-    } else if (calories === "> 150 Calo") {
-      console.log("Filtering posts with calories over 150");
-      query.calories = { $gt: 150 };
+    if (calories === "< 500 Cal") {
+      console.log("Filtering posts with calories under 500");
+      query.calories = { $lt: 500 };
+    } else if (calories === "500-750 Cal") {
+      console.log("Filtering posts with calories between 500 and 750");
+      query.calories = { $gte: 500, $lte: 750 };
+    } else if (calories === "751-1000 Cal") {
+      console.log("Filtering posts with calories between 751 and 1000");
+      query.calories = { $gte: 751, $lte: 1000 };
+    }else if (calories === "> 1000 Cal") {
+    console.log("Filtering posts with calories over 1000");
+    query.calories = { $gt: 1000 };
     }
 
     if (time === "< 10 mins") {
