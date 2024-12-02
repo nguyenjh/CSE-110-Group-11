@@ -28,7 +28,7 @@
 
 /* Login container styles */
 .login-container {
-    background-color: rgba(211, 211, 211, 1); /* Slight transparency to see some of the background */
+    background-color: rgba(211, 211, 211, 1); 
     padding: 25px 50px;
     border-radius: 12px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -45,22 +45,22 @@
     color: black;
 }
 
-.login-container .h1 {
+.login-container h1 {
     color: black;
 }
 
 /* Input fields */
-.login-container input[type="email"],
-.login-container input[type="password"] {
+.signup-container input[type="email"],
+.signup-container input[type="text"],
+.signup-container input[type="password"] {
     width: 100%;
     padding: 12px; /* Increased padding */
     margin: 12px 0 6px;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 1rem; /* Larger font */
-    background-color: white;
+    background-color: white; /* Set background to white */
     color: black;
-    
 }
 
 /* Error messages */
