@@ -6,13 +6,14 @@ interface IUser extends Document {
   email: string;
   password: string;
   ratings: [string, number][];
+  favorites: string[];
 }
 
 const UserSchema: Schema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: {type: String, required: true},
-  favorites: { type: String, default: [], required: false },
+  favorites: { type: [String], default: [], required: false },
   ratings: {
     type: [
       {
