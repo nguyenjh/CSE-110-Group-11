@@ -61,7 +61,12 @@ export default function FilterBar() {
     if (isClicked.includes(clickedTag)) {
       setIsClicked(prevClicked => prevClicked.filter((f) => f !== clickedTag));
     } else {
-      setIsClicked(prevClicked => [...prevClicked, clickedTag]);
+      if(isClicked.length < 4) {
+        setIsClicked(prevClicked => [...prevClicked, clickedTag]);
+      }
+      else {
+        alert("You are allowed to choose 4 tags only!");
+      }
     }
   };
 
@@ -161,20 +166,24 @@ export default function FilterBar() {
               </li>
             </ul>
           </li>
-
-          {/* Tags Filter */}
-          <li className="filter-item">
-            {suggestTag.map(item => (
-              <button 
-                key={item} 
-                className={`tag ${isClicked.includes(item) ? "active" : ""}`}
-                onClick={() => toggleClick(item)}
-              >
-                {item}
-              </button>
-            ))}
-          </li>
         </ul>
+
+        {/* Tags Filter */}
+        <div className="filter-item">
+            <div className = "tags-container">
+              <div className="row gx-3 gy-3">
+                {suggestTag.map(item => (
+                  <div key={item}  className='col-6'>
+                    <button 
+                      className={`tag ${isClicked.includes(item) ? "active" : ""}`}
+                      onClick={() => toggleClick(item)}>
+                      {item}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+        </div>
 
         {/* Clear Filters Button */}
         <button className="btn btn-danger clear-filters-btn" onClick={clearFilters}>
@@ -193,7 +202,8 @@ export default function FilterBar() {
         <div className='title-container'> 
           <h1 className="topbar-title" >Recipes</h1>
         </div>
-
+        
+        {/* Search Bar */}
         <div className = "search-bar-container">
           <div className='search-bar-with-icon'>
             <div className='searchingInput'>
