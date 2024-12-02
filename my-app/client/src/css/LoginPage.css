@@ -50,9 +50,8 @@
 }
 
 /* Input fields */
-.signup-container input[type="email"],
-.signup-container input[type="text"],
-.signup-container input[type="password"] {
+.login-container input[type="email"],
+.login-container input[type="password"] {
     width: 100%;
     padding: 12px; /* Increased padding */
     margin: 12px 0 6px;

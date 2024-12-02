@@ -1,5 +1,6 @@
 /* instead of global selectors, we use the div made in tsx to serve as a local page holder for signup */
-/* Login page setup */
+
+/* Sign Up page setup */
 .signup-page {
     position: relative; /* Make it a positioned container */
     display: flex;
