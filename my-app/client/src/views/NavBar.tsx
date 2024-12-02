@@ -58,7 +58,9 @@ export default function NavBar() {
       <div className="d-flex" id="wholebar">  {/* code for side bar, top bar and right bar*/}
         <nav className="navbar navbar-expand border-bottom" id="navbar" data-testid = "topbar">  {/* create another 'hidden' navbar so that the + button always at the bottom right of the screen*/}
         <div className="navbar-left">
-        <div className="title">PLATEFUL</div>
+          <NavLink to="/" className="title-link">
+            <div className="title">PLATEFUL</div>
+          </NavLink>
         </div>
               {/*code for the top nav bar*/} 
             <div className='topbar-item'>  
