@@ -29,11 +29,11 @@ export const getFilteredPosts = async (req: Request, res: Response) => {
       query.cost = { $lt: 5 };
     } else if (cost === "$5-$15") {
       console.log("Filtering posts with cost between $5 and $15");
-      query.cost = { $gt: 5, $lt: 15 };
+      query.cost = { $gte: 5, $lte: 15 };
     }
-    else if (cost === "$15-$30") {
-    console.log("Filtering posts with cost between $15 and $30");
-    query.cost = { $gt: 15, $lt: 30 };
+    else if (cost === "$16-$30") {
+    console.log("Filtering posts with cost between $16 and $30");
+    query.cost = { $gte: 16, $lte: 30 };
     }
     else if (cost === "> $30") {
       console.log("Filtering posts with cost over $30");
@@ -45,7 +45,7 @@ export const getFilteredPosts = async (req: Request, res: Response) => {
       query.calories = { $lt: 50 };
     } else if (calories === "50-150 Calo") {
       console.log("Filtering posts with calories between 50 and 150");
-      query.calories = { $gt: 50, $lt: 150 };
+      query.calories = { $gte: 50, $lte: 150 };
     } else if (calories === "> 150 Calo") {
       console.log("Filtering posts with calories over 150");
       query.calories = { $gt: 150 };

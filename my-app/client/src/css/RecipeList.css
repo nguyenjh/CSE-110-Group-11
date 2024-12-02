@@ -1,0 +1,102 @@
+/* Recipe list grid layout */
+.recipe-list {
+    display: grid;
+    gap: 30px; 
+    padding: 20px;
+  }
+  
+  /* Recipe Card */
+  .recipe-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: rgb(169, 222, 240);
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%; /* Full width within the parent container */
+    max-height: 250px;
+  }
+  
+  .recipe-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Recipe Name */
+  .recipe-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: #130404;
+  }
+  
+  /* Recipe Info */
+  .recipe-info {
+    font-size: 14px;
+    color: black;
+  }
+  
+  /* Tags Container */
+  .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .tag {
+    background-color: lightgreen;
+    color: black;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 15px;
+  }
+  
+  /* Media query for screen widths <= 900px */
+  @media screen and (max-width: 1300px) {
+    .recipe-card {
+      width: 200px; 
+      max-width: none; 
+    }
+    .recipe-name {
+        font-size: 20px;
+        font-weight: bold;
+        color: #130404;
+        word-wrap: break-word; 
+        overflow-wrap: break-word;
+        white-space: normal; 
+      }
+  }
+
+  @media screen and (max-width: 1000px) {
+    .recipe-card {
+      width: 150px; 
+      max-height: fit-content;
+    }
+
+    .recipe-name {
+        font-size: 20px;
+        font-weight: bold;
+        color: #130404;
+        word-wrap: break-word; 
+        overflow-wrap: break-word;
+        white-space: normal;
+      }
+  }
+
+  @media screen and (max-width: 700px) {
+    .recipe-card {
+      width: 100px; 
+      max-height: fit-content;
+    }
+
+    .recipe-name {
+        font-size: 15px;
+        font-weight: bold;
+        color: #130404;
+        word-wrap: break-word; 
+        overflow-wrap: break-word;
+        white-space: normal;
+      }
+  }
+  
