@@ -146,6 +146,7 @@ const SignUp: React.FC = () => {
   return (
     // wrap all content in div signup-page
     <div className="signup-page">
+      <div className="title">PLATEFUL</div>
     <div className="background" style={{backgroundImage: `url(${foodBG})`}}></div>
       <div className="signup-container">
 

@@ -39,10 +39,15 @@
 
 /* Title */
 .login-page .title {
+    border-top: 5px solid #ffffff; /* Add a top border */
+    border-bottom: 5px solid #ffffff; /* Add a bottom border */
     font-size: 50px;
     font-weight: bold;
-    margin-bottom:37px;
-    color: black;
+    margin-bottom: 37px;
+    color: white;
+      text-shadow: 0 0 2px #000; /* horizontal-offset vertical-offset 'blur' colour */
+  -moz-text-shadow: 0 0 2px #000;
+  -webkit-text-shadow: 0 0 2px #000;
 }
 
 .login-container h1 {

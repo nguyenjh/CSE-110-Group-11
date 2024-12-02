@@ -87,6 +87,7 @@ const LoginPage: React.FC = () => {
   return (
     // wrap all content in div login-page
     <div className="login-page">
+      <div className="title">PLATEFUL</div>
       <div className="background" style={{backgroundImage: `url(${foodBG})`}}></div>
     <div className="login-container">
       <h1>Login</h1>
