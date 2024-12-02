@@ -14,7 +14,9 @@ interface RatingStarsProps {
 }
 
 export default function RatingStars({initialRating, recipeID}:RatingStarsProps) {
+    let noRating = initialRating ? 0 : 1;
     initialRating = initialRating ? initialRating : 0; // Unwrapping optional initialRating
+
     // State to separate onhover and onclick rating star states
     const [rating, setRating] = useState(initialRating); // Retains old value if post has be reviewed before, else 0 
     const [tempRating, setTempRating] = useState(0);
@@ -23,12 +25,27 @@ export default function RatingStars({initialRating, recipeID}:RatingStarsProps) 
     let stars = Array(numberOfSymbols).fill(symbol);
 
     // Dummy user ratingsList map
-    const ratingsMap = new Map(); // TODO: get current session's user's ratings list
-    ratingsMap.set(`673bbff9ef36b9f360142f4a`, 4); // Temp testing hardcoded user's ratings list   
+    const userString = localStorage.getItem('user');
+    let user;
+    let userId;
+    let token;
+
+// Parse the JSON string into an object
+    if (userString) {
+        user = JSON.parse(userString);
+        userId = user._id;
+        token = user.token;
+        console.log('User ID:', userId);
+    } else {
+        user = null;
+        userId = null;
+        token = null;
+        console.log('No user found in localStorage');
+    }
 
     const handleClickSymbol = async(new_rating_input:number) => {
         setRating(new_rating_input);
-        const incrementCount = (!ratingsMap.has(recipeID)); // True means user has never rated this recipe before:+1 to the numRatings
+        const incrementCount = (!noRating); // True means user has never rated this recipe before:+1 to the numRatings
         const newRating = initialRating; // Difference between new and old
 
         console.log("isThisNewRating?: " + incrementCount)
@@ -51,8 +68,35 @@ export default function RatingStars({initialRating, recipeID}:RatingStarsProps) 
         
             const data = await response.json();
             console.log('Rating updated successfully:', data);
-            return data;
-        } catch (error) {
+            } catch (error) {
+            console.error('Error updating rating:', error);
+            throw error;
+        }
+
+        try{
+            const response = await fetch(`http://localhost:5050/api/ratings/`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                userId: userId,
+                itemId: recipeID, 
+                newRating: newRating, })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to update ratings');
+                }
+            
+                const data = await response.json();
+                console.log('Rating updated successfully:', data);
+            
+        }
+
+        catch (error) {
             console.error('Error updating rating:', error);
             throw error;
         }
@@ -73,11 +117,11 @@ export default function RatingStars({initialRating, recipeID}:RatingStarsProps) 
                     onMouseLeave={() => setTempRating(0)}
                     onClick={() => handleClickSymbol(star_index + 1)}>
                     
-                 {symbol}
+                {symbol}
                 </div>)
             })}
             </div>      
-      </div>
+        </div>
     )
 
 }
