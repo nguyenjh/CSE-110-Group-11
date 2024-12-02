@@ -22,7 +22,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(7px); /* Apply the blur effect */
+    filter: saturate(0.6);
     z-index: -1; /* Ensure the background stays behind the content */
 }
 
