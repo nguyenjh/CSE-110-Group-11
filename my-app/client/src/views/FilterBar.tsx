@@ -123,13 +123,16 @@ export default function FilterBar() {
             </a>
             <ul className="dropdown-menu" aria-labelledby="caloDropdown">
               <li>
-                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("calories", "< 50 Calo")}>&lt; 50 Calo</a>
+                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("calories", "< 500 Cal")}>&lt; 500 Cal</a>
               </li>
               <li>
-                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("calories", "50-150 Calo")}>50-150 Calo</a>
+                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("calories", "500-750 Cal")}>500-750 Cal</a>
               </li>
               <li>
-                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("calories", "> 150 Calo")}>&gt; 150 Calo</a>
+                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("calories", "751-1000 Cal")}>751-1000 Cal</a>
+              </li>
+              <li>
+                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("calories", "> 1000 Cal")}>&gt; 1000 Cal</a>
               </li>
             </ul>
           </li>
