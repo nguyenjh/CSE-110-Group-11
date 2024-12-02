@@ -129,4 +129,64 @@ const getAll = asyncHandler(async (req: Request, res: Response): Promise<void> =
     res.json(users);
 });
 
-export { registerUser, loginUser, getMe, getAll };
+const updateFavorites = asyncHandler(async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  const { userId, itemId } = req.body; 
+
+  if (!itemId || !userId) {
+    res.status(400).json({ message: 'Action must be a boolean and itemId is required.' });
+    return;
+  }
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    res.status(404).json({ message: 'User not found' });
+    return;
+  }
+
+  if (!user.favorites.includes(itemId)) {
+    user.favorites.push(itemId);
+  }
+
+  else {
+
+  user.favorites = user.favorites.filter((id) => id !== itemId);
+  }
+
+  await user.save(); 
+
+  res.status(200).json({ message: 'Favorites updated', favorites: user.favorites });
+});
+
+const updateRatings = asyncHandler(async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  const { userId, itemId, newRating } = req.body; 
+
+  // Check that body variables exist
+  if (!itemId || !userId || !newRating) {
+    res.status(400).json({ message: 'Action must be a boolean and itemId is required.' });
+    return;
+  }
+
+  const user = await User.findById(userId)
+
+  // Check that user does exist.
+  if (!user) {
+    res.status(404).json({ message: 'User not found' });
+    return;
+  }
+
+  const existingRating = user.ratings.find(([id]) => id === itemId);
+
+  // Update or add rating entry.
+  if (existingRating) {
+    existingRating[1] = newRating;
+  } else {
+    user.ratings.push([itemId, newRating]);
+  }
+
+  await user.save();
+
+  res.status(200).json({ message: 'Ratings updated', ratings: user.ratings });
+});
+
+export { registerUser, loginUser, getMe, getAll , updateFavorites, updateRatings};
