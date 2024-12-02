@@ -27,6 +27,13 @@ function PostCreation() {
   }
   const { recipeFormError, setRecipeFormError } = recipeError;
 
+  // Saving date to store in recipe post
+  const d = new Date();
+  let day = d.getDate();
+  let month = d.getMonth() + 1;
+  let year = d.getFullYear();
+  const date = month + "/" + day + "/" + year;
+
   /* 
    * Checks form is filled in expected format for each field
   */
@@ -151,7 +158,8 @@ function PostCreation() {
           cost: post.cost,
           tags: post.tags,
           ingredients: post.ingredients,
-          directions: post.directions
+          directions: post.directions,
+          // date: date, TODO: Implement data in schema
         }),
       });
   
