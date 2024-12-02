@@ -48,14 +48,14 @@ function PostCreation() {
       form: ''
     };
 
-    if (recipeForm.name.length < 4) {
-      validationErrors.title = 'Please enter a title.';
+    if (recipeForm.name.length <= 3) {
+      validationErrors.title = 'Please enter a title longer than 3 characters.';
       console.log('Please enter a title.')
       isValid = false;
     }
 
     // MAX CHARACTERS FOR TITLE ADDITION
-    if (recipeForm.name.length > 40) {
+    if (recipeForm.name.length >= 40) {
       validationErrors.title = 'Please enter a title shorter than 40 characters.';
       console.log('Please enter a title shorter than 40 characters.')
       isValid = false;
