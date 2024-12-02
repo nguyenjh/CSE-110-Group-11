@@ -1,44 +1,65 @@
 /* instead of global selectors, we use the div made in tsx to serve as a local page holder for signup */
+/* Login page setup */
 .signup-page {
+    position: relative; /* Make it a positioned container */
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    min-height: 100vh; /* Ensures the container takes up full viewport height */
-    background-color: white; /* White background for the entire page */
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden; /* Prevent any overflow */
 }
 
-/* Sign-up container */
+/* Background div */
+.signup-page .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/assets/foodBG.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(7px); /* Apply the blur effect */
+    z-index: -1; /* Ensure the background stays behind the content */
+}
+
+/* Signup container styles */
 .signup-container {
-    background-color: #d3d3d3;
-    padding: 25px 50px; /* Increased padding */
-    border-radius: 12px; /* Larger border radius */
+    background-color: rgba(211, 211, 211, 1); /* Slight transparency to see some of the background */
+    padding: 25px 50px;
+    border-radius: 12px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
-    width: 320px; /* Larger width */
-    position: relative;
-}
-
-/* Back button */
-.back-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    font-size: 1.1rem; /* Larger font size */
-    color: #333;
-    text-decoration: none;
-}
-
-.back-button:hover {
-    text-decoration: underline;
+    width: 320px;
+    position: relative; /* Ensure the form stays above the blurred background */
 }
 
 /* Title */
-.signup-container h1 {
-    font-size: 1.8rem;
+.signup-page .title {
+    font-size: 50px;
     font-weight: bold;
-    margin-top: 50px;
-    margin-bottom: 25px;
+    margin-bottom:10px;
+    color: black;
+}
+  
+  .back-button {
+    position: absolute;
+    top: 10px; /* Adjust distance from top */
+    left: 10px; /* Adjust distance from left */
+    font-size: 1rem;
     color: #333;
+    text-decoration: none;
+  }
+  
+  .back-button:hover {
+    text-decoration: underline;
+  }
+
+
+.signup-container .h1 {
+    color: black;
 }
 
 /* Input fields */

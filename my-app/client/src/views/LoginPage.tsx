@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/LoginPage.css';
+import foodBG from '../assets/foodBG.jpg'; // Import image
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -86,6 +87,7 @@ const LoginPage: React.FC = () => {
   return (
     // wrap all content in div login-page
     <div className="login-page">
+      <div className="background" style={{backgroundImage: `url(${foodBG})`}}></div>
     <div className="login-container">
       <h1>Login</h1>
       <input
@@ -124,6 +126,13 @@ const LoginPage: React.FC = () => {
       {errors.form && <span className="error" id="form-error">{errors.form}</span>}
 
       <p>Not registered? <Link to="/signup">Create an account</Link></p>
+
+      <div className="skip-container">
+      <p className="skip-link">
+      Don't want to create an account? <br />
+      <Link to="/">Skip to Home Page</Link>
+      </p>
+      </div>
     </div>
     </div>
   );
