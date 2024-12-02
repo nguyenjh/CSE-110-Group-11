@@ -390,5 +390,39 @@ input:focus {
   .hamburger-menu {
     padding: 5px; 
   }
+
+  .sidebar {
+    background-color: rgb(165, 215, 243);
+    height: 60%;
+    width: 300px;
+    left: -100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    transition: .2s ease;
+    gap: 15px;
+    border-radius: 5%;
+    align-items: center;
+    z-index: 100;  
+    margin-top: 100px;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .sidebar {
+    background-color: rgb(165, 215, 243);
+    height: 60%;
+    width: 300px;
+    left: -100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    transition: .2s ease;
+    gap: 15px;
+    border-radius: 5%;
+    align-items: center;
+    z-index: 100;  
+    margin-top: 100px;
+  }
 }
 
