@@ -38,7 +38,7 @@ describe('Test filter bar', () => {
     fireEvent.click(cost);
     expect(screen.getByText('< $5')).toBeInTheDocument();
     expect(screen.getByText('$5-$15')).toBeInTheDocument();
-    expect(screen.getByText('$15-$30')).toBeInTheDocument();
+    expect(screen.getByText('$16-$30')).toBeInTheDocument();
     expect(screen.getByText('> $30')).toBeInTheDocument();
   
     fireEvent.click(calories);
