@@ -57,15 +57,21 @@ export default function NavBar() {
     return (
       <div className="d-flex" id="wholebar">  {/* code for side bar, top bar and right bar*/}
         <nav className="navbar navbar-expand border-bottom" id="navbar" data-testid = "topbar">  {/* create another 'hidden' navbar so that the + button always at the bottom right of the screen*/}
+        <div className="navbar-left">
+        <div className="title">PLATEFUL</div>
+        </div>
               {/*code for the top nav bar*/} 
             <div className='topbar-item'>  
               <ul>
+
                 <li><NavLink to="/"><img src={logo} className='logo' style={{width:'30px'}}/></NavLink></li>
+
                 <li className={isLogin ? 'visible': 'hidden'}><NavLink to="/create">Create</NavLink></li>
 
                 <li className={isLogin ? 'visible': 'hidden'}><NavLink to="/account">Account</NavLink></li>
 
                 <li className={isLogin ? 'visible': 'hidden'}><NavLink to="/favorite">Favorite</NavLink></li>
+
                 <li> {isLogin? <NavLink to="/" onClick={toggleSignOutClick}>Sign Out</NavLink> : <NavLink to="/login">Log In</NavLink>} </li>
                 
               </ul>
