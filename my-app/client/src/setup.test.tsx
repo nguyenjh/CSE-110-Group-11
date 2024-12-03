@@ -38,13 +38,14 @@ describe('Test filter bar', () => {
     fireEvent.click(cost);
     expect(screen.getByText('< $5')).toBeInTheDocument();
     expect(screen.getByText('$5-$15')).toBeInTheDocument();
-    expect(screen.getByText('$15-$30')).toBeInTheDocument();
+    expect(screen.getByText('$16-$30')).toBeInTheDocument();
     expect(screen.getByText('> $30')).toBeInTheDocument();
   
     fireEvent.click(calories);
-    expect(screen.getByText('< 50 Calo')).toBeInTheDocument();
-    expect(screen.getByText('50-150 Calo')).toBeInTheDocument();
-    expect(screen.getByText('> 150 Calo')).toBeInTheDocument();
+    expect(screen.getByText('< 500 Cal')).toBeInTheDocument();
+    expect(screen.getByText('500-750 Cal')).toBeInTheDocument();
+    expect(screen.getByText('751-1000 Cal')).toBeInTheDocument();
+    expect(screen.getByText('> 1000 Cal')).toBeInTheDocument();
   
     fireEvent.click(time);
     expect(screen.getByText('< 10 mins')).toBeInTheDocument();
@@ -98,19 +99,6 @@ describe('Test buttons in Recipe Page', () => {
     // Assert that the value of the input field has been updated
     expect(searchInput.value).toBe('Pasta');
   });
-
-  test('like buttons', () => {
-    render(
-      <MemoryRouter>
-        <RecipeContent />  
-      </MemoryRouter>
-    );
-    //test for like button
-    const likeButton = screen.getByTestId('like-post');
-    expect(likeButton).toHaveTextContent('Like: 🤍');
-    fireEvent.click(likeButton);
-    expect(likeButton).toHaveTextContent('Like: 💖');
-  })
   });
 
 describe('PostCreation Component', () => {

@@ -1,28 +1,57 @@
 /* instead of global selectors, we use the div made in tsx to serve as a local page holder for login */
+
+/* Login page setup */
 .login-page {
+    position: relative; /* Make it a positioned container */
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    min-height: 100vh; /* Ensures the container takes up full viewport height */
-    background-color: white; /* White background for the entire page */
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden; /* Prevent any overflow */
 }
 
-/* Login container */
+/* Background div */
+.login-page .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/assets/foodBG.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: saturate(0.6);
+    z-index: -1; /* Ensure the background stays behind the content */
+}
+
+/* Login container styles */
 .login-container {
-    background-color: #d3d3d3;
-    padding: 25px 50px; /* Increased padding */
-    border-radius: 12px; /* Larger border radius */
+    background-color: rgba(211, 211, 211, 1); 
+    padding: 25px 50px;
+    border-radius: 12px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
-    width: 320px; /* Larger width */
+    width: 320px;
+    position: relative; /* Ensure the form stays above the blurred background */
 }
 
 /* Title */
-.login-container h1 {
-    font-size: 1.8rem;
+.login-page .title {
+    border-top: 5px solid #ffffff; /* Add a top border */
+    border-bottom: 5px solid #ffffff; /* Add a bottom border */
+    font-size: 50px;
     font-weight: bold;
-    margin-bottom: 25px;
-    color: #333;
+    margin-bottom: 37px;
+    color: white;
+      text-shadow: 0 0 2px #000; /* horizontal-offset vertical-offset 'blur' colour */
+  -moz-text-shadow: 0 0 2px #000;
+  -webkit-text-shadow: 0 0 2px #000;
+}
+
+.login-container h1 {
+    color: black;
 }
 
 /* Input fields */
@@ -34,9 +63,8 @@
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 1rem; /* Larger font */
-    background-color: white;
+    background-color: white; /* Set background to white */
     color: black;
-    
 }
 
 /* Error messages */
@@ -119,5 +147,9 @@
 }
 
 .login-container a:hover {
+    color: #0056b3; /* Slightly darker color on hover for better UX */
     text-decoration: underline;
 }
+  
+  
+  

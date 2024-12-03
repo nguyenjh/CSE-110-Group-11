@@ -29,26 +29,29 @@ export const getFilteredPosts = async (req: Request, res: Response) => {
       query.cost = { $lt: 5 };
     } else if (cost === "$5-$15") {
       console.log("Filtering posts with cost between $5 and $15");
-      query.cost = { $gt: 5, $lt: 15 };
+      query.cost = { $gte: 5, $lte: 15 };
     }
-    else if (cost === "$15-$30") {
-    console.log("Filtering posts with cost between $15 and $30");
-    query.cost = { $gt: 15, $lt: 30 };
+    else if (cost === "$16-$30") {
+    console.log("Filtering posts with cost between $16 and $30");
+    query.cost = { $gte: 16, $lte: 30 };
     }
     else if (cost === "> $30") {
       console.log("Filtering posts with cost over $30");
       query.cost = { $gt: 30};
     }
 
-    if (calories === "< 50 Calo") {
-      console.log("Filtering posts with calories under 50");
-      query.calories = { $lt: 50 };
-    } else if (calories === "50-150 Calo") {
-      console.log("Filtering posts with calories between 50 and 150");
-      query.calories = { $gt: 50, $lt: 150 };
-    } else if (calories === "> 150 Calo") {
-      console.log("Filtering posts with calories over 150");
-      query.calories = { $gt: 150 };
+    if (calories === "< 500 Cal") {
+      console.log("Filtering posts with calories under 500");
+      query.calories = { $lt: 500 };
+    } else if (calories === "500-750 Cal") {
+      console.log("Filtering posts with calories between 500 and 750");
+      query.calories = { $gte: 500, $lte: 750 };
+    } else if (calories === "751-1000 Cal") {
+      console.log("Filtering posts with calories between 751 and 1000");
+      query.calories = { $gte: 751, $lte: 1000 };
+    }else if (calories === "> 1000 Cal") {
+    console.log("Filtering posts with calories over 1000");
+    query.calories = { $gt: 1000 };
     }
 
     if (time === "< 10 mins") {

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import { suggestTag } from "../constants/constants";
 import "../css/Post.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
@@ -7,7 +6,7 @@ import { IPost } from "../../../PostInterface";
 import { filterContext } from "../context/FilterContext";
 import { searchContext } from "../context/SearchContext";
 import "../css/Pagination.css";
-
+import "../css/RecipeList.css";
 interface recipe_content extends IPost {
   _id: string;
 }
@@ -17,19 +16,42 @@ interface recipe_props {
 }
 
 // Recipe component to display individual recipes
-const Recipe: React.FC<recipe_props> = ({ recipe }) => (
-  <Link to={`/recipe/${recipe._id}`} style={{ color: "inherit", textDecoration: "none" }}>
-    <li className="list-group-item d-flex flex-column justify-content-between mb-5 p-5 align-items-left border rounded">
-      <div className="mb-2" style={{ fontSize: "20px", fontWeight: "bold" }}>{recipe.name}</div>
-      <div className="mb-2">4.2R - 12 likes - Sept 12</div>
-      <div className="tags-container p-2 mt-2">
-        {recipe.tags.map((tag) => (
-          <span key={tag} className="badge me-2" style={{ backgroundColor: "lightblue", color: "black", fontSize: "15px" }}>{tag}</span>
-        ))}
-      </div>
-    </li>
-  </Link>
-);
+const Recipe: React.FC<recipe_props> = ({ recipe }) => {
+  const [likes, setLikes] = useState(() => {
+    const storedLikes = localStorage.getItem(`likes_${recipe._id}`);
+    return storedLikes ? parseInt(storedLikes, 10) : recipe.likes;
+  });
+
+  useEffect(() => {
+    const storedLikes = localStorage.getItem(`likes_${recipe._id}`);
+    if (storedLikes && parseInt(storedLikes, 10) !== likes) {
+      setLikes(parseInt(storedLikes, 10));
+    }
+  }, [recipe._id, likes]);
+
+  return (
+    <div className="recipe-list">
+      <Link
+        to={`/recipe/${recipe._id}`}
+        style={{ color: "inherit", textDecoration: "none" }}
+      >
+        <li className="recipe-card">
+          <div className="recipe-name">{recipe.name}</div>
+          <div className="recipe-info">
+            {recipe.rating}R - {likes} likes - {recipe.estimated_total_time} min
+          </div>
+          <div className="tags-container">
+            {recipe.tags.map((tag) => (
+              <span key={tag} className="tag">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </li>
+      </Link>
+    </div>
+  );
+};
 
 export default function RecipeList() {
   const filterContextContent = useContext(filterContext);

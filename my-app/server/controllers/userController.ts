@@ -137,7 +137,7 @@ const updateFavorites = asyncHandler(async (req: AuthenticatedRequest, res: Resp
     return;
   }
 
-  const user = await User.findById(userId);
+  const user = await User.findById(userId).select('-password');
 
   if (!user) {
     res.status(404).json({ message: 'User not found' });
@@ -162,7 +162,13 @@ const updateRatings = asyncHandler(async (req: Request, res: Response): Promise<
   const { userId, itemId, newRating } = req.body; 
   console.log("Received body.");
 
-  const user = await User.findById(userId);
+  // Check that body variables exist
+  if (!itemId || !userId || !newRating) {
+    res.status(400).json({ message: 'Action must be a boolean and itemId is required.' });
+    return;
+  }
+
+  const user = await User.findById(userId).select('-password');
 
   // Check that user does exist.
   if (!user) {

@@ -171,25 +171,20 @@ useEffect(() => {
       localStorage.setItem("favoriteList", JSON.stringify(updatedFavorites));
     }, [isFav]);
     return (
-      <img
-        data-testid={testID}
-        style={{ color: isFav ? "red" : "black", width: "20px" }}
-        id="save-icon"
-        onClick={bookmarkToggle}
-        role="button"
-        src={isFav ? blackRibbon : whiteRibbon}
-        alt="savemark"
-      />
-    );
-  }
-  
-  // Share button functionality
-  const handleShare = () => {
-     navigator.clipboard.writeText(window.location.href).then(() => {
-       setAlertVisible(true);
-       setTimeout(() => setAlertVisible(false), 2000); // Hide alert after 2 seconds
-     });
-  };
+     <img
+       data-testid={testID}
+       style={{ color: isFav ? "red" : "black", width: "20px" }}
+       id="save-icon"
+       onClick={bookmarkToggle}
+       role="button"
+       src={isFav ? blackRibbon : whiteRibbon}
+       alt="savemark"
+     />
+   );
+ }
+
+
+/* Like Button for recipe*/
 
 // Use initial value from recipeData
 const [numberLikes, setNumberLikes] = useState<number>(recipeData?.likes || 0); 
@@ -228,6 +223,19 @@ const likeRecipeToggle = () => {
     return updatedLiked;
   });
 };
+  
+
+// // Update numberLikes when recipeData changes
+useEffect(() => {
+  if (!recipeData?._id) return;
+
+  // Initialize likes
+  const storedLikes = localStorage.getItem(`likes_${recipeData._id}`);
+  const storedIsLiked = localStorage.getItem(`isLiked_${recipeData._id}`);
+
+  setNumberLikes(storedLikes ? parseInt(storedLikes, 10) : recipeData.likes || 0);
+  setIsLiked(storedIsLiked === 'true');
+}, [recipeData]);
   
  // Share button functionality
  const handleShare = () => {

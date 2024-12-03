@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/SignUp.css';
+import foodBG from '../assets/foodBG.jpg'; // Import image
 
 const SignUp: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -145,7 +146,10 @@ const SignUp: React.FC = () => {
   return (
     // wrap all content in div signup-page
     <div className="signup-page">
+      <div className="title">PLATEFUL</div>
+    <div className="background" style={{backgroundImage: `url(${foodBG})`}}></div>
       <div className="signup-container">
+
         <Link to="/login" className="back-button">
           &#8592; Back
         </Link>
