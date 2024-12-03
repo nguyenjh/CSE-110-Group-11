@@ -114,18 +114,17 @@ describe('PostCreation Component', () => {
     );
 
     // Adjust the text based on actual content in the PostCreation component
-    expect(screen.getByText("Title:")).toBeVisible();
+    expect(screen.getByText("Title:*")).toBeVisible();
     expect(screen.getByText("Summary:")).toBeVisible();
-    expect(screen.getByText("Cost ($):")).toBeVisible();
+    expect(screen.getByText("Cost ($):*")).toBeVisible();
     expect(screen.getByText("Tags:")).toBeVisible();
-    expect(screen.getByText("Calories (kcal):")).toBeVisible();
-    expect(screen.getByText("Prep Time (minutes):")).toBeVisible();
-    expect(screen.getByText("Servings (#):")).toBeVisible();
-    expect(screen.getByText("Total Time (minutes):")).toBeVisible();
-    expect(screen.getByText("Ingredients")).toBeVisible();
+    expect(screen.getByText("Calories (kcal):*")).toBeVisible();
+    expect(screen.getByText("Prep Time (minutes):*")).toBeVisible();
+    expect(screen.getByText("Servings (#):*")).toBeVisible();
+    expect(screen.getByText("Total Time (minutes):*")).toBeVisible();
+    expect(screen.getByText("Ingredients*")).toBeVisible();
     expect(screen.getByText("Add Ingredient")).toBeVisible();
-    expect(screen.getByText("Upload Additional Photos")).toBeInTheDocument();
-    expect(screen.getByText("Directions")).toBeVisible();
+    expect(screen.getByText("Directions*")).toBeVisible();
     expect(screen.getByText("Add Step")).toBeVisible();
     expect(screen.getByText("Submit")).toBeVisible();
   });
