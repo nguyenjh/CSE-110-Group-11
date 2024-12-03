@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "../../css/RatingStars.css";
+import { ratingContext } from "../../context/RatingContext";
 
 // Constants
 const numberOfSymbols = 5;
@@ -9,90 +10,99 @@ const default_selected_color = '#FFBB00';
 
 // Props interface
 interface RatingStarsProps {
-    initialRating: number | undefined;
+    initialRating: number;
     recipeID: string | undefined;
 }
 
 export default function RatingStars({initialRating, recipeID}:RatingStarsProps) {
-    let noRating = initialRating ? 0 : 1;
-    initialRating = initialRating ? initialRating : 0; // Unwrapping optional initialRating
+    const { userRating, setUserRating } = useContext(ratingContext);
 
-    // State to separate onhover and onclick rating star states
-    const [rating, setRating] = useState(initialRating); // Retains old value if post has be reviewed before, else 0 
     const [tempRating, setTempRating] = useState(0);
-    
+
     // Star array for the five star symbols display
     let stars = Array(numberOfSymbols).fill(symbol);
-
-    // Dummy user ratingsList map
+    
     const userString = localStorage.getItem('user');
-    let user;
-    let userId;
-    let token;
-
-// Parse the JSON string into an object
+    let user: { _id: string; token: string } | null = null; // Explicitly define the type
+    let userId: string | null = null;
+    let token: string | null = null;
+    
+    // Parse the JSON string into an object
     if (userString) {
         user = JSON.parse(userString);
-        userId = user._id;
-        token = user.token;
-        console.log('User ID:', userId);
-    } else {
-        user = null;
-        userId = null;
-        token = null;
-        console.log('No user found in localStorage');
+        if (user && typeof user._id === 'string' && typeof user.token === 'string') {
+            userId = user._id.toString();
+            token = String(user.token);
+            console.log('User ID:', userId);
+        } else {
+            console.warn('Invalid user data in localStorage');
+        }
     }
+    
+
 
     const handleClickSymbol = async(new_rating_input:number) => {
-        setRating(new_rating_input);
+        let noRating = initialRating ? 1 : 0
+        const ratingDifference =  new_rating_input - initialRating; // Difference between new and old
+        setUserRating(new_rating_input);
         const incrementCount = (!noRating); // True means user has never rated this recipe before:+1 to the numRatings
-        const newRating = initialRating; // Difference between new and old
 
-        console.log("isThisNewRating?: " + incrementCount)
-        console.log("difference of new vs old rating: " + newRating)
+        
+        console.log("New rating inputted: " + new_rating_input);
+        console.log("rating is: " + userRating);
+        console.log("isThisNewRating?: " + incrementCount);
+        console.log("difference of new vs old rating: " + ratingDifference);
+
+        console.log("Trying post update");
         try {
-            const response = await fetch(`http://localhost:5050/recipe/${recipeID}/`, {
+            const response = await fetch(`http://localhost:5050/recipe/`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ 
-                newRating, 
-                incrementCount }),
+            body: JSON.stringify({
+                recipeID: recipeID, 
+                ratingDifference: ratingDifference, 
+                incrementCount: incrementCount,
+                newRating: new_rating_input}),
             });
         
             if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || 'Failed to update rating');
+                const errorDetails = await response.json();
+                console.error("Error response:", errorDetails);
+                throw new Error(errorDetails.error || "Failed to update ratings");
             }
         
             const data = await response.json();
             console.log('Rating updated successfully:', data);
+            console.log('Rating updated to ' + (data.totalRatings/data.numOfRatings));
             } catch (error) {
             console.error('Error updating rating:', error);
             throw error;
         }
 
+        console.log("Trying user update for rating.")
         try{
-            const response = await fetch(`http://localhost:5050/api/ratings/`, {
+
+            const response = await fetch(`http://localhost:5050/api/ratings`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify({
-                userId: userId,
-                itemId: recipeID, 
-                newRating: newRating, })
+                userId: userId?.toString(),
+                itemId: recipeID?.toString(),
+                newRating: new_rating_input,
+            }),
             });
 
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.error || 'Failed to update ratings');
-                }
+            }
             
-                const data = await response.json();
-                console.log('Rating updated successfully:', data);
+            const data = await response.json();
+            console.log('Rating updated successfully:', data);
             
         }
 
@@ -107,7 +117,7 @@ export default function RatingStars({initialRating, recipeID}:RatingStarsProps) 
             <span>Ratings:</span>
             <div className="StarsContainer">
             {stars.map((item,star_index) => {
-                const isActivedColor = (rating || tempRating) && (star_index < rating || star_index < tempRating );      
+                const isActivedColor = (userRating || tempRating) && (star_index < userRating || star_index < tempRating );      
                 let elementColor = isActivedColor ? default_selected_color : default_unselected_color;
                         
                 return (
@@ -123,5 +133,4 @@ export default function RatingStars({initialRating, recipeID}:RatingStarsProps) 
             </div>      
         </div>
     )
-
 }

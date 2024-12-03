@@ -28,7 +28,7 @@ router.get("/:id", getPost);
 router.post("/", protect, addPost);
 
 
-router.patch('/:id', updateRating);
+router.patch("/", updateRating);
 
 // Patch Request to Update a Specific Recipe: When on homepage/:id page, compile the form data 
 // from req and update the recipe found from the id param. 

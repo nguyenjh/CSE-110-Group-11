@@ -131,46 +131,61 @@ export const addPost = async (req: AuthenticatedRequest, res: Response) => {
 };
 
 export const updateRating = async (req: Request, res: Response): Promise<void> => {
-  const postId = req.params.id;
-  const { newRating, incrementCount } = req.body;
+  const { recipeID, ratingDifference, incrementCount, newRating } = req.body;
+  console.log('Received body:', req.body);
+
+ if (typeof recipeID !== 'string'){
+    res.status(400).json({ error: 'Invalid recipeID. Must be a string.' });
+    return;
+ }
+ console.log('Checked recipe ID:', recipeID);
 
   // Validate the incoming rating
-  if (typeof newRating !== 'number') {
-    res.status(400).json({ error: 'Invalid rating. Must be a number.' });
+  if (typeof ratingDifference !== 'number') {
+    res.status(400).json({ error: 'Invalid ratingDifference. Must be a number.' });
     return; // Ensure the function exits after responding
   }
+  console.log('Checked rating difference:', ratingDifference);
 
   // Validate incrementCount (optional, if not provided defaults to false)
   if (typeof incrementCount !== 'boolean') {
     res.status(400).json({ error: 'Invalid incrementCount. Must be a boolean.' });
     return;
   }
+  console.log('Checked increment count boolean:', incrementCount);
 
+  if (typeof newRating !== 'number') {
+    res.status(400).json({ error: 'Invalid newRating. Must be a number.' });
+    return; // Ensure the function exits after responding
+  }
+  console.log('Checked newRating:', newRating);
+
+  console.log('Running the findByIdAndUpdate');
   try {
     // Atomic update logic
     const updatedPost = await Post.findByIdAndUpdate(
-      postId,
+      recipeID,
       [
         {
           $set: {
-            ratingsTotal: { $add: ["$ratingsTotal", newRating] }, // Add newRating to ratingsTotal
-            numOfRatings: { $add: ["$numOfRatings", incrementCount ? 1 : 0] }, // Conditionally increment numOfRatings
-            rating: { // Recalculate the average rating
-              $round: [
-                {
-                  $divide: [
-                    { $add: ["$ratingsTotal", newRating] },
-                    { $add: ["$numOfRatings", incrementCount ? 1 : 0] },
-                  ],
-                },
-                1,
-              ],
+            ratingsTotal: {
+              $add: [
+                "$ratingsTotal", 
+                incrementCount ? newRating : ratingDifference
+              ]
             },
-          },
-        },
+            numOfRatings: {
+              $add: [
+                { $ifNull: ["$numOfRatings", 0] },
+                incrementCount ? 1 : 0
+              ]
+            }
+          }
+        }
       ],
       { new: true } // Return the updated document
     );
+    
 
     if (!updatedPost) {
       res.status(404).json({ error: 'Post not found' });
@@ -180,6 +195,6 @@ export const updateRating = async (req: Request, res: Response): Promise<void> =
     res.status(200).json({ message: 'Rating updated successfully', post: updatedPost });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Internal server error running updateRating' });
   }
 };

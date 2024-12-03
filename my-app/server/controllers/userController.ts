@@ -158,29 +158,27 @@ const updateFavorites = asyncHandler(async (req: AuthenticatedRequest, res: Resp
   res.status(200).json({ message: 'Favorites updated', favorites: user.favorites });
 });
 
-const updateRatings = asyncHandler(async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+const updateRatings = asyncHandler(async (req: Request, res: Response): Promise<void> => {
   const { userId, itemId, newRating } = req.body; 
+  console.log("Received body.");
 
-  // Check that body variables exist
-  if (!itemId || !userId || !newRating) {
-    res.status(400).json({ message: 'Action must be a boolean and itemId is required.' });
-    return;
-  }
-
-  const user = await User.findById(userId)
+  const user = await User.findById(userId);
 
   // Check that user does exist.
   if (!user) {
     res.status(404).json({ message: 'User not found' });
     return;
   }
+  console.log("received user");
 
   const existingRating = user.ratings.find(([id]) => id === itemId);
 
   // Update or add rating entry.
   if (existingRating) {
+    console.log("Existing rating found");
     existingRating[1] = newRating;
   } else {
+    console.log("No existing rating");
     user.ratings.push([itemId, newRating]);
   }
 

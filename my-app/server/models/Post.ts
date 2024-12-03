@@ -13,7 +13,7 @@ const PostSchema: Schema = new Schema({
     required: true,
   },
   name: { type: String, required: true },
-  rating: { type: Number, default: 0, required: false },
+  rating: { type: Number, default: 0.0, required: false},
   likes: { type: Number, required: false },
   summary: { type: String, required: false },
   prep_time: { type: Number, required: false },

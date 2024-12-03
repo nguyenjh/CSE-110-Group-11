@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import "../css/RecipeContent.css";
 import pasta_img from "../assets/pasta_img.png";
 import { useParams } from "react-router-dom";
@@ -6,6 +6,7 @@ import blackRibbon from "../assets/blackRibbon.svg";
 import whiteRibbon from "../assets/whiteRibbon.svg";
 import RatingStars from "../components/RecipeContent/RatingStars";
 import CommentLike from "../components/RecipeContent/CommentLike";
+import { ratingContext } from "../context/RatingContext";
 import { IPost } from "../../../PostInterface";
 
 // Define the Comment interface to ensure each comment has a text and likes property
@@ -21,17 +22,20 @@ interface recipe_content extends IPost {
 // Main component function
 function RecipeContent() {
   // State to manage the list of comments, initially containing a few sample comments
+
+  const { userRating, setUserRating } = useContext(ratingContext);
+
   const [comments, setComments] = useState<Comment[]>([
     { text: "This was so simple to make but so delicious!", likes: 2 },
     { text: "So good! I recommend adding more veggies!", likes: 3 },
     { text: "Can’t wait to see more recipes from you!", likes: 1 },
   ]);
 
+
  // State to manage the input for new comments
  const [newComment, setNewComment] = useState('');
  // State to mange alert visability for share feature
  const [alertVisible, setAlertVisible] = useState(false);
-
 
   // Function to handle adding a new comment to the comments list
   const handleAddComment = () => {
@@ -83,6 +87,64 @@ function RecipeContent() {
     }
     fetchData();
   }, [params.id]);
+
+  const userString = localStorage.getItem('user');
+let user;
+let userId;
+let token;
+
+ // Parse the JSON string into an object
+if (userString) {
+    user = JSON.parse(userString);
+    userId = String(user._id);
+    token = String(user.token);
+    console.log('User ID:', userId);
+} else {
+    user = null;
+    userId = null;
+    token = null;
+    console.log('No user found in localStorage');
+}
+
+const fetchRating = async () => {
+  try {
+      const response = await fetch(`http://localhost:5050/api/me/`, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+          },
+      });
+
+      if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to fetch ratings');
+      }
+
+      const data = await response.json();
+      console.log('Fetched user rating:', data.ratings);
+
+      // Check if any rating matches the recipeID
+      const matchingRating = data.ratings.find(
+          (rating: [string, number]) => rating[0] === params.id
+      );
+
+      if (matchingRating) {
+          console.log(`Matching rating found: RecipeID=${matchingRating[0]}, Rating=${matchingRating[1]}`);
+          setUserRating(matchingRating[1]); // Set the user's rating
+      } else {
+          console.log('No matching rating found for this recipeID');
+          setUserRating(0); // Default to 0 if no rating is found
+      }
+  } catch (error) {
+      console.error('Error fetching ratings:', error);
+      setUserRating(0); // Default to 0 in case of an error
+  }
+};
+
+useEffect(() => {
+  fetchRating();
+}, [params.id]); // Re-run if the recipe ID changes
 
   /*Favorite Button*/
   const [favoriteList, setFavoriteList] = useState<string[]>([]); //favorite list per user, get from db later
@@ -161,7 +223,7 @@ function RecipeContent() {
               <div className="titleSection">
                 <h1>{recipeData?.name}</h1>
                 <p className="rating">
-                  Rating: {recipeData?.rating} / 5 | Likes: {recipeData?.likes}
+                  Rating: {Math.round(recipeData ? recipeData.ratingsTotal / ((recipeData.numOfRatings != 0) ? recipeData.numOfRatings : 1) : 0) } / 5 | Likes: {recipeData?.likes}
                 </p>
               </div>
 
@@ -233,7 +295,7 @@ function RecipeContent() {
                >
                  Like: {isLiked ? '💖' : '🤍'}
                </button>
-               <RatingStars initialRating={recipeData?.rating} recipeID={recipeData?._id} />
+               <RatingStars initialRating={userRating} recipeID={recipeData?._id} />
              </div>
            </div>
 
