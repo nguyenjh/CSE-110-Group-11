@@ -28,7 +28,7 @@ function IngredientsList() {
   return (
     <div id="ingredients">
       <div>
-        <h2>Ingredients</h2>
+        <h2>Ingredients*</h2>
         <div id="ingredients-list">
         <ol>
             {(recipeForm.ingredients ?? []).map((input, index) => (

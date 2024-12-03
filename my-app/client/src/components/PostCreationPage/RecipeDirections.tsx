@@ -27,7 +27,7 @@ function RecipeDirections() {
   return (
     <div id="directions">
       <div>
-        <h2>Directions</h2>
+        <h2>Directions*</h2>
         <div id="directions-list">
           <ol>
             {(recipeForm.directions ?? []).map((input, index) => (

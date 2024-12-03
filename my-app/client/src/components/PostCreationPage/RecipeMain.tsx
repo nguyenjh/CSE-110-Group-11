@@ -30,8 +30,9 @@ function RecipeMain() {
 
     return(
         <div id="recipe-main">
+            <p><b>* Indicates required field</b></p>
             <div id='recipe-title' className="large-input-field">
-                <label htmlFor="recipe-title-input"><h2>Title:</h2></label>
+                <label htmlFor="recipe-title-input"><h2>Title:*</h2></label>
                 <input type="text" 
                 id="recipe-title-input"
                 value = {recipeForm.name}

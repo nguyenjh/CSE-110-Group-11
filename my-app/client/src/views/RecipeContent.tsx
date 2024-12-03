@@ -202,9 +202,9 @@ const likeRecipeToggle = () => {
 
              {/* Recipe Details Section */}
              <div className="details">
-               <p>🕒 Prep: {recipeData?.prep_time} {recipeData?.prep_time_unit} | 🕒 Estimated Total: {recipeData?.estimated_total_time} {recipeData?.estimated_total_time_unit} | Serves: {recipeData?.serving} | Calories: {recipeData?.calories} | Cost: {recipeData?.cost}</p>
+               <p>🕒 Prep: {recipeData?.prep_time} {recipeData?.prep_time_unit} | 🕒 Estimated Total: {recipeData?.estimated_total_time} {recipeData?.estimated_total_time_unit} | Serves: {recipeData?.serving} | Calories: {recipeData?.calories} | Cost: ${recipeData?.cost}</p>
                <p>
-                 Tags:
+                 Tags:{" "}
                  {recipeData?.tags?.length ? (
                    recipeData.tags.map((tag, index) => (
                      <span key={index} className={`tag ${tag.toLowerCase()}`}>{tag}</span>
