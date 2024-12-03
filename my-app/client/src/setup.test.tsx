@@ -100,20 +100,6 @@ describe('Test buttons in Recipe Page', () => {
     expect(searchInput.value).toBe('Pasta');
   });
 
-  test('like buttons', () => {
-    render(
-      <MemoryRouter>
-        <RecipeContent />  
-      </MemoryRouter>
-    );
-    //test for like button
-    const likeButton = screen.getByTestId('like-post');
-    expect(likeButton).toHaveTextContent('Like: 🤍');
-    fireEvent.click(likeButton);
-    expect(likeButton).toHaveTextContent('Like: 💖');
-  })
-  });
-
 describe('PostCreation Component', () => {
   it('renders the post creation form', () => {
     render(

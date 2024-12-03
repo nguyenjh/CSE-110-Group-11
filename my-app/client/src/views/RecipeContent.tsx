@@ -92,7 +92,8 @@ function RecipeContent() {
 
 
  /*Favorite Button*/
- const [favoriteList, setFavoriteList] = useState<string[]>([]); //favorite list per user, get from db later
+ //favorite list per user, get from db later
+ const [favoriteList, setFavoriteList] = useState<string[]>([]); 
 
  // Bookmark/favorite funcionality
  function ToggleBookmark({ recipeID, testID }: { recipeID: string; testID: string }) {
@@ -140,7 +141,7 @@ const [isLiked, setIsLiked] = useState<boolean>(false);
 useEffect(() => {
   if (!recipeData?._id) return;
 
-  // Initialize likes from localStorage or recipeData
+  // Initialize likes
   const storedLikes = localStorage.getItem(`likes_${recipeData._id}`);
   const storedIsLiked = localStorage.getItem(`isLiked_${recipeData._id}`);
 
@@ -169,8 +170,11 @@ const likeRecipeToggle = () => {
 };
   
  /* Rating Star */
- const recipeID = '1'; // Hard code for demo, change to const recipeID = recipeData?._id;
- const ratings = localStorage.getItem(`starRating ${recipeID}`); // Change to get it from db later
+ 
+ // Hard code for demo, change to const recipeID = recipeData?._id;
+ const recipeID = '1'; 
+  // Change to get it from db later
+ const ratings = localStorage.getItem(`starRating ${recipeID}`);
 
  // Share button functionality
  const handleShare = () => {
