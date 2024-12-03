@@ -81,9 +81,9 @@ function RecipeContent() {
         } else {
           console.warn(`Recipe with ID ${id} not found`);
         }
-      } catch (err) {
-        console.error("Fetch error:", err);
-      }
+        } catch (err) {
+          console.error("Fetch error:", err);
+        }
     }
     fetchData();
   }, [params.id]);
@@ -146,8 +146,9 @@ useEffect(() => {
   fetchRating();
 }, [params.id]); // Re-run if the recipe ID changes
 
-  /*Favorite Button*/
-  const [favoriteList, setFavoriteList] = useState<string[]>([]); //favorite list per user, get from db later
+ /*Favorite Button*/
+ //favorite list per user, get from db later
+ const [favoriteList, setFavoriteList] = useState<string[]>([]);
 
  // Bookmark/favorite funcionality
  function ToggleBookmark({ recipeID, testID }: { recipeID: string; testID: string }) {
@@ -190,28 +191,54 @@ useEffect(() => {
      });
   };
 
-  /* Like Button for recipe*/
-  const [numberLikes, setNumberLikes] = useState<number>(0); // change initial by getting number of likes from db later
-  const [isLiked, setIsLiked] = useState<boolean>(false); //change initial by getting from db
+// Use initial value from recipeData
+const [numberLikes, setNumberLikes] = useState<number>(recipeData?.likes || 0); 
+// Default to not liked
+const [isLiked, setIsLiked] = useState<boolean>(false); 
 
-  const likeRecipeToggle = () => {
-    setIsLiked(!isLiked);
-  };
 
-  useEffect(() => {
-    setNumberLikes((prevLikes) =>
-      isLiked ? prevLikes + 1 : Math.max(0, prevLikes - 1)
-    );
-  }, [isLiked]);
+// // Update numberLikes when recipeData changes
+useEffect(() => {
+  if (!recipeData?._id) return;
 
-  /*
-  Post:
-  numOfRatings = (number of people who have rated) (int)
-  ratingsTotal = (The raw number of the total value of ratings sent by every user who has rated) (int)
-  rating = (RatingsTotal / NumOfRatings) (int) 
-  User: 
-  ratings array = [(recipe id, rating), ...] array<tuple<num, num>> 
- */
+  // Initialize likes
+  const storedLikes = localStorage.getItem(`likes_${recipeData._id}`);
+  const storedIsLiked = localStorage.getItem(`isLiked_${recipeData._id}`);
+
+  setNumberLikes(storedLikes ? parseInt(storedLikes, 10) : recipeData.likes || 0);
+  setIsLiked(storedIsLiked === 'true');
+}, [recipeData]);
+
+const likeRecipeToggle = () => {
+  if (!recipeData) return;
+
+  setIsLiked((prevLiked) => {
+    const updatedLiked = !prevLiked;
+    const likeChange = updatedLiked ? 1 : -1;
+
+    setNumberLikes((prevLikes) => {
+      const updatedLikes = prevLikes + likeChange;
+
+      localStorage.setItem(`isLiked_${recipeData._id}`, updatedLiked.toString());
+      localStorage.setItem(`likes_${recipeData._id}`, updatedLikes.toString());
+
+      return updatedLikes;
+    });
+
+    return updatedLiked;
+  });
+};
+  
+ // Share button functionality
+ const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      setAlertVisible(true);
+      // Hide alert after 2 seconds
+      setTimeout(() => setAlertVisible(false), 2000); 
+    });
+ };
+
+ 
 
   return (
     <div className="app">
@@ -229,27 +256,19 @@ useEffect(() => {
 
               {/* Recipe Details Section */}
               <div className="details">
-                <p>
-                  🕒 Prep: {recipeData?.prep_time} {recipeData?.prep_time_unit}{" "}
-                  | 🕒 Estimated Total: {recipeData?.estimated_total_time}{" "}
-                  {recipeData?.estimated_total_time_unit} | Serves:{" "}
-                  {recipeData?.serving} | Calories: {recipeData?.calories} |
-                  Cost: {recipeData?.cost}
-                </p>
-                <p>
-                  Tags:
-                  {recipeData?.tags?.length ? (
-                    recipeData.tags.map((tag, index) => (
-                      <span key={index} className={`tag ${tag.toLowerCase()}`}>
-                        {tag}
-                      </span>
-                    ))
-                  ) : (
-                    <span>No tags available</span>
-                  )}
-                </p>
-                {/* <p>Created by: {recipeData?.user}</p> */}
-              </div>
+              <p>🕒 Prep: {recipeData?.prep_time} {recipeData?.prep_time_unit} | 🕒 Estimated Total: {recipeData?.estimated_total_time} {recipeData?.estimated_total_time_unit} | Serves: {recipeData?.serving} | Calories: {recipeData?.calories} | Cost: {recipeData?.cost}</p>
+              <p>
+                Tags:
+                {recipeData?.tags?.length ? (
+                  recipeData.tags.map((tag, index) => (
+                    <span key={index} className={`tag ${tag.toLowerCase()}`}>{tag}</span>
+                  ))
+                ) : (
+                  <span>No tags available</span>
+                )}
+              </p>
+               {/* <p>Created by: {recipeData?.user}</p> */}
+            </div>
 
              {/* Summary */}
              <div className="summary">
