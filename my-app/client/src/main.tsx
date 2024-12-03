@@ -22,6 +22,7 @@ import NoNavbarLayout from "./NoNav";
 import { RecipeContextProvider } from "./context/RecipeContext";
 import { AccountContextProvider } from "./context/AccountContext";
 import { FilterContextProvider } from "./context/FilterContext";
+import { RatingContextProvider } from "./context/RatingContext";
 import { RecipeFormErrorContextProvider } from "./context/RecipeFormErrorsContext";
 import "./index.css";
 import RecipeList from "./views/RecipeList";
@@ -65,7 +66,11 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "/recipe/:id",
-        element: <RecipeContent />,
+        element: 
+        <RatingContextProvider>
+          <RecipeContent />,
+        </RatingContextProvider>
+
       },
     ],
   },

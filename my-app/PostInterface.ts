@@ -23,3 +23,4 @@ export interface IPost {
   numOfRatings: number;
   ratingsTotal: number;
 }
+

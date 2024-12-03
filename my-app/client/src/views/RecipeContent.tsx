@@ -1,34 +1,35 @@
-import { useEffect, useState } from 'react'
-import '../css/RecipeContent.css';
-import pasta_img from '../assets/pasta_img.png'
+import { useEffect, useState, useContext } from "react";
+import "../css/RecipeContent.css";
+import pasta_img from "../assets/pasta_img.png";
 import { useParams } from "react-router-dom";
-import blackRibbon from '../assets/blackRibbon.svg';
-import whiteRibbon from '../assets/whiteRibbon.svg';
-import RatingStars from '../components/RecipeContent/RatingStars';
-import CommentLike from '../components/RecipeContent/CommentLike';
-import { IPost } from '../../../PostInterface';
-
+import blackRibbon from "../assets/blackRibbon.svg";
+import whiteRibbon from "../assets/whiteRibbon.svg";
+import RatingStars from "../components/RecipeContent/RatingStars";
+import CommentLike from "../components/RecipeContent/CommentLike";
+import { ratingContext } from "../context/RatingContext";
+import { IPost } from "../../../PostInterface";
 
 // Define the Comment interface to ensure each comment has a text and likes property
 interface Comment {
- text: string;
- likes: number;
+  text: string;
+  likes: number;
 }
-
 
 interface recipe_content extends IPost {
-   _id: string;
+  _id: string;
 }
-
 
 // Main component function
 function RecipeContent() {
- // State to manage the list of comments, initially containing a few sample comments
- const [comments, setComments] = useState<Comment[]>([
-   { text: 'This was so simple to make but so delicious!', likes: 2 },
-   { text: 'So good! I recommend adding more veggies!', likes: 3 },
-   { text: 'Can’t wait to see more recipes from you!', likes: 1 }
- ]);
+  // State to manage the list of comments, initially containing a few sample comments
+
+  const { userRating, setUserRating } = useContext(ratingContext);
+
+  const [comments, setComments] = useState<Comment[]>([
+    { text: "This was so simple to make but so delicious!", likes: 2 },
+    { text: "So good! I recommend adding more veggies!", likes: 3 },
+    { text: "Can’t wait to see more recipes from you!", likes: 1 },
+  ]);
 
 
  // State to manage the input for new comments
@@ -36,64 +37,118 @@ function RecipeContent() {
  // State to mange alert visability for share feature
  const [alertVisible, setAlertVisible] = useState(false);
 
+  // Function to handle adding a new comment to the comments list
+  const handleAddComment = () => {
+    // Add only if there's text in the newComment input
+    if (newComment.trim()) {
+      // Update comments state by appending the new comment
+      setComments([...comments, { text: newComment, likes: 0 }]);
+      // Clear the input field
+      setNewComment("");
+    }
+  };
 
- // Function to handle adding a new comment to the comments list
- const handleAddComment = () => {
-   // Add only if there's text in the newComment input
-   if (newComment.trim()) {
-     // Update comments state by appending the new comment
-     setComments([...comments, { text: newComment, likes: 0 }]);
-     // Clear the input field
-     setNewComment('');
-   }
- };
+  const params = useParams();
 
+  const [recipeData, setRecipeData] = useState<recipe_content>();
 
- const params = useParams();
-
-
- const [recipeData, setRecipeData] = useState<recipe_content>();
-
-
- useEffect(() => {
-   async function fetchData() {
-     const id = params.id?.toString();
-     if (!id) {
-       console.warn('No recipe ID provided');
-       return;
-     }
+  useEffect(() => {
+    async function fetchData() {
+      const id = params.id?.toString();
+      if (!id) {
+        console.warn("No recipe ID provided");
+        return;
+      }
       try {
-       console.log(`Fetching recipe with ID: ${id}`);
-       const response = await fetch(`http://localhost:5050/recipe/${id}`);
-       if (!response.ok) {
-         throw new Error(`An error has occurred: ${response.statusText}`);
-       }
-       const recipes = await response.json();
-       if (!recipes || recipes.length === 0) {
-         console.warn(`No recipes found with id ${id}`);
-         return;
-       }
+        console.log(`Fetching recipe with ID: ${id}`);
+        const response = await fetch(`http://localhost:5050/recipe/${id}`);
+        if (!response.ok) {
+          throw new Error(`An error has occurred: ${response.statusText}`);
+        }
+        const recipes = await response.json();
+        if (!recipes || recipes.length === 0) {
+          console.warn(`No recipes found with id ${id}`);
+          return;
+        }
         // Find the specific recipe matching the ID from the fetched recipes
-       const recipe = recipes.find((recipe: recipe_content) => recipe._id === id);
-      
-       if (recipe) {
-         console.log('Fetched recipe data:', recipe);
-         // Store the specific recipe in the state
-         setRecipeData(recipe); 
-       } else {
-         console.warn(`Recipe with ID ${id} not found`);
-       }
-     } catch (err) {
-       console.error('Fetch error:', err);
-     }
-   }
-    fetchData();
- }, [params.id]);
+        const recipe = recipes.find(
+          (recipe: recipe_content) => recipe._id === id
+        );
 
+        if (recipe) {
+          console.log("Fetched recipe data:", recipe);
+          setRecipeData(recipe); // Store the specific recipe in the state
+        } else {
+          console.warn(`Recipe with ID ${id} not found`);
+        }
+        } catch (err) {
+          console.error("Fetch error:", err);
+        }
+    }
+    fetchData();
+  }, [params.id]);
+
+  const userString = localStorage.getItem('user');
+let user;
+let userId;
+let token;
+
+ // Parse the JSON string into an object
+if (userString) {
+    user = JSON.parse(userString);
+    userId = String(user._id);
+    token = String(user.token);
+    console.log('User ID:', userId);
+} else {
+    user = null;
+    userId = null;
+    token = null;
+    console.log('No user found in localStorage');
+}
+
+const fetchRating = async () => {
+  try {
+      const response = await fetch(`http://localhost:5050/api/me/`, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+          },
+      });
+
+      if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to fetch ratings');
+      }
+
+      const data = await response.json();
+      console.log('Fetched user rating:', data.ratings);
+
+      // Check if any rating matches the recipeID
+      const matchingRating = data.ratings.find(
+          (rating: [string, number]) => rating[0] === params.id
+      );
+
+      if (matchingRating) {
+          console.log(`Matching rating found: RecipeID=${matchingRating[0]}, Rating=${matchingRating[1]}`);
+          setUserRating(matchingRating[1]); // Set the user's rating
+      } else {
+          console.log('No matching rating found for this recipeID');
+          setUserRating(0); // Default to 0 if no rating is found
+      }
+  } catch (error) {
+      console.error('Error fetching ratings:', error);
+      setUserRating(0); // Default to 0 in case of an error
+  }
+};
+
+useEffect(() => {
+  fetchRating();
+}, [params.id]); // Re-run if the recipe ID changes
 
  /*Favorite Button*/
  //favorite list per user, get from db later
- const [favoriteList, setFavoriteList] = useState<string[]>([]); 
+ const [favoriteList, setFavoriteList] = useState<string[]>([]);
 
  // Bookmark/favorite funcionality
  function ToggleBookmark({ recipeID, testID }: { recipeID: string; testID: string }) {
@@ -103,18 +158,18 @@ function RecipeContent() {
    });
     const [isFav, setIsFav] = useState(favoriteList.includes(recipeID));
     const bookmarkToggle = () => {
-     setIsFav((prev) => !prev);
-   };
+      setIsFav((prev) => !prev);
+    };
     useEffect(() => {
-     let updatedFavorites = favoriteList;
-     if (isFav && !favoriteList.includes(recipeID)) {
-       updatedFavorites = [...favoriteList, recipeID];
-     } else if (!isFav && favoriteList.includes(recipeID)) {
-       updatedFavorites = favoriteList.filter((id) => id !== recipeID);
-     }
-     setFavoriteList(updatedFavorites);
-     localStorage.setItem("favoriteList", JSON.stringify(updatedFavorites));
-   }, [isFav]);
+      let updatedFavorites = favoriteList;
+      if (isFav && !favoriteList.includes(recipeID)) {
+        updatedFavorites = [...favoriteList, recipeID];
+      } else if (!isFav && favoriteList.includes(recipeID)) {
+        updatedFavorites = favoriteList.filter((id) => id !== recipeID);
+      }
+      setFavoriteList(updatedFavorites);
+      localStorage.setItem("favoriteList", JSON.stringify(updatedFavorites));
+    }, [isFav]);
     return (
      <img
        data-testid={testID}
@@ -169,13 +224,19 @@ const likeRecipeToggle = () => {
   });
 };
   
- /* Rating Star */
- 
- // Hard code for demo, change to const recipeID = recipeData?._id;
- const recipeID = '1'; 
-  // Change to get it from db later
- const ratings = localStorage.getItem(`starRating ${recipeID}`);
 
+// // Update numberLikes when recipeData changes
+useEffect(() => {
+  if (!recipeData?._id) return;
+
+  // Initialize likes
+  const storedLikes = localStorage.getItem(`likes_${recipeData._id}`);
+  const storedIsLiked = localStorage.getItem(`isLiked_${recipeData._id}`);
+
+  setNumberLikes(storedLikes ? parseInt(storedLikes, 10) : recipeData.likes || 0);
+  setIsLiked(storedIsLiked === 'true');
+}, [recipeData]);
+  
  // Share button functionality
  const handleShare = () => {
     navigator.clipboard.writeText(window.location.href).then(() => {
@@ -185,37 +246,37 @@ const likeRecipeToggle = () => {
     });
  };
 
- return (
-   <div className="app">
-     <div className="recipe">
-       <div className="titleAndDetails">
-         <div className="titleAndImg">
-           <div className="titleDetailContainer">
+ 
 
+  return (
+    <div className="app">
+      <div className="recipe">
+        <div className="titleAndDetails">
+          <div className="titleAndImg">
+            <div className="titleDetailContainer">
+              {/* Recipe Title and Rating */}
+              <div className="titleSection">
+                <h1>{recipeData?.name}</h1>
+                <p className="rating">
+                  Rating: {Math.round(recipeData ? recipeData.ratingsTotal / ((recipeData.numOfRatings != 0) ? recipeData.numOfRatings : 1) : 0) } / 5 | Likes: {recipeData?.likes}
+                </p>
+              </div>
 
-             {/* Recipe Title and Rating */}
-             <div className="titleSection">
-               <h1>{recipeData?.name}</h1>
-               <p className="rating">Rating: {recipeData?.rating} / 5 | Likes: {numberLikes}</p>
-             </div>
-
-
-             {/* Recipe Details Section */}
-             <div className="details">
-               <p>🕒 Prep: {recipeData?.prep_time} {recipeData?.prep_time_unit} | 🕒 Estimated Total: {recipeData?.estimated_total_time} {recipeData?.estimated_total_time_unit} | Serves: {recipeData?.serving} | Calories: {recipeData?.calories} | Cost: {recipeData?.cost}</p>
-               <p>
-                 Tags:
-                 {recipeData?.tags?.length ? (
-                   recipeData.tags.map((tag, index) => (
-                     <span key={index} className={`tag ${tag.toLowerCase()}`}>{tag}</span>
-                   ))
-                 ) : (
-                   <span>No tags available</span>
-                 )}
-               </p>
+              {/* Recipe Details Section */}
+              <div className="details">
+              <p>🕒 Prep: {recipeData?.prep_time} {recipeData?.prep_time_unit} | 🕒 Estimated Total: {recipeData?.estimated_total_time} {recipeData?.estimated_total_time_unit} | Serves: {recipeData?.serving} | Calories: {recipeData?.calories} | Cost: {recipeData?.cost}</p>
+              <p>
+                Tags:
+                {recipeData?.tags?.length ? (
+                  recipeData.tags.map((tag, index) => (
+                    <span key={index} className={`tag ${tag.toLowerCase()}`}>{tag}</span>
+                  ))
+                ) : (
+                  <span>No tags available</span>
+                )}
+              </p>
                {/* <p>Created by: {recipeData?.user}</p> */}
-             </div>
-
+            </div>
 
              {/* Summary */}
              <div className="summary">
@@ -261,7 +322,7 @@ const likeRecipeToggle = () => {
                >
                  Like: {isLiked ? '💖' : '🤍'}
                </button>
-               <RatingStars ratings={ratings} index={'2'} />
+               <RatingStars initialRating={userRating} recipeID={recipeData?._id} />
              </div>
            </div>
 
@@ -278,6 +339,5 @@ const likeRecipeToggle = () => {
    </div>
  );
 }
-
 
 export default RecipeContent;
