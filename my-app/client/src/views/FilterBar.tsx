@@ -162,9 +162,6 @@ export default function FilterBar() {
             </a>
             <ul className="dropdown-menu" aria-labelledby="sortDropdown">
               <li>
-                <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("sortBy", "Newest")}>Newest</a>
-              </li>
-              <li>
                 <a className="dropdown-item" href="#" onClick={() => updateFilterFormString("sortBy", "Most Popular")}>Most Popular</a>
               </li>
             </ul>
