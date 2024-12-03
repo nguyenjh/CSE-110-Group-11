@@ -99,6 +99,7 @@ describe('Test buttons in Recipe Page', () => {
     // Assert that the value of the input field has been updated
     expect(searchInput.value).toBe('Pasta');
   });
+  });
 
 describe('PostCreation Component', () => {
   it('renders the post creation form', () => {
