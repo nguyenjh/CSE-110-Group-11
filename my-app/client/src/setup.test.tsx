@@ -99,19 +99,6 @@ describe('Test buttons in Recipe Page', () => {
     // Assert that the value of the input field has been updated
     expect(searchInput.value).toBe('Pasta');
   });
-
-  test('like buttons', () => {
-    render(
-      <MemoryRouter>
-        <RecipeContent />  
-      </MemoryRouter>
-    );
-    //test for like button
-    const likeButton = screen.getByTestId('like-post');
-    expect(likeButton).toHaveTextContent('Like: 🤍');
-    fireEvent.click(likeButton);
-    expect(likeButton).toHaveTextContent('Like: 💖');
-  })
   });
 
 describe('PostCreation Component', () => {

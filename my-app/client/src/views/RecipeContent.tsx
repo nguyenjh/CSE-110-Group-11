@@ -78,7 +78,8 @@ function RecipeContent() {
       
        if (recipe) {
          console.log('Fetched recipe data:', recipe);
-         setRecipeData(recipe); // Store the specific recipe in the state
+         // Store the specific recipe in the state
+         setRecipeData(recipe); 
        } else {
          console.warn(`Recipe with ID ${id} not found`);
        }
@@ -91,7 +92,8 @@ function RecipeContent() {
 
 
  /*Favorite Button*/
- const [favoriteList, setFavoriteList] = useState<string[]>([]); //favorite list per user, get from db later
+ //favorite list per user, get from db later
+ const [favoriteList, setFavoriteList] = useState<string[]>([]); 
 
  // Bookmark/favorite funcionality
  function ToggleBookmark({ recipeID, testID }: { recipeID: string; testID: string }) {
@@ -127,32 +129,59 @@ function RecipeContent() {
  }
 
 
- /* Like Button for recipe*/
+/* Like Button for recipe*/
+
+// Use initial value from recipeData
+const [numberLikes, setNumberLikes] = useState<number>(recipeData?.likes || 0); 
+// Default to not liked
+const [isLiked, setIsLiked] = useState<boolean>(false); 
 
 
- const [numberLikes, setNumberLikes] = useState<number>(0); // change initial by getting number of likes from db later
- const [isLiked, setIsLiked] = useState<boolean>(false); //change initial by getting from db
+// // Update numberLikes when recipeData changes
+useEffect(() => {
+  if (!recipeData?._id) return;
 
+  // Initialize likes
+  const storedLikes = localStorage.getItem(`likes_${recipeData._id}`);
+  const storedIsLiked = localStorage.getItem(`isLiked_${recipeData._id}`);
 
+  setNumberLikes(storedLikes ? parseInt(storedLikes, 10) : recipeData.likes || 0);
+  setIsLiked(storedIsLiked === 'true');
+}, [recipeData]);
 
+const likeRecipeToggle = () => {
+  if (!recipeData) return;
 
- const likeRecipeToggle = () => {
-   setIsLiked(!isLiked);     
- };
-  
- useEffect(() => {
-   setNumberLikes((prevLikes) => (isLiked ? prevLikes + 1 : Math.max(0, prevLikes - 1)));
- }, [isLiked]);
+  setIsLiked((prevLiked) => {
+    const updatedLiked = !prevLiked;
+    const likeChange = updatedLiked ? 1 : -1;
+
+    setNumberLikes((prevLikes) => {
+      const updatedLikes = prevLikes + likeChange;
+
+      localStorage.setItem(`isLiked_${recipeData._id}`, updatedLiked.toString());
+      localStorage.setItem(`likes_${recipeData._id}`, updatedLikes.toString());
+
+      return updatedLikes;
+    });
+
+    return updatedLiked;
+  });
+};
   
  /* Rating Star */
- const recipeID = '1'; // Hard code for demo, change to const recipeID = recipeData?._id;
- const ratings = localStorage.getItem(`starRating ${recipeID}`); // Change to get it from db later
+ 
+ // Hard code for demo, change to const recipeID = recipeData?._id;
+ const recipeID = '1'; 
+  // Change to get it from db later
+ const ratings = localStorage.getItem(`starRating ${recipeID}`);
 
  // Share button functionality
  const handleShare = () => {
     navigator.clipboard.writeText(window.location.href).then(() => {
       setAlertVisible(true);
-      setTimeout(() => setAlertVisible(false), 2000); // Hide alert after 2 seconds
+      // Hide alert after 2 seconds
+      setTimeout(() => setAlertVisible(false), 2000); 
     });
  };
 
@@ -167,7 +196,7 @@ function RecipeContent() {
              {/* Recipe Title and Rating */}
              <div className="titleSection">
                <h1>{recipeData?.name}</h1>
-               <p className="rating">Rating: {recipeData?.rating} / 5 | Likes: {recipeData?.likes}</p>
+               <p className="rating">Rating: {recipeData?.rating} / 5 | Likes: {numberLikes}</p>
              </div>
 
 

@@ -16,21 +16,42 @@ interface recipe_props {
 }
 
 // Recipe component to display individual recipes
-const Recipe: React.FC<recipe_props> = ({ recipe }) => (
-  <div className = "recipe-list">
-  <Link to={`/recipe/${recipe._id}`} style={{ color: "inherit", textDecoration: "none" }}>
-    <li className="recipe-card">
-      <div className="recipe-name">{recipe.name}</div>
-      <div className="recipe-info">{recipe.rating}R - {recipe.likes} likes - {recipe.estimated_total_time} min</div>
-      <div className="tags-container">
-        {recipe.tags.map((tag) => (
-          <span key={tag} className="tag">{tag}</span>
-        ))}
-      </div>
-    </li>
-  </Link>
-  </div>
-);
+const Recipe: React.FC<recipe_props> = ({ recipe }) => {
+  const [likes, setLikes] = useState(() => {
+    const storedLikes = localStorage.getItem(`likes_${recipe._id}`);
+    return storedLikes ? parseInt(storedLikes, 10) : recipe.likes;
+  });
+
+  useEffect(() => {
+    const storedLikes = localStorage.getItem(`likes_${recipe._id}`);
+    if (storedLikes && parseInt(storedLikes, 10) !== likes) {
+      setLikes(parseInt(storedLikes, 10));
+    }
+  }, [recipe._id, likes]);
+
+  return (
+    <div className="recipe-list">
+      <Link
+        to={`/recipe/${recipe._id}`}
+        style={{ color: "inherit", textDecoration: "none" }}
+      >
+        <li className="recipe-card">
+          <div className="recipe-name">{recipe.name}</div>
+          <div className="recipe-info">
+            {recipe.rating}R - {likes} likes - {recipe.estimated_total_time} min
+          </div>
+          <div className="tags-container">
+            {recipe.tags.map((tag) => (
+              <span key={tag} className="tag">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </li>
+      </Link>
+    </div>
+  );
+};
 
 export default function RecipeList() {
   const filterContextContent = useContext(filterContext);
