@@ -64,13 +64,23 @@ describe('Test filter bar', () => {
 
 
 
-describe('Test buttons in Recipe Page', () => {
+describe('Test content in Recipe Page', () => {
    it('should render the recipe page', async () => {
     render(
       <MemoryRouter>
          <RecipeContent />  
        </MemoryRouter>
      );
+
+     // Checks if text components load on recipe content page
+     expect(screen.getByText("💵 Cost: $")).toBeVisible();
+     expect(screen.getByText("Tags:")).toBeVisible();
+     expect(screen.getByText("Summary:")).toBeVisible();
+     expect(screen.getByText("Ingredients:")).toBeVisible();
+     expect(screen.getByText("Directions:")).toBeVisible();
+     expect(screen.getByText("Share: 🔗")).toBeVisible();
+     expect(screen.getByText("Like: 🤍")).toBeVisible();
+     expect(screen.getByText("Ratings:")).toBeVisible();
 
      //test for favorite button (bookmark)
      const bookmarkButton = screen.getByTestId('testID?');
