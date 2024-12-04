@@ -31,6 +31,7 @@ const Recipe: React.FC<recipe_props> = ({ recipe }) => {
 
   return (
     <div className="recipe-list">
+      <div className="topbar-title">Favorites</div>
       <Link
         to={`/recipe/${recipe._id}`}
         style={{ color: "inherit", textDecoration: "none" }}

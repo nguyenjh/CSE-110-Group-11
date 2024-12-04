@@ -180,6 +180,7 @@ const SignUp: React.FC = () => {
           value={formData.password}
           onChange={handleInputChange}
         />
+        <p style={{fontSize:"11px", margin:"0", color:"black"}}><i>*must be at least 6 characters and contain a number</i></p>
         {errors.password && <span className="error">{errors.password}</span>}
 
         <input
