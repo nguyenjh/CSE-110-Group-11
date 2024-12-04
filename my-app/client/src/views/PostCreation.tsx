@@ -144,6 +144,7 @@ function PostCreation() {
         },
         body: JSON.stringify({
           name: post.name,
+          rating: 0,
           likes: 0,
           summary: post.summary,
           prep_time: post.prep_time,
@@ -155,7 +156,9 @@ function PostCreation() {
           cost: post.cost,
           tags: post.tags,
           ingredients: post.ingredients,
-          directions: post.directions
+          directions: post.directions,
+          numOfRatings: 0,
+          totalRatings: 0,
         }),
       });
   

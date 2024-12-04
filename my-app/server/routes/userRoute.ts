@@ -14,6 +14,6 @@ router.post('/login', loginUser); // POST /api/login
 // Private route
 router.get('/me', protect, getMe); // GET /api/me
 router.patch('/favorites', protect, updateFavorites); // PATCH /api/favorite
-router.patch('/ratings', protect, updateRatings); //PATCH /api/ratings
+router.patch('/ratings', updateRatings); //PATCH /api/ratings
 
 export default router;
