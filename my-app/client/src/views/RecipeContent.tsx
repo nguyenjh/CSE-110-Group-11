@@ -61,6 +61,11 @@ function RecipeContent() {
 
   const [recipeData, setRecipeData] = useState<recipe_content>();
   const [isFav, setIsFav] = useState<boolean>(false);
+  
+  // Use initial value from recipeData
+  const [numberLikes, setNumberLikes] = useState<number>(recipeData?.likes || 0); 
+  // Default to not liked
+  const [isLiked, setIsLiked] = useState<boolean>(false); 
 
   useEffect(() => {
     async function fetchData() {
@@ -161,8 +166,19 @@ useEffect(() => {
           setIsFav(false);
         }
   
+
+        const matchingLikes = data.likes.find((likes: string) => likes === params.id);
+
+        if(matchingLikes) {
+          console.log("matching Like found");
+            setIsLiked(true);
+        }
+        else {
+          console.log("matching like was not found");
+          setIsLiked(false);
+        }
     } catch (error) {
-        console.error('Error fetching ratings:', error);
+        console.error('Error fetching user info:', error);
         setUserRating(0); // Default to 0 in case of an error
     }
   };
@@ -196,7 +212,7 @@ function ToggleBookmark({ isFav }: { isFav : boolean }) {
   }
 
     catch (error) {
-        console.error('Error updating rating:', error);
+        console.error('Error updating favorites:', error);
         throw error;
     }
 
@@ -216,59 +232,66 @@ function ToggleBookmark({ isFav }: { isFav : boolean }) {
   );
 }
 
-
-/* Like Button for recipe*/
-
-// Use initial value from recipeData
-const [numberLikes, setNumberLikes] = useState<number>(recipeData?.likes || 0); 
-// Default to not liked
-const [isLiked, setIsLiked] = useState<boolean>(false); 
-
-
-// // Update numberLikes when recipeData changes
-useEffect(() => {
-  if (!recipeData?._id) return;
-
-  // Initialize likes
-  const storedLikes = localStorage.getItem(`likes_${recipeData._id}`);
-  const storedIsLiked = localStorage.getItem(`isLiked_${recipeData._id}`);
-
-  setNumberLikes(storedLikes ? parseInt(storedLikes, 10) : recipeData.likes || 0);
-  setIsLiked(storedIsLiked === 'true');
-}, [recipeData]);
-
-const likeRecipeToggle = () => {
-  if (!recipeData) return;
-
-  setIsLiked((prevLiked) => {
-    const updatedLiked = !prevLiked;
-    const likeChange = updatedLiked ? 1 : -1;
-
-    setNumberLikes((prevLikes) => {
-      const updatedLikes = prevLikes + likeChange;
-
-      localStorage.setItem(`isLiked_${recipeData._id}`, updatedLiked.toString());
-      localStorage.setItem(`likes_${recipeData._id}`, updatedLikes.toString());
-
-      return updatedLikes;
-    });
-
-    return updatedLiked;
-  });
-};
+function likeRecipeToggle ({ isLiked }: { isLiked : boolean }) {
+  const likeToggle = async() => {
+    try {
+      const response = await fetch(`http://localhost:5050/recipe/like`, {
+      method: 'PATCH',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          recipeID: params.id?.toString(),
+          isLiked: isLiked
+      })
+      });
   
+      if (!response.ok) {
+          const errorDetails = await response.json();
+          console.error("Error response:", errorDetails);
+          throw new Error(errorDetails.error || "Failed to update ratings");
+      }
+  
+      const data = await response.json();
+      console.log('Likes updated successfully:', data);
+      console.log('Likes updated to ' + (data.like));
+      } catch (error) {
+      console.error('Error updating rating:', error);
+      throw error;
+    }
 
-// // Update numberLikes when recipeData changes
-useEffect(() => {
-  if (!recipeData?._id) return;
+    try{
 
-  // Initialize likes
-  const storedLikes = localStorage.getItem(`likes_${recipeData._id}`);
-  const storedIsLiked = localStorage.getItem(`isLiked_${recipeData._id}`);
+      const response = await fetch(`http://localhost:5050/api/likes`, {
+      method: 'PATCH',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          userId: userId?.toString(),
+          itemId: params.id?.toString(),
+      }),
+      });
 
-  setNumberLikes(storedLikes ? parseInt(storedLikes, 10) : recipeData.likes || 0);
-  setIsLiked(storedIsLiked === 'true');
-}, [recipeData]);
+      if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to update likes');
+      }
+      
+      const data = await response.json();
+      console.log('likes updated successfully:', data);
+      
+  }
+
+    catch (error) {
+        console.error('Error updating likes:', error);
+        throw error;
+    }
+
+    handleRefresh();
+  };
+  likeToggle();
+}
   
  // Share button functionality
  const handleShare = () => {
@@ -353,7 +376,7 @@ useEffect(() => {
                  data-testid='like-post'
                  className='likeRecipe'
                  id="likeRecipe"
-                 onClick={likeRecipeToggle}
+                 onClick={() => likeRecipeToggle({ isLiked })}
                >
                  Like: {isLiked ? '💖' : '🤍'}
                </button>

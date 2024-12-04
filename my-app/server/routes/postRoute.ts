@@ -11,7 +11,7 @@ import express from "express"
 
 import { protect } from "../middleware/auth"
 
-import { getPost, addPost, getFilteredPosts, updateRating} from "../controllers/postController";
+import { getPost, addPost, getFilteredPosts, updateRating, updateLikes} from "../controllers/postController";
 
 
 const router = express.Router();
@@ -29,6 +29,8 @@ router.post("/", protect, addPost);
 
 
 router.patch("/", updateRating);
+
+router.patch("/like", updateLikes);
 
 // Patch Request to Update a Specific Recipe: When on homepage/:id page, compile the form data 
 // from req and update the recipe found from the id param. 
