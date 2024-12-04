@@ -317,14 +317,16 @@ function likeRecipeToggle ({ isLiked }: { isLiked : boolean }) {
               <div className="titleSection">
                 <h1>{recipeData?.name}</h1>
                 <p className="rating">
-                  Rating: {rating} / 5 | Likes: {recipeData?.likes}
+                  ✭ Rating: {rating} / 5 | ♥ Likes: {recipeData?.likes}
                 </p>
               </div>
 
               {/* Recipe Details Section */}
               <div className="details">
-              <p>🕒 Prep: {recipeData?.prep_time} {recipeData?.prep_time_unit} | 🕒 Estimated Total: {recipeData?.estimated_total_time} {recipeData?.estimated_total_time_unit} | Serves: {recipeData?.serving} | Calories: {recipeData?.calories} | Cost: ${recipeData?.cost}</p>
-              <p>
+              <p className="detailsText">🕒 Prep Time: {recipeData?.prep_time} {recipeData?.prep_time_unit} | 🕒 Estimated Total Time: {recipeData?.estimated_total_time} {recipeData?.estimated_total_time_unit}</p>
+              <p className="detailsText">🍽️ Serves: {recipeData?.serving} | Total Calories: {recipeData?.calories}</p>
+              <p className="detailsText">💵 Cost: ${recipeData?.cost}</p>
+              <p className="detailsText">
                 Tags:{" "}
                 {recipeData?.tags?.length ? (
                   recipeData.tags.map((tag, index) => (
@@ -381,14 +383,6 @@ function likeRecipeToggle ({ isLiked }: { isLiked : boolean }) {
                  Like: {isLiked ? '💖' : '🤍'}
                </button>
                <RatingStars initialRating={userRating} recipeID={recipeData?._id} />
-             </div>
-           </div>
-
-
-           {/* Image Section */}
-           <div className="imgContainer">
-             <div className="imgHolder">
-               <img className='pasta_img' src={pasta_img} alt="Delicious plate of pasta" />
              </div>
            </div>
          </div>
