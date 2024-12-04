@@ -16,7 +16,8 @@
   .recipe h1 {
     display: flex;
     align-items: center;
-    font-size: 24px;
+    font-size: 35px;
+    font-weight: bold;
   }
   
   /* Recipe Details Layout */
@@ -45,6 +46,10 @@
     border:3px solid rgb(0, 0, 0);
     color: white;
   }
+
+  .detailsText {
+    font-weight: bold;
+  }
   
   /* Tag Styling */
   .tag {
@@ -70,8 +75,9 @@
   
   /* Header (h3) Styling */
   h3 {
-    font-size: 18px;
+    font-size: 20px;
     text-decoration: underline;
+    font-weight: bold;
   }
   
   /* Direction List Styling*/
@@ -101,6 +107,7 @@
     border:3px solid rgb(0, 0, 0);
     border-radius: 8px;
     color: white;
+    font-weight: bold;
   }
 
   /* Alert Display Styling*/
