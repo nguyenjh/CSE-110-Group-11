@@ -30,7 +30,6 @@ const Recipe: React.FC<recipe_props> = ({ recipe }) => {
 
   return (
     <div className="recipe-list">
-      <div className="topbar-title">Favorites</div>
       <Link
         to={`/recipe/${recipe._id}`}
         style={{ color: "inherit", textDecoration: "none" }}
@@ -142,7 +141,9 @@ export default function FavoritePage() {
 
 
 return (
-  <div className="row mt-3" style={{ display: "flex", flexWrap: "wrap" }}>
+  <div className="favorite-page">
+    <h1 className="topbar-title">Favorites</h1>
+    <div className="row mt-3" style={{ display: "flex", flexWrap: "wrap" }}>
     {favoriteRecipes.length > 0 ? (
       favoriteRecipes.map((recipe) => (
         <div className="col-sm-4" key={recipe._id}>
@@ -154,6 +155,7 @@ return (
         <p>No favorite recipes yet. Start bookmarking your favorites!</p>
       </div>
     )}
+  </div>
   </div>
 );
 }
