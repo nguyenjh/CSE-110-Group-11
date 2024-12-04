@@ -348,7 +348,7 @@ useEffect(() => {
              <div className="actions">
                <button onClick={handleShare}>Share: 🔗</button>
                <p className={`alert-box ${alertVisible ? 'visible' : ''}`}>Copied to clipboard!</p>
-               <button>Bookmark: <ToggleBookmark isFav = {isFav} /></button>
+               <button>Bookmark: <ToggleBookmark data-testid="bookmark-up" isFav = {isFav} /></button>
                <button
                  data-testid='like-post'
                  className='likeRecipe'
