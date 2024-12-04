@@ -22,22 +22,8 @@
 #profile-pic {
   grid-area: 1 / 6 / 2 / 8;
 }
-#edit-button {
-  grid-area: 1 / 11 / 2 / 13;
-  height: 50px;
-  overflow: hidden;
-}
-#edit-button img {
-  height: 100%;
-}
-#avatar-button {
-  grid-area: 2 / 6 / 3 / 8;
-}
 #account-button {
-  grid-area: 3 / 5 / 4 / 7;
-}
-#favorite-recipes-button {
-  grid-area: 3 / 7 / 4 / 9;
+  grid-area: 3 / 6 / 4 / 8;
 }
 
 /* Dynamic account component */

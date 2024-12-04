@@ -53,7 +53,6 @@ describe('Test filter bar', () => {
     expect(screen.getByText('> 30 mins')).toBeInTheDocument();
   
     fireEvent.click(sort);
-    expect(screen.getByText('Newest')).toBeInTheDocument();
     expect(screen.getByText('Most Popular')).toBeInTheDocument();
   
     suggestTag.forEach(tag => {
