@@ -129,7 +129,7 @@ const getAll = asyncHandler(async (req: Request, res: Response): Promise<void> =
     res.json(users);
 });
 
-const updateFavorites = asyncHandler(async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+const updateFavorites = asyncHandler(async (req: Request, res: Response): Promise<void> => {
   const { userId, itemId } = req.body; 
 
   if (!itemId || !userId) {
