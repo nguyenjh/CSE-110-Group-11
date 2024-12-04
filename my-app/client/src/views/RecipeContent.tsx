@@ -246,6 +246,11 @@ useEffect(() => {
     });
  };
   
+   // Runtime rating calculation
+   const isValidNumRating = (recipeData?.numOfRatings === undefined || recipeData?.numOfRatings < 1);
+   let rating = isValidNumRating ? "-" : (recipeData?.ratingsTotal / recipeData?.numOfRatings).toFixed(1); // Shows placeholder value for rating if there isnt a valid numRatings in db
+   rating = rating.replace(/[.,]0$/, ""); // Format rating value to show decimal values only if they are nonzero
+ 
   return (
     <div className="app">
       <div className="recipe">
@@ -256,7 +261,7 @@ useEffect(() => {
               <div className="titleSection">
                 <h1>{recipeData?.name}</h1>
                 <p className="rating">
-                  Rating: {Math.round(recipeData ? recipeData.ratingsTotal / ((recipeData.numOfRatings != 0) ? recipeData.numOfRatings : 1) : 0) } / 5 | Likes: {recipeData?.likes}
+                  Rating: {rating} / 5 | Likes: {recipeData?.likes}
                 </p>
               </div>
 

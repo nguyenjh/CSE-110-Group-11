@@ -29,6 +29,11 @@ const Recipe: React.FC<recipe_props> = ({ recipe }) => {
     }
   }, [recipe._id, likes]);
 
+  // Runtime rating calculation
+  const isValidNumRating = (recipe?.numOfRatings === undefined || recipe?.numOfRatings < 1);
+  let rating = isValidNumRating ? "-" : (recipe?.ratingsTotal / recipe?.numOfRatings).toFixed(1); // Shows placeholder value for rating if there isnt a valid numRatings in db
+  rating = rating.replace(/[.,]0$/, ""); // Format rating value to show decimal values only if they are nonzero
+  
   return (
     <div className="recipe-list">
       <Link
@@ -38,7 +43,7 @@ const Recipe: React.FC<recipe_props> = ({ recipe }) => {
         <li className="recipe-card">
           <div className="recipe-name">{recipe.name}</div>
           <div className="recipe-info">
-            {recipe.rating}R - {likes} likes - {recipe.estimated_total_time} min
+            {rating === '-' ? 'Unrated' : `${rating}✭`} - {likes} likes - {recipe.estimated_total_time} min
           </div>
           <div className="tags-container">
             {recipe.tags.map((tag) => (
