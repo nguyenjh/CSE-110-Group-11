@@ -7,6 +7,7 @@ interface IUser extends Document {
   password: string;
   ratings: [string, number][];
   favorites: string[];
+  likes: string[];
 }
 
 const UserSchema: Schema = new Schema({
@@ -27,6 +28,7 @@ const UserSchema: Schema = new Schema({
     ],
     default: [], 
   },
+  likes: {type: [String], default: [], required: false},
 });
 
 export const User = mongoose.model<IUser>('User', UserSchema);

@@ -193,4 +193,40 @@ const updateRatings = asyncHandler(async (req: Request, res: Response): Promise<
   res.status(200).json({ message: 'Ratings updated', ratings: user.ratings });
 });
 
-export { registerUser, loginUser, getMe, getAll , updateFavorites, updateRatings};
+const updateLikes = asyncHandler(async (req: Request, res: Response): Promise<void> => {
+  const { userId, itemId } = req.body; 
+  console.log("Received body");
+
+  if (!itemId || !userId) {
+    console.log("Error with input");
+    res.status(400).json({ message: 'Action must be a boolean and itemId is required.' });
+    return;
+  }
+
+  const user = await User.findById(userId).select('-password');
+  console.log("Received user");
+
+  if (!user) {
+    console.log("User not Found");
+    res.status(404).json({ message: 'User not found' });
+    return;
+  }
+
+  if (!user.likes.includes(itemId)) {
+    console.log("Adding liked post");
+    user.likes.push(itemId);
+    console.log("Added liked post");
+  }
+
+  else {
+    console.log("Liked post found, so deleting.");
+    user.likes = user.likes.filter((id) => id !== itemId);
+    console.log("Deleted liked post");
+  }
+
+  await user.save(); 
+
+  res.status(200).json({ message: 'Likes updated', likes: user.likes });
+});
+
+export { registerUser, loginUser, getMe, getAll , updateFavorites, updateRatings, updateLikes};

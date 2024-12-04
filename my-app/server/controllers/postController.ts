@@ -199,3 +199,59 @@ export const updateRating = async (req: Request, res: Response): Promise<void> =
     res.status(500).json({ error: 'Internal server error running updateRating' });
   }
 };
+
+export const updateLikes = async (req: Request, res: Response): Promise<void> => {
+  const { recipeID, isLiked } = req.body;
+  console.log('Received body:', req.body);
+
+ if (typeof recipeID !== 'string'){
+    res.status(400).json({ error: 'Invalid recipeID. Must be a string.' });
+    return;
+ }
+ console.log('Checked recipe ID:', recipeID);
+
+  if (typeof isLiked !== 'boolean') {
+    res.status(400).json({ error: 'Invalid liked. Must be a boolean.' });
+    return; // Ensure the function exits after responding
+  }
+  console.log('Checked liked:', isLiked);
+
+  console.log('Running the findByIdAndUpdate');
+  try {
+    // Atomic update logic
+    const updatedPost = await Post.findByIdAndUpdate(
+      recipeID,
+      [
+        {
+          $set: {
+            likes: {
+              $add: [
+                "$likes",
+                {
+                  $cond: {
+                    if: isLiked,       // Check the `liked` value
+                    then: -1,        // Subtract 1 if liked is true
+                    else: 1          // Add 1 if liked is false
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      { new: true } // Return the updated document
+    );
+    
+    
+
+    if (!updatedPost) {
+      res.status(404).json({ error: 'Post not found' });
+      return;
+    }
+
+    res.status(200).json({ message: 'Likes updated successfully', post: updatedPost });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error running updateLikes' });
+  }
+};
