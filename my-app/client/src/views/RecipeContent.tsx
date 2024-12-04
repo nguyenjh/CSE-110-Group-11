@@ -185,7 +185,7 @@ useEffect(() => {
   fetchUserInfo();
 }, [params.id]); // Re-run if the recipe ID changes
 
- // Bookmark/favorite funcionality
+// Bookmark/favorite funcionality
 function ToggleBookmark({ isFav }: { isFav : boolean }) {
   const bookmarkToggle = async() => {
     try{
@@ -371,7 +371,7 @@ function likeRecipeToggle ({ isLiked }: { isLiked : boolean }) {
              <div className="actions">
                <button onClick={handleShare}>Share: 🔗</button>
                <p className={`alert-box ${alertVisible ? 'visible' : ''}`}>Copied to clipboard!</p>
-               <button>Bookmark: <ToggleBookmark data-testid="bookmark-up" isFav = {isFav} /></button>
+               <button>Bookmark: <ToggleBookmark isFav = {isFav} /></button>
                <button
                  data-testid='like-post'
                  className='likeRecipe'

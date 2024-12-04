@@ -65,19 +65,17 @@ describe('Test filter bar', () => {
 
 
 describe('Test buttons in Recipe Page', () => {
-  // it('should render the recipe page', async () => {
-  //   render(
-  //     <MemoryRouter>
-  //       <RecipeContent />  
-  //     </MemoryRouter>
-  //   );
+   it('should render the recipe page', async () => {
+    render(
+      <MemoryRouter>
+         <RecipeContent />  
+       </MemoryRouter>
+     );
 
-  //   //test for favorite button (bookmark)
-  //   const bookmarkButton = screen.getByTestId('bookmark-up');
-  //   expect(bookmarkButton).toHaveAttribute('src', expect.stringContaining('whiteRibbon.svg'));
-  //   fireEvent.click(bookmarkButton);
-  //   expect(bookmarkButton).toHaveAttribute('src', expect.stringContaining('blackRibbon.svg'));
-  // });
+     //test for favorite button (bookmark)
+     const bookmarkButton = screen.getByTestId('testID?');
+     expect(bookmarkButton).toBeInTheDocument();
+   });
 
   test('renders search input and updates with user input', () => {
     render(
