@@ -20,7 +20,9 @@ export const getFilteredPosts = async (req: Request, res: Response) => {
     const time = req.query.time;
     const sortBy = req.query.sortBy;
 
-    console.log("Query parameters:", req.query);
+    // Get the `tags` parameter from the query
+    const tags = req.query.tags;
+    const tagsArray: string[] = tags ? tags.toString().split(',') : [];
 
     const query: any = {};
 
@@ -65,6 +67,10 @@ export const getFilteredPosts = async (req: Request, res: Response) => {
     let sortOption: any = {};
     if (sortBy === "Most Popular") {
       sortOption.likes = -1; // Sort by likes, most popular first
+    }
+    
+    if (tagsArray.length > 0) {
+      query.tags = { $all: tagsArray };
     }
 
     const result = await Post.find(query).sort(sortOption);

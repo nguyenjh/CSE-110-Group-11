@@ -133,6 +133,9 @@ export default function RecipeList() {
         if (filterForm.calories) params.append("calories", filterForm.calories);
         if (filterForm.time) params.append("time", filterForm.time);
         if (filterForm.sortBy) params.append("sortBy", filterForm.sortBy);
+        if (filterForm.tags && filterForm.tags.length > 0) {
+          params.append("tags", filterForm.tags.join(","));
+      }
 
         const url = `http://localhost:5050/recipe?${params.toString()}`;
         console.log("Fetching recipes with URL:", url);
