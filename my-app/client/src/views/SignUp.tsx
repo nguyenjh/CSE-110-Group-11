@@ -94,7 +94,7 @@ const SignUp: React.FC = () => {
     setIsModalOpen(false);
 
     try {
-      const response = await fetch('http://localhost:5050/api/register', {
+      const response = await fetch(`http://localhost:5050/api/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -180,6 +180,7 @@ const SignUp: React.FC = () => {
           value={formData.password}
           onChange={handleInputChange}
         />
+        <p style={{fontSize:"11px", margin:"0", color:"black"}}><i>*must be at least 6 characters and contain a number</i></p>
         {errors.password && <span className="error">{errors.password}</span>}
 
         <input

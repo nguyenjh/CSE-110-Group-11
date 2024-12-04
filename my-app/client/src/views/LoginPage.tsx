@@ -131,7 +131,7 @@ const LoginPage: React.FC = () => {
       <div className="skip-container">
       <p className="skip-link">
       Don't want to create an account? <br />
-      <Link to="/">Skip to Home Page</Link>
+      <Link to="/">Return to Home Page</Link>
       </p>
       </div>
     </div>

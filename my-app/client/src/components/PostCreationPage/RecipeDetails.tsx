@@ -42,7 +42,7 @@ function RecipeDetails() {
     <div id="recipe-details">
       {/* Cost input */}
       <div id="recipe-cost">
-        <h2>Cost ($):</h2>
+        <h2>Cost ($):*</h2>
       </div>
       <div id="recipe-cost-input">
         <input
@@ -87,7 +87,7 @@ function RecipeDetails() {
 
       {/* Calories input */}
       <div>
-        <label htmlFor="calories">Calories (kcal):</label>
+        <label htmlFor="calories">Calories (kcal):*</label>
         <input
           type="number"
           id="calories"
@@ -101,7 +101,7 @@ function RecipeDetails() {
 
       {/* Prep Time input */}
       <div>
-        <label htmlFor="prep-time">Prep Time (minutes):</label>
+        <label htmlFor="prep-time">Prep Time (minutes):*</label>
         <input
           type="number"
           id="prep-time"
@@ -115,7 +115,7 @@ function RecipeDetails() {
 
       {/* Serving size input */}
       <div>
-        <label htmlFor="servings">Servings (#):</label>
+        <label htmlFor="servings">Servings (#):*</label>
         <input
           type="number"
           id="servings"
@@ -129,7 +129,7 @@ function RecipeDetails() {
 
       {/* Total time input */}
       <div>
-        <label htmlFor="total-time">Total Time (minutes):</label>
+        <label htmlFor="total-time">Total Time (minutes):*</label>
         <input
           type="number"
           id="total-time"
