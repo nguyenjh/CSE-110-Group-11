@@ -60,9 +60,12 @@ export default function FilterBar() {
   const toggleClick = (clickedTag: string) => {
     if (isClicked.includes(clickedTag)) {
       setIsClicked(prevClicked => prevClicked.filter((f) => f !== clickedTag));
-    } else {
+      setFilterForm((prev) => ({...prev, tags: prev.tags.filter((f) => f !== clickedTag),}));
+    } 
+    else {
       if(isClicked.length < 4) {
         setIsClicked(prevClicked => [...prevClicked, clickedTag]);
+        setFilterForm(prev => ({...prev, tags: [...prev.tags, clickedTag]}));
       }
       else {
         alert("You are allowed to choose 4 tags only!");
