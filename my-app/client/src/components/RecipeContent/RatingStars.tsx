@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../css/RatingStars.css";
 import { ratingContext } from "../../context/RatingContext";
 
@@ -18,6 +19,13 @@ export default function RatingStars({initialRating, recipeID}:RatingStarsProps) 
     const { userRating, setUserRating } = useContext(ratingContext);
 
     const [tempRating, setTempRating] = useState(0);
+
+    const navigate = useNavigate();
+
+    const handleRefresh = () => {
+      navigate(0); // Refreshes the current route
+    };
+  
 
     // Star array for the five star symbols display
     let stars = Array(numberOfSymbols).fill(symbol);
@@ -110,6 +118,8 @@ export default function RatingStars({initialRating, recipeID}:RatingStarsProps) 
             console.error('Error updating rating:', error);
             throw error;
         }
+
+        handleRefresh();
     };
 
     return (

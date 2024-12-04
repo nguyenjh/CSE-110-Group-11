@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import "../css/RecipeContent.css";
 import pasta_img from "../assets/pasta_img.png";
 import { useParams } from "react-router-dom";
@@ -24,6 +25,14 @@ function RecipeContent() {
   // State to manage the list of comments, initially containing a few sample comments
 
   const { userRating, setUserRating } = useContext(ratingContext);
+
+  const navigate = useNavigate();
+
+  const handleRefresh = () => {
+    navigate(0); // Refreshes the current route
+  };
+
+
 
   const [comments, setComments] = useState<Comment[]>([
     { text: "This was so simple to make but so delicious!", likes: 2 },
@@ -51,6 +60,7 @@ function RecipeContent() {
   const params = useParams();
 
   const [recipeData, setRecipeData] = useState<recipe_content>();
+  const [isFav, setIsFav] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -88,9 +98,9 @@ function RecipeContent() {
     fetchData();
   }, [params.id]);
 
-  const userString = localStorage.getItem('user');
+const userString = localStorage.getItem('user');
 let user;
-let userId;
+let userId: string;
 let token;
 
  // Parse the JSON string into an object
@@ -101,87 +111,110 @@ if (userString) {
     console.log('User ID:', userId);
 } else {
     user = null;
-    userId = null;
+    userId = "";
     token = null;
     console.log('No user found in localStorage');
 }
 
-const fetchRating = async () => {
-  try {
-      const response = await fetch(`http://localhost:5050/api/me/`, {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`,
-          },
+
+useEffect(() => {
+  const fetchUserInfo = async () => {
+    try {
+        const response = await fetch(`http://localhost:5050/api/me/`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+  
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Failed to fetch ratings');
+        }
+  
+        const data = await response.json();
+        console.log('Fetched user rating:', data.ratings);
+        console.log('Fetched user favorites:', data.favorites);
+  
+        // Check if any rating matches the recipeID
+        const matchingRating = data.ratings.find(
+            (rating: [string, number]) => rating[0] === params.id
+        );
+  
+        if (matchingRating) {
+            console.log(`Matching rating found: RecipeID=${matchingRating[0]}, Rating=${matchingRating[1]}`);
+            setUserRating(matchingRating[1]); // Set the user's rating
+        } else {
+            console.log('No matching rating found for this recipeID');
+            setUserRating(0); // Default to 0 if no rating is found
+        }
+  
+        const matchingFavorite = data.favorites.find((favorite: string) => favorite === params.id);
+
+        if(matchingFavorite) {
+          console.log("matching Favorite found");
+            setIsFav(true);
+        }
+        else {
+          console.log("matching favorite was not found");
+          setIsFav(false);
+        }
+  
+    } catch (error) {
+        console.error('Error fetching ratings:', error);
+        setUserRating(0); // Default to 0 in case of an error
+    }
+  };
+  fetchUserInfo();
+}, [params.id]); // Re-run if the recipe ID changes
+
+ // Bookmark/favorite funcionality
+function ToggleBookmark({ isFav }: { isFav : boolean }) {
+  const bookmarkToggle = async() => {
+    try{
+
+      const response = await fetch(`http://localhost:5050/api/favorites`, {
+      method: 'PATCH',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+          userId: userId?.toString(),
+          itemId: params.id?.toString(),
+      }),
       });
 
       if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.error || 'Failed to fetch ratings');
+          throw new Error(errorData.error || 'Failed to update favorites');
       }
-
+      
       const data = await response.json();
-      console.log('Fetched user rating:', data.ratings);
-
-      // Check if any rating matches the recipeID
-      const matchingRating = data.ratings.find(
-          (rating: [string, number]) => rating[0] === params.id
-      );
-
-      if (matchingRating) {
-          console.log(`Matching rating found: RecipeID=${matchingRating[0]}, Rating=${matchingRating[1]}`);
-          setUserRating(matchingRating[1]); // Set the user's rating
-      } else {
-          console.log('No matching rating found for this recipeID');
-          setUserRating(0); // Default to 0 if no rating is found
-      }
-  } catch (error) {
-      console.error('Error fetching ratings:', error);
-      setUserRating(0); // Default to 0 in case of an error
+      console.log('favorites updated successfully:', data);
+      
   }
-};
 
-useEffect(() => {
-  fetchRating();
-}, [params.id]); // Re-run if the recipe ID changes
+    catch (error) {
+        console.error('Error updating rating:', error);
+        throw error;
+    }
 
- /*Favorite Button*/
- //favorite list per user, get from db later
- const [favoriteList, setFavoriteList] = useState<string[]>([]);
-
- // Bookmark/favorite funcionality
- function ToggleBookmark({ recipeID, testID }: { recipeID: string; testID: string }) {
-   const [favoriteList, setFavoriteList] = useState<string[]>(() => {
-     const savedList = localStorage.getItem("favoriteList");
-     return savedList ? JSON.parse(savedList) : [];
-   });
-    const [isFav, setIsFav] = useState(favoriteList.includes(recipeID));
-    const bookmarkToggle = () => {
-      setIsFav((prev) => !prev);
-    };
-    useEffect(() => {
-      let updatedFavorites = favoriteList;
-      if (isFav && !favoriteList.includes(recipeID)) {
-        updatedFavorites = [...favoriteList, recipeID];
-      } else if (!isFav && favoriteList.includes(recipeID)) {
-        updatedFavorites = favoriteList.filter((id) => id !== recipeID);
-      }
-      setFavoriteList(updatedFavorites);
-      localStorage.setItem("favoriteList", JSON.stringify(updatedFavorites));
-    }, [isFav]);
+    handleRefresh();
+  };
+    
     return (
-     <img
-       data-testid={testID}
-       style={{ color: isFav ? "red" : "black", width: "20px" }}
-       id="save-icon"
-       onClick={bookmarkToggle}
-       role="button"
-       src={isFav ? blackRibbon : whiteRibbon}
-       alt="savemark"
-     />
-   );
- }
+    <img
+      data-testid= "testID?"
+      style={{ color: isFav ? "red" : "black", width: "20px" }}
+      id="save-icon"
+      onClick={bookmarkToggle}
+      role="button"
+      src={isFav ? blackRibbon : whiteRibbon}
+      alt="savemark"
+    />
+  );
+}
 
 
 /* Like Button for recipe*/
@@ -315,7 +348,7 @@ useEffect(() => {
              <div className="actions">
                <button onClick={handleShare}>Share: 🔗</button>
                <p className={`alert-box ${alertVisible ? 'visible' : ''}`}>Copied to clipboard!</p>
-               <button>Bookmark: <ToggleBookmark recipeID={recipeData?._id ?? ""} testID="bookmark-up" /></button> {/*hardcode for now, can change later*/}
+               <button>Bookmark: <ToggleBookmark isFav = {isFav} /></button>
                <button
                  data-testid='like-post'
                  className='likeRecipe'
