@@ -63,9 +63,7 @@ export const getFilteredPosts = async (req: Request, res: Response) => {
     }
 
     let sortOption: any = {};
-    if (sortBy === "Newest") {
-      sortOption.createdAt = -1; // Sort by creation time, newest first
-    } else if (sortBy === "Most Popular") {
+    if (sortBy === "Most Popular") {
       sortOption.likes = -1; // Sort by likes, most popular first
     }
 
